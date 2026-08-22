@@ -9,8 +9,10 @@ import {
   X,
   Plus,
   Luggage,
+  ShieldCheck,
 } from "lucide-react";
 import useAuthStore from "../store/authStore";
+import useLanguageStore from "../store/languageStore";
 import { Button } from "./ui/button";
 import Logo from "./Logo";
 
@@ -20,6 +22,7 @@ export default function Navbar({ transparent = false }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const t = useLanguageStore((state) => state.t);
 
   useEffect(() => {
     if (!transparent) return;
@@ -36,10 +39,12 @@ export default function Navbar({ transparent = false }) {
   };
 
   const navLinks = [
-    { name: "Dashboard", href: "/dashboard", icon: Compass },
-    { name: "My Trips", href: "/trips", icon: Luggage },
-    { name: "Explore Cities", href: "/cities", icon: Map },
-    { name: "Profile", href: "/profile", icon: User },
+    { name: t("dashboard"), href: "/dashboard", icon: Compass },
+    { name: t("myTrips"), href: "/trips", icon: Luggage },
+    { name: t("exploreCities"), href: "/cities", icon: Map },
+    { name: "Activities", href: "/activities", icon: Sparkles },
+    ...(user?.isAdmin ? [{ name: "Admin", href: "/admin", icon: ShieldCheck }] : []),
+    { name: t("profile"), href: "/profile", icon: User },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -70,7 +75,7 @@ export default function Navbar({ transparent = false }) {
               const active = isActive(item.href);
               return (
                 <Link
-                  key={item.name}
+                  key={item.href}
                   to={item.href}
                   className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-medium transition-colors ${
                     isLight
@@ -101,7 +106,7 @@ export default function Navbar({ transparent = false }) {
                 }`}
               >
                 <Plus className="w-4 h-4" />
-                <span>New Trip</span>
+                <span>{t("newTrip")}</span>
               </Button>
             </Link>
 

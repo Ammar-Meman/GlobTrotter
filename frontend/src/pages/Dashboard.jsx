@@ -19,7 +19,6 @@ import useAuthStore from "@/store/authStore";
 import useTripStore from "@/store/tripStore";
 import { Button } from "@/components/ui/button";
 
-/* ── Hero Slides with Verified Authentic Indian Destinations ─── */
 const HERO_SLIDES = [
   {
     id: "tajmahal",
@@ -113,7 +112,6 @@ const HERO_SLIDES = [
   },
 ];
 
-/* ── Popular Destinations Grid ───────────────────────────── */
 const POPULAR_DESTINATIONS = [
   {
     name: "Agra",
@@ -230,16 +228,9 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-
-      {/* Sticky Immersed Navbar at Top */}
       <Navbar transparent={true} />
 
-      {/* ══════════════════════════════════════════════════════════
-          HERO — 100% Full Window Viewport Height
-         ══════════════════════════════════════════════════════════ */}
       <section className="relative -mt-16 w-full min-h-screen flex flex-col justify-between overflow-hidden bg-slate-950">
-
-        {/* Cross-fading Background Images */}
         <div className="absolute inset-0 z-0">
           {HERO_SLIDES.map((slide, index) => (
             <div
@@ -252,19 +243,13 @@ export default function Dashboard() {
               }}
             />
           ))}
-
-          {/* Clean Gradient Scrim */}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/30 to-slate-950/40" />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/20 to-transparent" />
         </div>
 
-        {/* Spacer for top navbar */}
         <div className="h-20" />
 
-        {/* Hero Central Text Content */}
         <div className="relative z-10 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 flex flex-col justify-center">
-
-          {/* Clean Location Tag */}
           <div className="flex items-center gap-2 mb-4">
             <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-sky-500/90 text-white text-xs font-medium shadow-xs">
               <MapPin className="w-3.5 h-3.5" />
@@ -272,7 +257,6 @@ export default function Dashboard() {
             </span>
           </div>
 
-          {/* Headline + Greeting */}
           <AnimatePresence mode="wait">
             <motion.div
               key={`hero-${currentSlide}`}
@@ -297,7 +281,6 @@ export default function Dashboard() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-3.5 mt-8">
             <Button
               onClick={() => navigate("/trips/new")}
@@ -317,7 +300,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* ── Search Bar Card (Fully visible, clearly anchored at base of Hero) ── */}
         <div className="relative z-20 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-10">
           <form
             onSubmit={handleQuickSearch}
@@ -374,13 +356,8 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════
-          MAIN BODY — Clean Modern Layout
-         ══════════════════════════════════════════════════════════ */}
       <main className="flex-1 bg-slate-50 pt-12 pb-16 px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="max-w-6xl mx-auto space-y-12">
-
-          {/* Stats Strip */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
               { label: "Planned Trips", value: totalTrips, icon: Luggage },
@@ -402,7 +379,6 @@ export default function Dashboard() {
             })}
           </div>
 
-          {/* ── Upcoming Itineraries ──────────────────────────── */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
@@ -432,7 +408,6 @@ export default function Dashboard() {
                       key={trip.id}
                       className="rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col group"
                     >
-                      {/* Cover */}
                       <div className="relative h-40 w-full overflow-hidden bg-slate-100">
                         <img
                           src={trip.coverPhoto || "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800&auto=format&fit=crop&q=80"}
@@ -448,7 +423,6 @@ export default function Dashboard() {
                         </span>
                       </div>
 
-                      {/* Body */}
                       <div className="p-4 flex-1 space-y-2">
                         <h3 className="font-semibold text-base text-slate-900 group-hover:text-sky-600 transition-colors line-clamp-1">
                           {trip.name}
@@ -462,7 +436,6 @@ export default function Dashboard() {
                         )}
                       </div>
 
-                      {/* Footer */}
                       <div className="px-4 pb-4 pt-2 flex items-center gap-2 border-t border-slate-100">
                         <Button
                           size="sm"
@@ -504,7 +477,6 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* ── Popular Destinations ──────────────────────────── */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
@@ -555,7 +527,6 @@ export default function Dashboard() {
               ))}
             </div>
           </div>
-
         </div>
       </main>
     </div>

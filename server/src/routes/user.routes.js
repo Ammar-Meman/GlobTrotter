@@ -5,6 +5,7 @@ import { validateBody } from "../middleware/validate.middleware.js";
 import {
   updateProfileSchema,
   createSavedDestinationSchema,
+  deleteAccountSchema,
 } from "../validators/user.validator.js";
 
 const router = Router();
@@ -12,7 +13,7 @@ const router = Router();
 router.use(requireAuth);
 
 router.put("/me", validateBody(updateProfileSchema), userController.updateMe);
-router.delete("/me", userController.deleteMe);
+router.delete("/me", validateBody(deleteAccountSchema), userController.deleteMe);
 
 router.get("/me/saved-destinations", userController.getSavedDestinations);
 router.post(

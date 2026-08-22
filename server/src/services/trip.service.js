@@ -185,6 +185,11 @@ export const copyTrip = async (userId, tripId) => {
     throw new NotFoundError("Trip not found");
   }
 
+  // SECURITY: Only the owner of the trip (or a publicly shared trip) can be copied.
+  if (sourceTrip.userId !== userId && !sourceTrip.isPublic) {
+    throw new ForbiddenError("You do not have access to this trip");
+  }
+
   const origStart = new Date(sourceTrip.startDate);
   const origEnd = new Date(sourceTrip.endDate);
   const durationMs = origEnd.getTime() - origStart.getTime();
