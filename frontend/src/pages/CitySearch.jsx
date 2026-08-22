@@ -141,6 +141,116 @@ const GLOBAL_CITIES = [
       { name: "North Goa", vibe: "Electric nightlife, crowded beaches, flea markets" },
       { name: "South Goa", vibe: "Pristine quiet beaches, luxury resorts, old-world charm" },
     ],
+  },
+  {
+    id: "agra",
+    cityName: "Agra",
+    country: "India",
+    region: "North India",
+    latitude: 27.1767,
+    longitude: 78.0081,
+    costIndex: 60.0,
+    popularity: 97,
+    dailyBudget: 1800,
+    bestSeason: "Oct – Mar",
+    climate: "Semi-arid",
+    vibes: ["Historic & Cultural", "Romantic"],
+    image: "https://images.unsplash.com/photo-1548013146-72479768bada?w=800&auto=format&fit=crop&q=80",
+    description: "Home to the glorious Taj Mahal, Agra offers an unforgettable journey into the grandeur of the Mughal Empire.",
+    landmarks: ["Taj Mahal", "Agra Fort", "Fatehpur Sikri"],
+    cuisine: ["Petha", "Mughlai Curry", "Bedai"],
+    neighborhoods: [
+      { name: "Taj Ganj", vibe: "Bustling backpacker hub right outside the Taj" },
+      { name: "Sadar Bazaar", vibe: "Street food and leather goods market" },
+    ],
+  },
+  {
+    id: "udaipur",
+    cityName: "Udaipur",
+    country: "India",
+    region: "West India",
+    latitude: 24.5854,
+    longitude: 73.7125,
+    costIndex: 85.0,
+    popularity: 93,
+    dailyBudget: 3500,
+    bestSeason: "Sep – Mar",
+    climate: "Hot semi-arid",
+    vibes: ["Romantic", "Historic & Cultural"],
+    image: "https://images.pexels.com/photos/5743132/pexels-photo-5743132.jpeg?auto=compress&cs=tinysrgb&w=800",
+    description: "The City of Lakes is considered India's most romantic city, featuring marble palaces floating on serene waters.",
+    landmarks: ["City Palace", "Lake Pichola", "Jag Mandir"],
+    cuisine: ["Dal Bati", "Kachori", "Thali"],
+    neighborhoods: [
+      { name: "Lal Ghat", vibe: "Heritage hotels and scenic lakeside views" },
+      { name: "Fateh Sagar", vibe: "Evening walks and street food corners" },
+    ],
+  },
+  {
+    id: "darjeeling",
+    cityName: "Darjeeling",
+    country: "India",
+    region: "East India",
+    latitude: 27.0360,
+    longitude: 88.2627,
+    costIndex: 65.0,
+    popularity: 91,
+    dailyBudget: 2200,
+    bestSeason: "Mar – May & Sep – Nov",
+    climate: "Subtropical highland",
+    vibes: ["Nature & Adventure", "Romantic", "Zen & Relaxation"],
+    image: "https://images.pexels.com/photos/10313019/pexels-photo-10313019.jpeg?auto=compress&cs=tinysrgb&w=800",
+    description: "Nestled in the Himalayas, this town is world-renowned for its tea gardens, cool climate, and views of Kangchenjunga.",
+    landmarks: ["Tiger Hill", "Batasia Loop", "Peace Pagoda"],
+    cuisine: ["Momos", "Thukpa", "Darjeeling Tea"],
+    neighborhoods: [
+      { name: "Mall Road", vibe: "Colonial cafes, bakeries, and shopping" },
+      { name: "Chowrasta", vibe: "Open public square with pony rides" },
+    ],
+  },
+  {
+    id: "bengaluru",
+    cityName: "Bengaluru",
+    country: "India",
+    region: "South India",
+    latitude: 12.9716,
+    longitude: 77.5946,
+    costIndex: 82.0,
+    popularity: 94,
+    dailyBudget: 3200,
+    bestSeason: "Oct – Feb",
+    climate: "Tropical savanna",
+    vibes: ["Futuristic & Modern", "Foodie & Culinary", "Nightlife"],
+    image: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800&auto=format&fit=crop&q=80",
+    description: "India's Silicon Valley blends high-tech industry with beautiful public parks, craft breweries, and diverse South Indian cuisine.",
+    landmarks: ["Lalbagh Botanical Garden", "Cubbon Park", "Bangalore Palace"],
+    cuisine: ["Filter Coffee", "Masala Dosa", "Craft Beer", "Bisi Bele Bath"],
+    neighborhoods: [
+      { name: "Indiranagar", vibe: "Upscale boutiques, brewpubs, trendy cafes" },
+      { name: "Koramangala", vibe: "Startup hub, global dining, active nightlife" },
+    ],
+  },
+  {
+    id: "srinagar",
+    cityName: "Srinagar",
+    country: "India",
+    region: "North India",
+    latitude: 34.0837,
+    longitude: 74.7973,
+    costIndex: 78.0,
+    popularity: 92,
+    dailyBudget: 2800,
+    bestSeason: "Apr – Oct",
+    climate: "Humid subtropical",
+    vibes: ["Nature & Adventure", "Romantic", "Zen & Relaxation"],
+    image: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=800&auto=format&fit=crop&q=80",
+    description: "The summer capital of Jammu and Kashmir, legendary for its houseboats on Dal Lake and historic Mughal gardens.",
+    landmarks: ["Dal Lake", "Shalimar Bagh", "Shankaracharya Temple"],
+    cuisine: ["Rogan Josh", "Kahwa Tea", "Gushtaba"],
+    neighborhoods: [
+      { name: "Dal Lake", vibe: "Floating markets, shikara rides, houseboats" },
+      { name: "Lal Chowk", vibe: "City center and commercial heartbeat" },
+    ],
   }
 ];
 
@@ -157,10 +267,10 @@ const VIBES = [
 ];
 const COST_FILTERS = [
   { label: "All Budgets", value: "all" },
-  { label: "Budget ($)", value: "budget", max: 50 },
-  { label: "Moderate ($$)", value: "moderate", min: 50, max: 75 },
-  { label: "Upscale ($$$)", value: "upscale", min: 75, max: 85 },
-  { label: "Luxury ($$$$)", value: "luxury", min: 85 },
+  { label: "Budget (₹)", value: "budget", max: 50 },
+  { label: "Moderate (₹₹)", value: "moderate", min: 50, max: 75 },
+  { label: "Upscale (₹₹₹)", value: "upscale", min: 75, max: 85 },
+  { label: "Luxury (₹₹₹₹)", value: "luxury", min: 85 },
 ];
 
 export default function CitySearch() {
@@ -279,10 +389,10 @@ export default function CitySearch() {
   }, [selectedRegion, selectedVibe, selectedCost, searchQuery, sortBy]);
 
   const getCostTier = (costIndex) => {
-    if (costIndex < 50) return { label: "$", name: "Budget-Friendly", color: "text-emerald-500" };
-    if (costIndex < 75) return { label: "$$", name: "Moderate", color: "text-blue-500" };
-    if (costIndex < 85) return { label: "$$$", name: "Upscale", color: "text-amber-500" };
-    return { label: "$$$$", name: "Luxury Tier", color: "text-purple-500" };
+    if (costIndex < 50) return { label: "₹", name: "Budget-Friendly", color: "text-emerald-500" };
+    if (costIndex < 75) return { label: "₹₹", name: "Moderate", color: "text-blue-500" };
+    if (costIndex < 85) return { label: "₹₹₹", name: "Upscale", color: "text-amber-500" };
+    return { label: "₹₹₹₹", name: "Luxury Tier", color: "text-purple-500" };
   };
 
   return (
@@ -491,7 +601,7 @@ export default function CitySearch() {
                             {city.cityName}
                           </h3>
                           <span className={`text-xs font-bold px-2 py-0.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 ${costTier.color}`}>
-                            {costTier.label} • ~${city.dailyBudget}/day
+                            ~₹{city.dailyBudget}/day
                           </span>
                         </div>
                         <p className="text-xs text-white/80 flex items-center gap-1">
