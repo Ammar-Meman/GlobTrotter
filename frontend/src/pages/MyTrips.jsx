@@ -27,8 +27,8 @@ export default function MyTrips() {
   const t = useLanguageStore((state) => state.t);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all"); // 'all' | 'upcoming' | 'inprogress' | 'completed'
-  const [sortBy, setSortBy] = useState("departure-asc"); // 'departure-asc' | 'departure-desc' | 'created-desc' | 'stops-desc'
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("departure-asc");
   const [tripToDelete, setTripToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -36,7 +36,6 @@ export default function MyTrips() {
     fetchTrips().catch((err) => console.error("Error fetching trips:", err));
   }, [fetchTrips]);
 
-  // Compute status helper
   const getStatus = (start, end) => {
     if (!start || !end) return "upcoming";
     const now = new Date().getTime();
@@ -48,7 +47,6 @@ export default function MyTrips() {
     return "completed";
   };
 
-  // Status counts
   const counts = useMemo(() => {
     const res = { all: trips.length, upcoming: 0, inprogress: 0, completed: 0 };
     trips.forEach((t) => {
@@ -58,17 +56,14 @@ export default function MyTrips() {
     return res;
   }, [trips]);
 
-  // Filter & Sort Logic
   const filteredTrips = useMemo(() => {
     return trips
       .filter((trip) => {
-        // Status filter
         if (statusFilter !== "all") {
           const st = getStatus(trip.startDate, trip.endDate);
           if (st !== statusFilter) return false;
         }
 
-        // Search query filter
         if (searchQuery.trim()) {
           const q = searchQuery.toLowerCase();
           const nameMatch = trip.name?.toLowerCase().includes(q);
@@ -113,34 +108,33 @@ export default function MyTrips() {
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Header Strip */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/40 pb-6">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{t("myTripsTitle")}</h1>
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                {trips.length} {t("myTrips")}
+              <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">
+                {t ? t("myTripsTitle") : "My Trips"}
+              </h1>
+              <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200">
+                {trips.length} {trips.length === 1 ? "Trip" : "Trips"}
               </span>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              {t("myTripsSubtitle")}
+              {t ? t("myTripsSubtitle") : "Review, edit, and organize all your upcoming and past journeys."}
             </p>
           </div>
 
-          <Button onClick={() => navigate("/trips/new")} className="gap-2 shadow-sm font-semibold shrink-0">
+          <Button onClick={() => navigate("/trips/new")} className="gap-2 shadow-sm font-medium shrink-0 bg-sky-500 hover:bg-sky-600 text-white">
             <Plus className="w-4 h-4" />
-            <span>{t("createNewTrip")}</span>
+            <span>{t ? t("createNewTrip") : "Create New Trip"}</span>
           </Button>
         </div>
 
-        {/* Search, Filter Tabs & Sort Controls */}
         <div className="space-y-4">
           <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-            {/* Search Input */}
             <div className="relative flex-1 max-w-md">
               <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
               <Input
-                placeholder={t("searchTripsPlaceholder")}
+                placeholder={t ? t("searchTripsPlaceholder") : "Search trips by name or keyword..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-9 pr-8"
@@ -155,11 +149,10 @@ export default function MyTrips() {
               )}
             </div>
 
-            {/* Sort Dropdown */}
             <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground font-medium flex items-center gap-1">
                 <SlidersHorizontal className="w-3.5 h-3.5" />
-                {t("filters")}:
+                {t ? t("filters") : "Sort"}:
               </span>
               <select
                 value={sortBy}
@@ -174,22 +167,21 @@ export default function MyTrips() {
             </div>
           </div>
 
-          {/* Status Tabs */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
             {[
-              { id: "all", label: t("allStatus"), count: counts.all },
-              { id: "upcoming", label: t("planned"), count: counts.upcoming },
-              { id: "inprogress", label: t("ongoing"), count: counts.inprogress },
-              { id: "completed", label: t("completed"), count: counts.completed },
+              { id: "all", label: t ? t("allStatus") : "All Itineraries", count: counts.all },
+              { id: "upcoming", label: t ? t("planned") : "Upcoming", count: counts.upcoming },
+              { id: "inprogress", label: t ? t("ongoing") : "In Progress", count: counts.inprogress },
+              { id: "completed", label: t ? t("completed") : "Past Journeys", count: counts.completed },
             ].map((tab) => {
               const active = statusFilter === tab.id;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setStatusFilter(tab.id)}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all shrink-0 ${
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all shrink-0 cursor-pointer ${
                     active
-                      ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                      ? "bg-sky-500 text-white font-medium shadow-xs"
                       : "bg-secondary/60 text-muted-foreground hover:bg-secondary hover:text-foreground"
                   }`}
                 >
@@ -197,7 +189,7 @@ export default function MyTrips() {
                   <span
                     className={`text-[10px] px-1.5 py-0.2 rounded-full ${
                       active
-                        ? "bg-primary-foreground/20 text-primary-foreground"
+                        ? "bg-white/20 text-white"
                         : "bg-background/80 text-muted-foreground"
                     }`}
                   >
@@ -209,7 +201,6 @@ export default function MyTrips() {
           </div>
         </div>
 
-        {/* Trips Grid View */}
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((n) => (
@@ -236,14 +227,13 @@ export default function MyTrips() {
             ))}
           </div>
         ) : (
-          /* Empty / No Results State */
           <Card className="border-dashed border-2 border-border/80 bg-card/40 p-12 text-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-primary/10 text-primary mx-auto flex items-center justify-center">
+            <div className="w-16 h-16 rounded-full bg-sky-50 text-sky-600 mx-auto flex items-center justify-center">
               <Plane className="w-8 h-8" />
             </div>
 
             <div className="max-w-md mx-auto space-y-1.5">
-              <h3 className="font-bold text-lg">
+              <h3 className="font-semibold text-lg text-slate-900">
                 {searchQuery || statusFilter !== "all" ? "No matching trips found" : "No trips created yet"}
               </h3>
               <p className="text-xs text-muted-foreground">
@@ -265,7 +255,7 @@ export default function MyTrips() {
                 Reset Filters
               </Button>
             ) : (
-              <Button onClick={() => navigate("/trips/new")} className="gap-2 font-medium">
+              <Button onClick={() => navigate("/trips/new")} className="gap-2 font-medium bg-sky-500 hover:bg-sky-600 text-white">
                 <Plus className="w-4 h-4" />
                 Create Your First Trip
               </Button>
@@ -274,7 +264,6 @@ export default function MyTrips() {
         )}
       </main>
 
-      {/* Delete Confirmation Modal */}
       {tripToDelete && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in-0 duration-200">
           <div className="bg-card border border-border/80 rounded-2xl max-w-md w-full p-6 shadow-xl space-y-5">
@@ -283,7 +272,7 @@ export default function MyTrips() {
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-lg text-foreground">Delete Trip</h3>
+                <h3 className="font-semibold text-lg text-foreground">Delete Trip</h3>
                 <p className="text-xs text-muted-foreground">This action cannot be undone</p>
               </div>
             </div>
