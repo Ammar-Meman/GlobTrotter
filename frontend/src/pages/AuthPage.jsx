@@ -10,10 +10,10 @@ import {
   Eye,
   EyeOff,
   Loader2,
+  Globe,
   Calendar,
   Users,
   MapPin,
-  Sparkles,
 } from "lucide-react";
 import useAuthStore from "@/store/authStore";
 import api from "@/lib/api";
@@ -125,40 +125,37 @@ export default function AuthPage({ initialMode = "login" }) {
 
   return (
     <div className="min-h-screen w-full relative flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-slate-100 overflow-hidden font-sans select-none">
-      {/* Background 1: Login Scenic Udaipur Lake Palace / Mountains with Bright Sky */}
+      {/* Background 1: Login Scenic Blue Mountain & Lake Overlook with Sky */}
       <div
         className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
           !isSignup ? "opacity-100 scale-100" : "opacity-0 scale-105"
         }`}
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1599661046289-e31897846e41?q=85&w=2400&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=85&w=2400&auto=format&fit=crop')",
         }}
       />
 
-      {/* Background 2: Signup Jaipur / Royal Heritage Sunset Skyline */}
+      {/* Background 2: Signup European City Skyline Overlook at Sunset */}
       <div
         className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
           isSignup ? "opacity-100 scale-100" : "opacity-0 scale-105"
         }`}
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1609137144822-09c31405b583?q=85&w=2400&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=85&w=2400&auto=format&fit=crop')",
         }}
       />
 
-      {/* Gentle Soft Light Gradient for 100% Crisp Natural Contrast Without Card Wrappers */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-white/10 to-black/10 backdrop-filter" />
-
       {/* Main Full-Width Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto min-h-[660px] flex items-center justify-between">
+      <div className="relative z-10 w-full max-w-6xl mx-auto min-h-[640px] flex items-center justify-between">
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* ============================================================ */}
-          {/* INFORMATIONAL HERO SECTION (Direct Clean Text on Canvas)     */}
+          {/* INFORMATIONAL HERO SECTION                                   */}
           {/* ============================================================ */}
           <div
-            className={`transition-all duration-700 ease-in-out lg:col-span-6 p-4 sm:p-8 flex flex-col justify-between space-y-7 ${
+            className={`transition-all duration-700 ease-in-out lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-8 ${
               isSignup ? "lg:order-2" : "lg:order-1"
             }`}
           >
@@ -169,85 +166,85 @@ export default function AuthPage({ initialMode = "login" }) {
 
             {/* Headline & Description */}
             <div className="space-y-3.5 max-w-lg">
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-slate-950 leading-[1.1] drop-shadow-xs">
+              <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-bold text-slate-900 tracking-tight leading-[1.15]">
                 Plan. Explore. <br />
                 <span className="text-blue-600">Experience.</span>
               </h1>
 
-              <p className="text-slate-900 font-semibold text-sm sm:text-base leading-relaxed max-w-md drop-shadow-xs">
-                Your journey across India begins here. Plan personalized multi-city itineraries, discover heritage destinations, and track budgets in ₹.
+              <p className="text-slate-700 text-sm sm:text-base leading-relaxed max-w-md font-normal">
+                Your journey begins here. Plan personalized trips, discover amazing destinations and make memories that last a lifetime.
               </p>
             </div>
 
-            {/* 3 Individual White Feature Cards */}
-            <div className="space-y-3.5 max-w-md pt-1">
+            {/* 3 Clean Feature Items (Minimalist White Icon Boxes, NOT bulky cards) */}
+            <div className="space-y-4 max-w-md pt-2">
               {!isSignup ? (
                 <>
                   {/* Item 1 */}
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
-                      🏛️
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
+                      <Globe className="w-5 h-5 text-slate-700" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-slate-900">Explore Destinations</h4>
-                      <p className="text-xs text-slate-600 font-medium">Discover royal palaces, hill stations, and coastal retreats.</p>
+                      <h4 className="font-semibold text-sm text-slate-900">Explore Destinations</h4>
+                      <p className="text-xs text-slate-600">Find the best places around the world.</p>
                     </div>
                   </div>
 
                   {/* Item 2 */}
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
-                      📅
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
+                      <Calendar className="w-5 h-5 text-slate-700" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-slate-900">Plan Your Trip</h4>
-                      <p className="text-xs text-slate-600 font-medium">Build custom day-by-day itineraries with estimated budgets in ₹.</p>
+                      <h4 className="font-semibold text-sm text-slate-900">Plan Your Trip</h4>
+                      <p className="text-xs text-slate-600">Build custom itineraries that fit your style.</p>
                     </div>
                   </div>
 
                   {/* Item 3 */}
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
-                      👥
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
+                      <Users className="w-5 h-5 text-slate-700" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-slate-900">Share & Collaborate</h4>
-                      <p className="text-xs text-slate-600 font-medium">Share your travel plans, copy itineraries, and travel together.</p>
+                      <h4 className="font-semibold text-sm text-slate-900">Share & Collaborate</h4>
+                      <p className="text-xs text-slate-600">Share your plans and travel together.</p>
                     </div>
                   </div>
                 </>
               ) : (
                 <>
                   {/* Signup Item 1 */}
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
-                      📍
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
+                      <MapPin className="w-5 h-5 text-slate-700" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-slate-900">Discover Indian Cities</h4>
-                      <p className="text-xs text-slate-600 font-medium">Explore top destinations from Udaipur to Ladakh and Kerala.</p>
+                      <h4 className="font-semibold text-sm text-slate-900">Discover Cities</h4>
+                      <p className="text-xs text-slate-600">Explore top destinations and hidden gems.</p>
                     </div>
                   </div>
 
                   {/* Signup Item 2 */}
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
-                      🧭
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
+                      <Calendar className="w-5 h-5 text-slate-700" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-slate-900">Plan It Your Way</h4>
-                      <p className="text-xs text-slate-600 font-medium">Organize multi-city routes, durations, and day-by-day stops.</p>
+                      <h4 className="font-semibold text-sm text-slate-900">Plan It Your Way</h4>
+                      <p className="text-xs text-slate-600">Build the perfect itinerary that fits your style.</p>
                     </div>
                   </div>
 
                   {/* Signup Item 3 */}
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
-                      ✨
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
+                      <Users className="w-5 h-5 text-slate-700" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-slate-900">Share & Inspire</h4>
-                      <p className="text-xs text-slate-600 font-medium">Share your public tour links and inspire fellow travelers.</p>
+                      <h4 className="font-semibold text-sm text-slate-900">Share & Inspire</h4>
+                      <p className="text-xs text-slate-600">Share your trips and inspire other travelers.</p>
                     </div>
                   </div>
                 </>
@@ -259,19 +256,19 @@ export default function AuthPage({ initialMode = "login" }) {
           {/* SOLID WHITE ROUNDED FORM CARD                                */}
           {/* ============================================================ */}
           <div
-            className={`transition-all duration-700 ease-in-out lg:col-span-6 bg-white rounded-[32px] p-8 sm:p-12 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.18)] border border-slate-100 flex flex-col justify-between space-y-6 ${
+            className={`transition-all duration-700 ease-in-out lg:col-span-6 bg-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-slate-100 flex flex-col justify-between space-y-6 ${
               isSignup ? "lg:order-1" : "lg:order-2"
             }`}
           >
             {/* Header */}
             <div className="space-y-1.5">
-              <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
                 {!isSignup ? "Welcome Back!" : "Create Your Account"}
               </h2>
-              <p className="text-sm text-slate-500 font-medium">
+              <p className="text-sm text-slate-500 font-normal">
                 {!isSignup
                   ? "Login to continue planning your next adventure."
-                  : "Join GlobeTrotter and start planning your next journey."}
+                  : "Join GlobeTrotter and start planning your next adventure."}
               </p>
             </div>
 
@@ -299,7 +296,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Enter your email"
                       autoComplete="email"
                       {...registerLogin("email")}
-                      className={`pl-10 h-12 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl text-slate-800 ${
+                      className={`pl-10 h-12 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsLogin.email ? "border-red-500" : ""
                       }`}
                     />
@@ -330,7 +327,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Enter your password"
                       autoComplete="current-password"
                       {...registerLogin("password")}
-                      className={`pl-10 pr-10 h-12 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl text-slate-800 ${
+                      className={`pl-10 pr-10 h-12 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsLogin.password ? "border-red-500" : ""
                       }`}
                     />
@@ -387,7 +384,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Enter your full name"
                       autoComplete="name"
                       {...registerSignup("name")}
-                      className={`pl-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl text-slate-800 ${
+                      className={`pl-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsSignup.name ? "border-red-500" : ""
                       }`}
                     />
@@ -410,7 +407,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Enter your email"
                       autoComplete="email"
                       {...registerSignup("email")}
-                      className={`pl-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl text-slate-800 ${
+                      className={`pl-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsSignup.email ? "border-red-500" : ""
                       }`}
                     />
@@ -433,7 +430,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Create a password"
                       autoComplete="new-password"
                       {...registerSignup("password")}
-                      className={`pl-10 pr-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl text-slate-800 ${
+                      className={`pl-10 pr-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsSignup.password ? "border-red-500" : ""
                       }`}
                     />
@@ -464,7 +461,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Confirm your password"
                       autoComplete="new-password"
                       {...registerSignup("confirmPassword")}
-                      className={`pl-10 pr-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl text-slate-800 ${
+                      className={`pl-10 pr-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsSignup.confirmPassword ? "border-red-500" : ""
                       }`}
                     />
