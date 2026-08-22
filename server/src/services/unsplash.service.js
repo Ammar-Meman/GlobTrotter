@@ -1,3 +1,6 @@
+const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
+
+// ── Static mock fallback (unchanged from stub) ─────────────────────────────
 const MOCK_CITY_IMAGES = {
   paris: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&auto=format&fit=crop&q=80",
   tokyo: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=1200&auto=format&fit=crop&q=80",
@@ -24,24 +27,50 @@ const MOCK_CITY_IMAGES = {
 const DEFAULT_CITY_IMAGE =
   "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1200&auto=format&fit=crop&q=80";
 
+// ─────────────────────────────────────────────────────────────────────────────
+
 /**
  * Gets a representative image URL for a city.
+ * Uses Unsplash Search API when UNSPLASH_ACCESS_KEY is set.
+ * Falls back to the static mock table otherwise.
  * @param {string} cityName
  * @returns {Promise<{ imageUrl: string }>}
  */
 export const getCityImage = async (cityName) => {
-  if (!cityName) {
-    return { imageUrl: DEFAULT_CITY_IMAGE };
+  if (!cityName) return { imageUrl: DEFAULT_CITY_IMAGE };
+
+  // ── Live path ─────────────────────────────────────────────────────────────
+  if (UNSPLASH_ACCESS_KEY) {
+    try {
+      const query = encodeURIComponent(`${cityName} city travel landmark`);
+      const url =
+        `https://api.unsplash.com/search/photos` +
+        `?query=${query}&per_page=1&orientation=landscape` +
+        `&client_id=${UNSPLASH_ACCESS_KEY}`;
+
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Unsplash HTTP ${response.status}`);
+      const json = await response.json();
+
+      const photo = json.results?.[0];
+      if (photo?.urls?.regular) {
+        // Prefer regular (1080px), add w param for consistent sizing
+        const imageUrl = photo.urls.regular.includes("?")
+          ? `${photo.urls.regular}&w=1200&q=80`
+          : `${photo.urls.regular}?w=1200&q=80`;
+        return { imageUrl };
+      }
+    } catch (err) {
+      console.warn("[unsplash.service] Live API failed, falling back to static:", err.message);
+    }
   }
 
+  // ── Static fallback ───────────────────────────────────────────────────────
   const clean = cityName.trim().toLowerCase();
   const matchedKey = Object.keys(MOCK_CITY_IMAGES).find(
     (k) => clean.includes(k) || k.includes(clean)
   );
 
-  if (matchedKey) {
-    return { imageUrl: MOCK_CITY_IMAGES[matchedKey] };
-  }
-
+  if (matchedKey) return { imageUrl: MOCK_CITY_IMAGES[matchedKey] };
   return { imageUrl: DEFAULT_CITY_IMAGE };
 };
