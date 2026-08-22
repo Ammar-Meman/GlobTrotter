@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
-  MapPin, Calendar, Clock, DollarSign, Copy, ExternalLink,
+  MapPin, Calendar, Clock, IndianRupee, Copy, ExternalLink,
   Loader2, AlertCircle, Globe, ChevronRight, LogIn,
 } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -162,7 +162,7 @@ export default function PublicShare() {
           <span>{getDayCount(trip.startDate, trip.endDate)} days</span>
           <span>{stops.length} stops</span>
           <span>{totalActivities} activities</span>
-          <span className="flex items-center gap-1"><DollarSign className="w-3.5 h-3.5" />${totalCost.toFixed(0)} est.</span>
+          <span className="flex items-center gap-1"><IndianRupee className="w-3.5 h-3.5" />₹{totalCost.toFixed(0)} est.</span>
         </div>
 
         {/* Itinerary */}

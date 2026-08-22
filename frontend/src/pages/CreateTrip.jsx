@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import {
   Compass,
   Calendar,
-  DollarSign,
+  IndianRupee,
   Image as ImageIcon,
   Upload,
   Loader2,
@@ -208,7 +208,7 @@ export default function CreateTrip() {
                 <Label htmlFor="name">Trip Name *</Label>
                 <Input
                   id="name"
-                  placeholder="e.g. Summer European Grand Tour, Japanese Cherry Blossom Trek"
+                  placeholder="e.g. Rajasthan Heritage Tour, Kerala Backwaters Trip"
                   {...register("name")}
                   className={errors.name ? "border-destructive" : ""}
                 />
@@ -265,8 +265,8 @@ export default function CreateTrip() {
               {/* Budget Limit */}
               <div className="space-y-2">
                 <Label htmlFor="budgetLimit" className="flex items-center gap-1.5">
-                  <DollarSign className="w-3.5 h-3.5 text-emerald-500" />
-                  Estimated Budget Target (USD)
+                  <IndianRupee className="w-3.5 h-3.5 text-emerald-500" />
+                  Estimated Budget Target (INR)
                 </Label>
                 <Input
                   id="budgetLimit"

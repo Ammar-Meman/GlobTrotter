@@ -292,7 +292,7 @@ export default function Profile() {
                   <Label htmlFor="name">Full Name *</Label>
                   <Input
                     id="name"
-                    placeholder="Jane Doe"
+                    placeholder="Priya Sharma"
                     {...register("name")}
                     className={errors.name ? "border-destructive" : ""}
                   />
@@ -379,7 +379,7 @@ export default function Profile() {
             {/* Add Destination Input Form */}
             <form onSubmit={handleAddDestination} className="flex gap-2 max-w-md">
               <Input
-                placeholder="e.g. Kyoto, Reykjavik, Zurich, Sydney..."
+                placeholder="e.g. Jaipur, Varanasi, Munnar, Goa..."
                 value={newCityName}
                 onChange={(e) => setNewCityName(e.target.value)}
                 disabled={addingCity}

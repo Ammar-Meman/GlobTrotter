@@ -72,7 +72,7 @@ export default function Signup() {
                 <Input
                   id="name"
                   type="text"
-                  placeholder="Jane Doe"
+                  placeholder="Priya Sharma"
                   autoComplete="name"
                   {...register("name")}
                   className={errors.name ? "border-destructive" : ""}

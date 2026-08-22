@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Clock, DollarSign } from "lucide-react";
+import { GripVertical, Clock, IndianRupee } from "lucide-react";
 
 const CATEGORY_ICONS = { transport: "🚗", stay: "🏨", activity: "🎯", meal: "🍽️" };
 
@@ -37,7 +37,7 @@ export default function DraggableActivity({ activity, id }) {
         <div className="text-sm font-medium text-foreground truncate">{activity.name}</div>
         <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
           {timeStr && <span className="flex items-center gap-0.5"><Clock className="w-3 h-3" />{timeStr}</span>}
-          <span className="flex items-center gap-0.5"><DollarSign className="w-3 h-3" />${activity.cost}</span>
+          <span className="flex items-center gap-0.5"><IndianRupee className="w-3 h-3" />₹{activity.cost}</span>
           {duration > 0 && (
             <span>{duration >= 60 ? `${Math.floor(duration / 60)}h${duration % 60 ? ` ${duration % 60}m` : ""}` : `${duration}m`}</span>
           )}
