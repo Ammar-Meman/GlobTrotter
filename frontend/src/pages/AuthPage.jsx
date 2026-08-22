@@ -14,6 +14,7 @@ import {
   Calendar,
   Users,
   MapPin,
+  Sparkles,
 } from "lucide-react";
 import useAuthStore from "@/store/authStore";
 import api from "@/lib/api";
@@ -124,8 +125,8 @@ export default function AuthPage({ initialMode = "login" }) {
   const isSubmitting = isSignup ? isSubmittingSignup : isSubmittingLogin;
 
   return (
-    <div className="min-h-screen w-full relative flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-slate-100 overflow-hidden font-sans select-none">
-      {/* Background 1: Login Scenic Blue Mountain & Lake Overlook with Sky */}
+    <div className="min-h-screen w-full relative flex items-center justify-center p-4 sm:p-6 lg:p-12 bg-slate-100 overflow-hidden font-sans select-none">
+      {/* Background 1: Login Scenic Blue Mountain Lake with Bright Sky */}
       <div
         className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
           !isSignup ? "opacity-100 scale-100" : "opacity-0 scale-105"
@@ -136,7 +137,7 @@ export default function AuthPage({ initialMode = "login" }) {
         }}
       />
 
-      {/* Background 2: Signup European City Skyline Overlook at Sunset */}
+      {/* Background 2: Signup European Waterfront & Bright City Skyline */}
       <div
         className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
           isSignup ? "opacity-100 scale-100" : "opacity-0 scale-105"
@@ -147,104 +148,113 @@ export default function AuthPage({ initialMode = "login" }) {
         }}
       />
 
+      {/* Directional Soft Light Ambient Wash for 100% Crystal-Clear Readability */}
+      <div
+        className={`absolute inset-0 transition-all duration-700 pointer-events-none ${
+          !isSignup
+            ? "bg-gradient-to-r from-white/95 via-white/60 to-white/10 sm:from-white/90 sm:via-white/50 sm:to-transparent"
+            : "bg-gradient-to-l from-white/95 via-white/60 to-white/10 sm:from-white/90 sm:via-white/50 sm:to-transparent"
+        }`}
+      />
+
       {/* Main Full-Width Content Container */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto min-h-[640px] flex items-center justify-between">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto min-h-[660px] flex items-center justify-between">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           
           {/* ============================================================ */}
           {/* INFORMATIONAL HERO SECTION                                   */}
           {/* ============================================================ */}
           <div
-            className={`transition-all duration-700 ease-in-out lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-8 ${
+            className={`transition-all duration-700 ease-in-out lg:col-span-6 p-4 sm:p-8 flex flex-col justify-between space-y-8 ${
               isSignup ? "lg:order-2" : "lg:order-1"
             }`}
           >
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <Logo size="md" to={null} />
+            <div>
+              <Logo size="lg" to={null} />
             </div>
 
-            {/* Headline & Description */}
-            <div className="space-y-3.5 max-w-lg">
-              <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-bold text-slate-900 tracking-tight leading-[1.15]">
+            {/* Headline & Description with Ample Spacing and Large Typography */}
+            <div className="space-y-4 max-w-xl">
+              <h1 className="text-5xl sm:text-6xl lg:text-[56px] font-extrabold text-slate-950 tracking-tight leading-[1.1]">
                 Plan. Explore. <br />
                 <span className="text-blue-600">Experience.</span>
               </h1>
 
-              <p className="text-slate-700 text-sm sm:text-base leading-relaxed max-w-md font-normal">
-                Your journey begins here. Plan personalized trips, discover amazing destinations and make memories that last a lifetime.
+              <p className="text-slate-800 text-base sm:text-lg font-medium leading-relaxed max-w-lg">
+                Your journey begins here. Plan personalized multi-city trips, discover amazing destinations and make memories that last a lifetime.
               </p>
             </div>
 
-            {/* 3 Clean Feature Items (Minimalist White Icon Boxes, NOT bulky cards) */}
-            <div className="space-y-4 max-w-md pt-2">
+            {/* 3 Clean Feature Items with Increased Spacing & Crisp Contrast */}
+            <div className="space-y-5 max-w-lg pt-2">
               {!isSignup ? (
                 <>
                   {/* Item 1 */}
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <Globe className="w-5 h-5 text-slate-700" />
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center shrink-0 border border-slate-200/80 transition-transform group-hover:scale-105">
+                      <Globe className="w-6 h-6 text-blue-600" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-sm text-slate-900">Explore Destinations</h4>
-                      <p className="text-xs text-slate-600">Find the best places around the world.</p>
+                    <div className="space-y-0.5">
+                      <h4 className="font-bold text-base text-slate-950">Explore Destinations</h4>
+                      <p className="text-sm text-slate-700 font-medium">Find the best places around the world.</p>
                     </div>
                   </div>
 
                   {/* Item 2 */}
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <Calendar className="w-5 h-5 text-slate-700" />
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center shrink-0 border border-slate-200/80 transition-transform group-hover:scale-105">
+                      <Calendar className="w-6 h-6 text-blue-600" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-sm text-slate-900">Plan Your Trip</h4>
-                      <p className="text-xs text-slate-600">Build custom itineraries that fit your style.</p>
+                    <div className="space-y-0.5">
+                      <h4 className="font-bold text-base text-slate-950">Plan Your Trip</h4>
+                      <p className="text-sm text-slate-700 font-medium">Build custom itineraries that fit your style.</p>
                     </div>
                   </div>
 
                   {/* Item 3 */}
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <Users className="w-5 h-5 text-slate-700" />
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center shrink-0 border border-slate-200/80 transition-transform group-hover:scale-105">
+                      <Users className="w-6 h-6 text-blue-600" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-sm text-slate-900">Share & Collaborate</h4>
-                      <p className="text-xs text-slate-600">Share your plans and travel together.</p>
+                    <div className="space-y-0.5">
+                      <h4 className="font-bold text-base text-slate-950">Share & Collaborate</h4>
+                      <p className="text-sm text-slate-700 font-medium">Share your plans and travel together.</p>
                     </div>
                   </div>
                 </>
               ) : (
                 <>
                   {/* Signup Item 1 */}
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <MapPin className="w-5 h-5 text-slate-700" />
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center shrink-0 border border-slate-200/80 transition-transform group-hover:scale-105">
+                      <MapPin className="w-6 h-6 text-blue-600" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-sm text-slate-900">Discover Cities</h4>
-                      <p className="text-xs text-slate-600">Explore top destinations and hidden gems.</p>
+                    <div className="space-y-0.5">
+                      <h4 className="font-bold text-base text-slate-950">Discover Cities</h4>
+                      <p className="text-sm text-slate-700 font-medium">Explore top destinations and hidden gems.</p>
                     </div>
                   </div>
 
                   {/* Signup Item 2 */}
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <Calendar className="w-5 h-5 text-slate-700" />
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center shrink-0 border border-slate-200/80 transition-transform group-hover:scale-105">
+                      <Calendar className="w-6 h-6 text-blue-600" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-sm text-slate-900">Plan It Your Way</h4>
-                      <p className="text-xs text-slate-600">Build the perfect itinerary that fits your style.</p>
+                    <div className="space-y-0.5">
+                      <h4 className="font-bold text-base text-slate-950">Plan It Your Way</h4>
+                      <p className="text-sm text-slate-700 font-medium">Build the perfect itinerary that fits your style.</p>
                     </div>
                   </div>
 
                   {/* Signup Item 3 */}
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <Users className="w-5 h-5 text-slate-700" />
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-white shadow-md flex items-center justify-center shrink-0 border border-slate-200/80 transition-transform group-hover:scale-105">
+                      <Users className="w-6 h-6 text-blue-600" />
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-sm text-slate-900">Share & Inspire</h4>
-                      <p className="text-xs text-slate-600">Share your trips and inspire other travelers.</p>
+                    <div className="space-y-0.5">
+                      <h4 className="font-bold text-base text-slate-950">Share & Inspire</h4>
+                      <p className="text-sm text-slate-700 font-medium">Share your trips and inspire other travelers.</p>
                     </div>
                   </div>
                 </>
@@ -256,13 +266,13 @@ export default function AuthPage({ initialMode = "login" }) {
           {/* SOLID WHITE ROUNDED FORM CARD                                */}
           {/* ============================================================ */}
           <div
-            className={`transition-all duration-700 ease-in-out lg:col-span-6 bg-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-slate-100 flex flex-col justify-between space-y-6 ${
+            className={`transition-all duration-700 ease-in-out lg:col-span-6 bg-white rounded-[32px] p-8 sm:p-12 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.18)] border border-slate-100 flex flex-col justify-between space-y-6 ${
               isSignup ? "lg:order-1" : "lg:order-2"
             }`}
           >
             {/* Header */}
             <div className="space-y-1.5">
-              <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
+              <h2 className="text-3xl font-extrabold text-slate-950 tracking-tight">
                 {!isSignup ? "Welcome Back!" : "Create Your Account"}
               </h2>
               <p className="text-sm text-slate-500 font-normal">
@@ -384,7 +394,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Enter your full name"
                       autoComplete="name"
                       {...registerSignup("name")}
-                      className={`pl-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
+                      className={`pl-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsSignup.name ? "border-red-500" : ""
                       }`}
                     />
@@ -407,7 +417,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Enter your email"
                       autoComplete="email"
                       {...registerSignup("email")}
-                      className={`pl-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
+                      className={`pl-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsSignup.email ? "border-red-500" : ""
                       }`}
                     />
@@ -430,7 +440,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Create a password"
                       autoComplete="new-password"
                       {...registerSignup("password")}
-                      className={`pl-10 pr-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
+                      className={`pl-10 pr-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsSignup.password ? "border-red-500" : ""
                       }`}
                     />
@@ -461,7 +471,7 @@ export default function AuthPage({ initialMode = "login" }) {
                       placeholder="Confirm your password"
                       autoComplete="new-password"
                       {...registerSignup("confirmPassword")}
-                      className={`pl-10 pr-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 rounded-xl text-slate-800 ${
+                      className={`pl-10 pr-10 h-11 text-sm bg-white border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600 rounded-xl text-slate-800 ${
                         errorsSignup.confirmPassword ? "border-red-500" : ""
                       }`}
                     />
