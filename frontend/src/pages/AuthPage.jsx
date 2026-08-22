@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   Mail,
   Lock,
@@ -224,14 +224,25 @@ export default function AuthPage({ initialMode = "login" }) {
           animate={{ left: isSignup ? "0%" : "50%" }}
           transition={{ type: "spring", stiffness: 100, damping: 22, mass: 1.1 }}
         >
-          <div className="w-full bg-white rounded-[32px] p-10 sm:p-12 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.3)] border border-slate-100 flex flex-col space-y-6">
-            <FormContent
-              isSignup={isSignup} isSub={isSub} serverError={serverError}
-              rLogin={rLogin} hsLogin={hsLogin} eLogin={eLogin} onLogin={onLogin}
-              rSignup={rSignup} hsSignup={hsSignup} eSignup={eSignup} onSignup={onSignup}
-              showPw={showPw} setShowPw={setShowPw} showConfirmPw={showConfirmPw} setShowConfirmPw={setShowConfirmPw}
-              rememberMe={rememberMe} setRememberMe={setRememberMe} toggle={toggle}
-            />
+          <div className="w-full bg-white rounded-[32px] p-10 sm:p-12 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.3)] border border-slate-100 overflow-hidden relative">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={isSignup ? "signup-form" : "login-form"}
+                initial={{ opacity: 0, x: isSignup ? 40 : -40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: isSignup ? -40 : 40 }}
+                transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                className="flex flex-col space-y-6"
+              >
+                <FormContent
+                  isSignup={isSignup} isSub={isSub} serverError={serverError}
+                  rLogin={rLogin} hsLogin={hsLogin} eLogin={eLogin} onLogin={onLogin}
+                  rSignup={rSignup} hsSignup={hsSignup} eSignup={eSignup} onSignup={onSignup}
+                  showPw={showPw} setShowPw={setShowPw} showConfirmPw={showConfirmPw} setShowConfirmPw={setShowConfirmPw}
+                  rememberMe={rememberMe} setRememberMe={setRememberMe} toggle={toggle}
+                />
+              </motion.div>
+            </AnimatePresence>
           </div>
         </motion.div>
       </div>
