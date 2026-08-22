@@ -357,7 +357,7 @@ export const CITIES_DATA = [
   },
 
   // ── South India ──────────────────────────────────────────────────────────
-  bengaluru: {
+  {
     id: "bengaluru",
     cityName: "Bengaluru",
     country: "India",
@@ -379,7 +379,7 @@ export const CITIES_DATA = [
       { name: "Koramangala", vibe: "Startup offices, nightlife hotspots, global dining" },
     ],
   },
-  kochi: {
+  {
     id: "kochi",
     cityName: "Kochi",
     country: "India",
@@ -401,7 +401,7 @@ export const CITIES_DATA = [
       { name: "Jew Town", vibe: "Antique shops, aromatic spice stores, handmade perfumes" },
     ],
   },
-  munnar: {
+  {
     id: "munnar",
     cityName: "Munnar",
     country: "India",
@@ -423,7 +423,7 @@ export const CITIES_DATA = [
       { name: "Old Munnar Town", vibe: "Spice bazaars, chocolate shops, local tea stalls" },
     ],
   },
-  alleppey: {
+  {
     id: "alleppey",
     cityName: "Alleppey",
     country: "India",
@@ -445,7 +445,7 @@ export const CITIES_DATA = [
       { name: "Marari Coast", vibe: "Tranquil sandy beaches, coconut groves, eco-resorts" },
     ],
   },
-  mysore: {
+  {
     id: "mysore",
     cityName: "Mysore",
     country: "India",
@@ -467,7 +467,7 @@ export const CITIES_DATA = [
       { name: "Devaraja Market", vibe: "Fresh flowers, incense, sandalwood oils, colorful pyramids" },
     ],
   },
-  chennai: {
+  {
     id: "chennai",
     cityName: "Chennai",
     country: "India",
@@ -489,7 +489,7 @@ export const CITIES_DATA = [
       { name: "Besant Nagar", vibe: "Promenade beach, breezy sunset cafes, seafood snack stalls" },
     ],
   },
-  hyderabad: {
+  {
     id: "hyderabad",
     cityName: "Hyderabad",
     country: "India",
@@ -511,7 +511,7 @@ export const CITIES_DATA = [
       { name: "Jubilee Hills", vibe: "Upscale breweries, gourmet restaurants, contemporary lounges" },
     ],
   },
-  pondicherry: {
+  {
     id: "pondicherry",
     cityName: "Pondicherry",
     country: "India",
@@ -533,7 +533,7 @@ export const CITIES_DATA = [
       { name: "Auroville", vibe: "Universal spiritual township, forest retreats, organic bakeries" },
     ],
   },
-  ooty: {
+  {
     id: "ooty",
     cityName: "Ooty",
     country: "India",
@@ -555,7 +555,7 @@ export const CITIES_DATA = [
       { name: "Fernhill & Lovedale", vibe: "Quiet tea estates, heritage bungalows, scenic walks" },
     ],
   },
-  hampi: {
+  {
     id: "hampi",
     cityName: "Hampi",
     country: "India",
@@ -579,7 +579,7 @@ export const CITIES_DATA = [
   },
 
   // ── East & Northeast India ────────────────────────────────────────────────
-  kolkata: {
+  {
     id: "kolkata",
     cityName: "Kolkata",
     country: "India",
@@ -601,7 +601,7 @@ export const CITIES_DATA = [
       { name: "Park Street", vibe: "Iconic colonial dining, live music pubs, nightlife" },
     ],
   },
-  darjeeling: {
+  {
     id: "darjeeling",
     cityName: "Darjeeling",
     country: "India",
@@ -623,7 +623,7 @@ export const CITIES_DATA = [
       { name: "Happy Valley", vibe: "Lush terraced tea gardens and heritage processing walks" },
     ],
   },
-  shillong: {
+  {
     id: "shillong",
     cityName: "Shillong",
     country: "India",
@@ -645,7 +645,7 @@ export const CITIES_DATA = [
       { name: "Laitumkhrah", vibe: "College quarter, rock music diners, indie coffee joints" },
     ],
   },
-  gangtok: {
+  {
     id: "gangtok",
     cityName: "Gangtok",
     country: "India",
@@ -667,7 +667,7 @@ export const CITIES_DATA = [
       { name: "Rumtek Valley", vibe: "Ancient Buddhist monasteries with chanting monks" },
     ],
   },
-  puri: {
+  {
     id: "puri",
     cityName: "Puri",
     country: "India",
@@ -691,7 +691,7 @@ export const CITIES_DATA = [
   },
 
   // ── Central India ────────────────────────────────────────────────────────
-  khajuraho: {
+  {
     id: "khajuraho",
     cityName: "Khajuraho",
     country: "India",
@@ -713,7 +713,7 @@ export const CITIES_DATA = [
       { name: "Old Village", vibe: "Rural stone houses, handicrafts, local clay art studios" },
     ],
   },
-  bhopal: {
+  {
     id: "bhopal",
     cityName: "Bhopal",
     country: "India",

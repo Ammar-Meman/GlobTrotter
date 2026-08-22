@@ -1,5 +1,15 @@
 import { z } from "zod";
 
+// SECURITY: Only allow http/https URLs for image fields.
+const safeUrlOrNull = z
+  .string()
+  .url({ message: "imageUrl must be a valid URL" })
+  .refine((u) => u.startsWith("http://") || u.startsWith("https://"), {
+    message: "imageUrl must use http or https",
+  })
+  .nullable()
+  .optional();
+
 export const activityCategoryEnum = z.enum(["transport", "stay", "activity", "meal"], {
   errorMap: () => ({ message: "category must be one of: transport, stay, activity, meal" }),
 });
@@ -12,7 +22,7 @@ export const createActivitySchema = z.object({
   scheduledAt: z.string().datetime({ message: "scheduledAt must be a valid ISO datetime" }),
   duration: z.number().int().optional().nullable(),
   description: z.string().optional().nullable(),
-  imageUrl: z.string().optional().nullable(),
+  imageUrl: safeUrlOrNull,
 });
 
 export const updateActivitySchema = z.object({
@@ -23,7 +33,7 @@ export const updateActivitySchema = z.object({
   scheduledAt: z.string().datetime({ message: "scheduledAt must be a valid ISO datetime" }).optional(),
   duration: z.number().int().optional().nullable(),
   description: z.string().optional().nullable(),
-  imageUrl: z.string().optional().nullable(),
+  imageUrl: safeUrlOrNull,
   order: z.number().int().optional(),
 });
 
