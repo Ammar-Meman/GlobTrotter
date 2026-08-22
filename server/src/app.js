@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import tripRoutes from "./routes/trip.routes.js";
 import stopRoutes, { tripStopRouter } from "./routes/stop.routes.js";
+import activityRoutes, { stopActivityRouter } from "./routes/activity.routes.js";
 import { errorHandler } from "./middleware/error.middleware.js";
 
 const app = express();
@@ -20,6 +21,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/trips", tripStopRouter);
 app.use("/api/stops", stopRoutes);
+app.use("/api/stops", stopActivityRouter);
+app.use("/api/activities", activityRoutes);
 
 app.use(errorHandler);
 
