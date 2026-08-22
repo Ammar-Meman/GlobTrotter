@@ -9,12 +9,15 @@ import {
 
 const router = Router();
 
-router.use(requireAuth);
+// Public sharing route (no auth required)
+router.get("/public/:shareId", tripController.getPublicTrip);
 
-router.post("/", validateBody(createTripSchema), tripController.createTrip);
-router.get("/", tripController.getTrips);
-router.get("/:id", tripController.getTripById);
-router.put("/:id", validateBody(updateTripSchema), tripController.updateTrip);
-router.delete("/:id", tripController.deleteTrip);
+// Protected routes
+router.post("/", requireAuth, validateBody(createTripSchema), tripController.createTrip);
+router.get("/", requireAuth, tripController.getTrips);
+router.get("/:id", requireAuth, tripController.getTripById);
+router.post("/:id/copy", requireAuth, tripController.copyTrip);
+router.put("/:id", requireAuth, validateBody(updateTripSchema), tripController.updateTrip);
+router.delete("/:id", requireAuth, tripController.deleteTrip);
 
 export default router;

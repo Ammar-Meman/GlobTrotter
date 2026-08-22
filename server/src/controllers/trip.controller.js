@@ -36,6 +36,30 @@ export const getTripById = async (req, res, next) => {
   }
 };
 
+export const getPublicTrip = async (req, res, next) => {
+  try {
+    const result = await tripService.getPublicTripByShareId(req.params.shareId);
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const copyTrip = async (req, res, next) => {
+  try {
+    const result = await tripService.copyTrip(req.user.id, req.params.id);
+    res.status(201).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const updateTrip = async (req, res, next) => {
   try {
     const result = await tripService.updateTrip(req.user.id, req.params.id, req.body);
