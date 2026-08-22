@@ -8,7 +8,7 @@ import {
   ArrowRight,
   Share2,
   Check,
-  DollarSign,
+  IndianRupee,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
@@ -140,7 +140,7 @@ export default function TripCard({
 
           {trip?.budgetLimit && (
             <div className="pt-1 flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
-              <DollarSign className="w-3.5 h-3.5" />
+              <IndianRupee className="w-3.5 h-3.5" />
               <span>Target Budget: ${Number(trip.budgetLimit).toLocaleString()}</span>
             </div>
           )}

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  MapPin, Calendar, Clock, DollarSign, Pencil, ArrowLeft,
+  MapPin, Calendar, Clock, IndianRupee, Pencil, ArrowLeft,
   Loader2, AlertCircle, BarChart3, Share2, ChevronRight,
 } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -111,7 +111,7 @@ export default function ItineraryView() {
             <span>{getDayCount(currentTrip.startDate, currentTrip.endDate)} days</span>
             <span>{stops.length} stops</span>
             <span>{totalActivities} activities</span>
-            <span className="flex items-center gap-1"><DollarSign className="w-3.5 h-3.5" />${totalCost.toFixed(0)} total</span>
+            <span className="flex items-center gap-1"><IndianRupee className="w-3.5 h-3.5" />₹{totalCost.toFixed(0)} total</span>
           </div>
 
           {/* Action Bar */}

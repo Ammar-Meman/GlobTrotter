@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  ArrowLeft, Loader2, AlertCircle, DollarSign, TrendingUp, Calendar, PieChart as PieChartIcon, BarChart3,
+  ArrowLeft, Loader2, AlertCircle, IndianRupee, TrendingUp, Calendar, PieChart as PieChartIcon, BarChart3,
 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import BudgetChart from "../components/trip/BudgetChart";
@@ -74,7 +74,7 @@ export default function Budget() {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-          <SummaryCard icon={DollarSign} label="Total Cost" value={`$${budget.totalCost.toFixed(0)}`} color="text-emerald-600 bg-emerald-500/10" />
+          <SummaryCard icon={IndianRupee} label="Total Cost" value={`₹${budget.totalCost.toFixed(0)}`} color="text-emerald-600 bg-emerald-500/10" />
           <SummaryCard icon={TrendingUp} label="Avg / Day" value={`$${budget.averagePerDay}`} color="text-blue-600 bg-blue-500/10" />
           <SummaryCard icon={Calendar} label="Days" value={budget.byDay.length} color="text-purple-600 bg-purple-500/10" />
           <SummaryCard icon={AlertCircle} label="Daily Budget" value={`$${budget.dailyBudgetThreshold}`} color="text-amber-600 bg-amber-500/10" />
