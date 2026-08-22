@@ -298,6 +298,51 @@ export async function mockApi(endpoint, options = {}) {
     };
   }
 
+  // Admin Stats endpoint
+  if (endpoint === "/admin/stats" && method === "GET") {
+    return {
+      totalUsers: 48,
+      totalTrips: 92,
+      topCities: [
+        { cityName: "Paris", count: 28 },
+        { cityName: "Tokyo", count: 24 },
+        { cityName: "Rome", count: 19 },
+        { cityName: "Kyoto", count: 15 },
+        { cityName: "Barcelona", count: 12 },
+      ],
+      topActivities: [
+        { name: "Louvre Museum Tour", count: 22 },
+        { name: "Seine Sunset Dinner Cruise", count: 18 },
+        { name: "Colosseum Arena Walk", count: 16 },
+        { name: "Sagrada Familia Exploration", count: 14 },
+        { name: "Shibuya Crossing Food Tour", count: 11 },
+      ],
+      activeUsersLast7Days: 26,
+    };
+  }
+
+  // Cities Search endpoint
+  if (endpoint.startsWith("/cities/search") && method === "GET") {
+    return [
+      { cityName: "Paris", country: "France", latitude: 48.8566, longitude: 2.3522, costIndex: 72.5, popularity: 95 },
+      { cityName: "Tokyo", country: "Japan", latitude: 35.6762, longitude: 139.6503, costIndex: 85.0, popularity: 98 },
+      { cityName: "New York", country: "United States", latitude: 40.7128, longitude: -74.006, costIndex: 90.0, popularity: 96 },
+      { cityName: "London", country: "United Kingdom", latitude: 51.5074, longitude: -0.1278, costIndex: 82.0, popularity: 94 },
+      { cityName: "Rome", country: "Italy", latitude: 41.9028, longitude: 12.4964, costIndex: 68.0, popularity: 92 },
+      { cityName: "Barcelona", country: "Spain", latitude: 41.3879, longitude: 2.1699, costIndex: 65.0, popularity: 90 },
+      { cityName: "Kyoto", country: "Japan", latitude: 35.0116, longitude: 135.7681, costIndex: 75.0, popularity: 88 },
+      { cityName: "Amsterdam", country: "Netherlands", latitude: 52.3676, longitude: 4.9041, costIndex: 78.0, popularity: 87 },
+      { cityName: "Dubai", country: "United Arab Emirates", latitude: 25.2048, longitude: 55.2708, costIndex: 80.0, popularity: 89 },
+      { cityName: "Singapore", country: "Singapore", latitude: 1.3521, longitude: 103.8198, costIndex: 86.0, popularity: 88 },
+      { cityName: "Bangkok", country: "Thailand", latitude: 13.7563, longitude: 100.5018, costIndex: 42.0, popularity: 91 },
+      { cityName: "Sydney", country: "Australia", latitude: -33.8688, longitude: 151.2093, costIndex: 84.0, popularity: 86 },
+      { cityName: "Berlin", country: "Germany", latitude: 52.52, longitude: 13.405, costIndex: 64.0, popularity: 85 },
+      { cityName: "Bali", country: "Indonesia", latitude: -8.3405, longitude: 115.092, costIndex: 38.0, popularity: 95 },
+      { cityName: "Reykjavik", country: "Iceland", latitude: 64.1466, longitude: -21.9426, costIndex: 88.0, popularity: 84 },
+      { cityName: "Zurich", country: "Switzerland", latitude: 47.3769, longitude: 8.5417, costIndex: 94.0, popularity: 82 },
+    ];
+  }
+
   // Fallback
   throw { code: "NOT_FOUND", message: `Mock route ${method} ${endpoint} not implemented` };
 }
