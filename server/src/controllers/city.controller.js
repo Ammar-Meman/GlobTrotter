@@ -1,10 +1,10 @@
-import * as mapboxService from "../services/mapbox.service.js";
-import * as unsplashService from "../services/unsplash.service.js";
+import * as geoapifyService from "../services/geoapify.service.js";
+import * as pexelsService from "../services/pexels.service.js";
 
 export const searchCities = async (req, res, next) => {
   try {
     const query = req.query.q || "";
-    const results = await mapboxService.searchCities(query);
+    const results = await geoapifyService.searchCities(query);
     res.status(200).json({
       success: true,
       data: results,
@@ -17,7 +17,7 @@ export const searchCities = async (req, res, next) => {
 export const getCityImage = async (req, res, next) => {
   try {
     const { cityName } = req.params;
-    const result = await unsplashService.getCityImage(cityName);
+    const result = await pexelsService.getCityImage(cityName);
     res.status(200).json({
       success: true,
       data: result,
