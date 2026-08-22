@@ -13,7 +13,7 @@
 | Route | Page Component | Status / Scope |
 |:---|:---|:---|
 | `1. /`, `/login`, `/signup` | `AuthPage.jsx` / `Login.jsx` / `Signup.jsx` | Completed (Smooth physical morphing, soft sky aesthetic, responsive) |
-| `2. /dashboard` | `Dashboard.jsx` | Personalized welcome, quick stats, trip cards, destination carousel, budget highlights |
+| `2. /dashboard` | `Dashboard.jsx` | Completed (Immersive dynamic hero, transparent navbar overlay, floating search tray, stats, itineraries, popular Indian cities) |
 | `3. /trips` | `MyTrips.jsx` & `TripCard.jsx` | Full trip management, search/sort filters, delete modal, share button |
 | `4. /trips/create`, `/trips/new` | `CreateTrip.jsx` | Focused multi-step form, date validation, cover photo upload & presets |
 | `5. /trips/:id/itinerary`, `/trips/:id/edit` | `ItineraryBuilder.jsx` | Split layout, drag-to-reorder stops, expandable activity cards, quick add |
