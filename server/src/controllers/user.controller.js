@@ -14,7 +14,8 @@ export const updateMe = async (req, res, next) => {
 
 export const deleteMe = async (req, res, next) => {
   try {
-    const result = await userService.deleteMe(req.user.id);
+    const { password } = req.body || {};
+    const result = await userService.deleteMe(req.user.id, password);
     res.status(200).json({
       success: true,
       data: result,

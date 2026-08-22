@@ -223,12 +223,25 @@ function mergeWithStaticData(cityName, country, lat, lon) {
   }
 
   return {
+    id: staticEntry?.id || cityName.toLowerCase().replace(/[^a-z0-9]/g, "-"),
     cityName,
-    country: country || staticEntry?.country || "Unknown",
+    country: country || staticEntry?.country || "Global Destination",
+    region: staticEntry?.region || (/india/.test(countryLower) ? "India" : "International"),
     latitude: lat,
     longitude: lon,
     costIndex: staticEntry?.costIndex ?? defaultCost,
     popularity: staticEntry?.popularity ?? defaultPop,
+    dailyBudget: staticEntry?.dailyBudget ?? Math.round(defaultCost * 40),
+    bestSeason: staticEntry?.bestSeason ?? "Year-round",
+    climate: staticEntry?.climate ?? "Temperate",
+    vibes: staticEntry?.vibes ?? ["Explore", "Cultural", "Sightseeing"],
+    image: staticEntry?.image || "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop&q=80",
+    description: staticEntry?.description || `Discover the iconic culture, cuisine, and attractions of ${cityName}, ${country || "Global Destination"}.`,
+    landmarks: staticEntry?.landmarks ?? ["City Center", "Historic District", "Local Markets"],
+    cuisine: staticEntry?.cuisine ?? ["Local Delicacies", "Street Food", "Traditional Coffee"],
+    neighborhoods: staticEntry?.neighborhoods ?? [
+      { name: "Downtown / Center", vibe: "Central shopping, cafes, and historic monuments" }
+    ],
   };
 }
 
@@ -236,7 +249,7 @@ function mergeWithStaticData(cityName, country, lat, lon) {
  * Calls Geoapify Geocoding API if GEOAPIFY_API_KEY is set, otherwise falls back to
  * static CITIES_DATA lookup.
  * @param {string} query
- * @returns {Promise<Array<{cityName: string, country: string, latitude: number, longitude: number, costIndex: number, popularity: number}>>}
+ * @returns {Promise<Array<object>>}
  */
 export const searchCities = async (query) => {
   const apiKey = process.env.GEOAPIFY_API_KEY;
@@ -247,7 +260,7 @@ export const searchCities = async (query) => {
       const encoded = encodeURIComponent(query.trim());
       const url =
         `https://api.geoapify.com/v1/geocode/search` +
-        `?text=${encoded}&type=city&limit=8&apiKey=${apiKey.trim()}`;
+        `?text=${encoded}&type=city&limit=12&apiKey=${apiKey.trim()}`;
 
       const response = await fetch(url);
       if (!response.ok) throw new Error(`Geoapify Geocoding HTTP ${response.status}`);
@@ -271,31 +284,24 @@ export const searchCities = async (query) => {
 
   // ── Static fallback ───────────────────────────────────────────────────────
   if (!query || query.trim() === "") {
-    return CITIES_DATA.slice(0, 10);
+    return CITIES_DATA;
   }
 
   const cleanQuery = query.trim().toLowerCase();
   const matched = CITIES_DATA.filter(
     (c) =>
       c.cityName.toLowerCase().includes(cleanQuery) ||
-      (c.country && c.country.toLowerCase().includes(cleanQuery))
+      (c.country && c.country.toLowerCase().includes(cleanQuery)) ||
+      (c.region && c.region.toLowerCase().includes(cleanQuery)) ||
+      (c.vibes && c.vibes.some(v => v.toLowerCase().includes(cleanQuery))) ||
+      (c.landmarks && c.landmarks.some(l => l.toLowerCase().includes(cleanQuery)))
   );
 
   if (matched.length > 0) return matched;
 
   // Unknown city — derive plausible values
   const capitalized = query.charAt(0).toUpperCase() + query.slice(1);
-  const hash = capitalized.split("").reduce((acc, c) => acc + c.charCodeAt(0), 0);
-  return [
-    {
-      cityName: capitalized,
-      country: "Global Destination",
-      latitude: 0.0,
-      longitude: 0.0,
-      costIndex: Math.round((50 + (hash % 17) - 8) * 10) / 10,
-      popularity: 60 + (hash % 35),
-    },
-  ];
+  return [mergeWithStaticData(capitalized, "Global Destination", 0.0, 0.0)];
 };
 
 /**

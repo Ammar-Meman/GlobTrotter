@@ -9,3 +9,7 @@ export const updateProfileSchema = z.object({
 export const createSavedDestinationSchema = z.object({
   cityName: z.string().min(1, { message: "cityName is required" }),
 });
+
+export const deleteAccountSchema = z.object({
+  password: z.string().min(1, { message: "Password is required to delete account" }),
+});

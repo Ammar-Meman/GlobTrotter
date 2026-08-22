@@ -20,9 +20,14 @@ import {
   Shield,
   Compass,
   LogOut,
+  Lock,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import useAuthStore from "@/store/authStore";
+import useLanguageStore from "@/store/languageStore";
+import { LANGUAGES_LIST } from "@/lib/i18n";
 import api from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,18 +41,10 @@ const profileSchema = z.object({
   photoUrl: z.string().optional().or(z.literal("")),
 });
 
-const LANGUAGES = [
-  { code: "en", name: "English (US)" },
-  { code: "es", name: "Español (Spanish)" },
-  { code: "fr", name: "Français (French)" },
-  { code: "de", name: "Deutsch (German)" },
-  { code: "hi", name: "हिन्दी (Hindi)" },
-  { code: "ja", name: "日本語 (Japanese)" },
-];
-
 export default function Profile() {
   const navigate = useNavigate();
   const { user, updateUser, logout } = useAuthStore();
+  const { language: currentLang, setLanguage, t } = useLanguageStore();
 
   const [avatarPreview, setAvatarPreview] = useState(user?.photoUrl || "");
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
@@ -63,19 +60,30 @@ export default function Profile() {
   // Delete Account Modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
+  const [showDeletePassword, setShowDeletePassword] = useState(false);
+  const [deleteModalError, setDeleteModalError] = useState("");
+
+  const openDeleteModal = () => {
+    setDeletePassword("");
+    setDeleteModalError("");
+    setShowDeletePassword(false);
+    setShowDeleteModal(true);
+  };
 
   const {
     register,
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isSubmitting, isDirty },
+    watch,
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       name: user?.name || "",
       email: user?.email || "",
-      language: user?.language || "en",
+      language: user?.language || currentLang || "en",
       photoUrl: user?.photoUrl || "",
     },
   });
@@ -86,10 +94,13 @@ export default function Profile() {
       reset({
         name: user.name || "",
         email: user.email || "",
-        language: user.language || "en",
+        language: user.language || currentLang || "en",
         photoUrl: user.photoUrl || "",
       });
       setAvatarPreview(user.photoUrl || "");
+      if (user.language && user.language !== currentLang) {
+        setLanguage(user.language);
+      }
     }
   }, [user, reset]);
 
@@ -142,6 +153,7 @@ export default function Profile() {
 
       const updated = await api.put("/users/me", payload);
       updateUser(updated);
+      setLanguage(values.language);
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err) {
@@ -177,18 +189,25 @@ export default function Profile() {
     }
   };
 
-  const handleDeleteAccount = async () => {
+  const handleDeleteAccount = async (e) => {
+    if (e) e.preventDefault();
+    if (!deletePassword) {
+      setDeleteModalError("Please enter your current password to confirm deletion.");
+      return;
+    }
+
     setIsDeletingAccount(true);
+    setDeleteModalError("");
     try {
-      await api.delete("/users/me");
+      await api.delete("/users/me", { password: deletePassword });
+      setShowDeleteModal(false);
       logout();
       navigate("/signup");
     } catch (err) {
       console.error("Account deletion failed:", err);
-      setServerError("Failed to delete account. Please try again.");
+      setDeleteModalError(err.message || "Incorrect password. Please try again.");
     } finally {
       setIsDeletingAccount(false);
-      setShowDeleteModal(false);
     }
   };
 
@@ -199,9 +218,9 @@ export default function Profile() {
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Header Strip */}
         <div className="border-b border-border/40 pb-6">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Account & Profile</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{t("profileTitle")}</h1>
           <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-            Manage your personal profile, preferred language, travel bucket list, and security preferences.
+            {t("profileSubtitle")}
           </p>
         </div>
 
@@ -214,7 +233,7 @@ export default function Profile() {
         {saveSuccess && (
           <div className="rounded-xl border border-emerald-500/50 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
             <Check className="w-4 h-4" />
-            <span>Profile information successfully updated!</span>
+            <span>{t("profileUpdated")}</span>
           </div>
         )}
 
@@ -265,10 +284,10 @@ export default function Profile() {
                 <p className="text-xs text-muted-foreground">{user?.email}</p>
                 <div className="pt-2 flex items-center justify-center gap-2">
                   <span className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                    {user?.isAdmin ? "Administrator" : "Globetrotter"}
+                    {user?.isAdmin ? "Administrator" : "GlobeTrotter"}
                   </span>
                   <span className="text-[10px] font-medium text-muted-foreground px-2 py-0.5 rounded-full bg-secondary">
-                    Member
+                    {t("member")}
                   </span>
                 </div>
               </div>
@@ -280,19 +299,19 @@ export default function Profile() {
             <CardHeader className="pb-4">
               <CardTitle className="text-lg flex items-center gap-2">
                 <User className="w-5 h-5 text-primary" />
-                Personal Information
+                {t("personalInfo")}
               </CardTitle>
-              <CardDescription>Update your name, contact details, and display preferences.</CardDescription>
+              <CardDescription>{t("personalInfoDesc")}</CardDescription>
             </CardHeader>
 
             <CardContent>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 {/* Name */}
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name *</Label>
+                  <Label htmlFor="name">{t("fullName")} *</Label>
                   <Input
                     id="name"
-                    placeholder="Priya Sharma"
+                    placeholder={t("fullNamePlaceholder")}
                     {...register("name")}
                     className={errors.name ? "border-destructive" : ""}
                   />
@@ -302,8 +321,8 @@ export default function Profile() {
                 {/* Email (Read Only or Informational) */}
                 <div className="space-y-2">
                   <Label htmlFor="email" className="flex items-center justify-between">
-                    <span>Email Address</span>
-                    <span className="text-[11px] text-muted-foreground font-normal">Registered Account</span>
+                    <span>{t("emailAddress")}</span>
+                    <span className="text-[11px] text-muted-foreground font-normal">{t("registeredAccount")}</span>
                   </Label>
                   <Input
                     id="email"
@@ -318,14 +337,14 @@ export default function Profile() {
                 <div className="space-y-2">
                   <Label htmlFor="language" className="flex items-center gap-1.5">
                     <Languages className="w-3.5 h-3.5 text-primary" />
-                    Preferred Language
+                    {t("preferredLanguage")}
                   </Label>
                   <select
                     id="language"
                     {...register("language")}
                     className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
                   >
-                    {LANGUAGES.map((lang) => (
+                    {LANGUAGES_LIST.map((lang) => (
                       <option key={lang.code} value={lang.code}>
                         {lang.name}
                       </option>
@@ -338,7 +357,7 @@ export default function Profile() {
                   <Label htmlFor="photoUrl">Avatar Photo URL</Label>
                   <Input
                     id="photoUrl"
-                    placeholder="https://images.unsplash.com/..."
+                    placeholder="https://images.pexels.com/..."
                     {...register("photoUrl")}
                     onChange={(e) => setAvatarPreview(e.target.value)}
                   />
@@ -355,7 +374,7 @@ export default function Profile() {
                     ) : (
                       <Save className="w-4 h-4" />
                     )}
-                    <span>{isSubmitting ? "Saving Changes..." : "Save Changes"}</span>
+                    <span>{isSubmitting ? t("saving") : t("saveChanges")}</span>
                   </Button>
                 </div>
               </form>
@@ -368,10 +387,10 @@ export default function Profile() {
           <CardHeader className="pb-4">
             <CardTitle className="text-lg flex items-center gap-2">
               <MapPin className="w-5 h-5 text-emerald-500" />
-              Saved Wishlist Destinations
+              {t("savedWishlist")}
             </CardTitle>
             <CardDescription>
-              Keep a bucket list of dream cities you plan to visit. Easily convert any saved city into a new journey.
+              {t("savedWishlistDesc")}
             </CardDescription>
           </CardHeader>
 
@@ -379,14 +398,14 @@ export default function Profile() {
             {/* Add Destination Input Form */}
             <form onSubmit={handleAddDestination} className="flex gap-2 max-w-md">
               <Input
-                placeholder="e.g. Jaipur, Varanasi, Munnar, Goa..."
+                placeholder={t("addCityPlaceholder")}
                 value={newCityName}
                 onChange={(e) => setNewCityName(e.target.value)}
                 disabled={addingCity}
               />
               <Button type="submit" size="sm" disabled={addingCity || !newCityName.trim()} className="gap-1.5 shrink-0">
                 {addingCity ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
-                <span>Add City</span>
+                <span>{t("addCityButton")}</span>
               </Button>
             </form>
 
@@ -438,9 +457,9 @@ export default function Profile() {
             ) : (
               <div className="p-6 text-center border border-dashed border-border/80 rounded-xl bg-card/40 space-y-1.5">
                 <Compass className="w-6 h-6 text-muted-foreground mx-auto" />
-                <p className="text-xs font-medium">No saved wishlist destinations yet.</p>
+                <p className="text-xs font-medium">{t("noSavedWishlist")}</p>
                 <p className="text-[11px] text-muted-foreground">
-                  Type a city name above to keep track of your dream travel stops.
+                  {t("noSavedWishlistHint")}
                 </p>
               </div>
             )}
@@ -452,25 +471,25 @@ export default function Profile() {
           <CardHeader className="pb-3">
             <CardTitle className="text-base text-destructive flex items-center gap-2">
               <AlertTriangle className="w-4 h-4" />
-              Danger Zone
+              {t("dangerZone")}
             </CardTitle>
             <CardDescription className="text-xs">
-              Permanently delete your account and all associated itineraries, stops, activities, and wishlist items.
+              {t("dangerZoneDesc")}
             </CardDescription>
           </CardHeader>
 
           <CardContent className="flex items-center justify-between pt-1">
             <p className="text-xs text-muted-foreground max-w-lg">
-              Once deleted, your travel data cannot be recovered. Please export any important itineraries before proceeding.
+              {t("dangerZoneWarning")}
             </p>
 
             <Button
               variant="destructive"
               size="sm"
-              onClick={() => setShowDeleteModal(true)}
+              onClick={openDeleteModal}
               className="shrink-0"
             >
-              Delete Account
+              {t("deleteAccount")}
             </Button>
           </CardContent>
         </Card>
@@ -481,39 +500,78 @@ export default function Profile() {
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in-0 duration-200">
           <div className="bg-card border border-border/80 rounded-2xl max-w-md w-full p-6 shadow-xl space-y-5">
             <div className="flex items-center gap-3 text-destructive">
-              <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center shrink-0">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-lg text-foreground">Delete Account</h3>
-                <p className="text-xs text-muted-foreground">Permanent action</p>
+                <h3 className="font-bold text-lg text-foreground">{t("deleteModalTitle")}</h3>
+                <p className="text-xs text-muted-foreground">{t("deleteModalSubtitle")}</p>
               </div>
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Are you sure you want to permanently delete your GlobeTrotter account? All your trips, custom itineraries, and saved destinations will be immediately removed.
+              {t("deleteModalDesc")}
             </p>
 
-            <div className="flex items-center justify-end gap-2.5 pt-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowDeleteModal(false)}
-                disabled={isDeletingAccount}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={handleDeleteAccount}
-                disabled={isDeletingAccount}
-                className="gap-1.5"
-              >
-                {isDeletingAccount && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-                <span>{isDeletingAccount ? "Deleting..." : "Permanently Delete"}</span>
-              </Button>
-            </div>
+            {deleteModalError && (
+              <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-xs text-destructive flex items-center gap-2">
+                <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                <span>{deleteModalError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleDeleteAccount} className="space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="delete-password-input" className="text-xs font-semibold flex items-center gap-1.5">
+                  <Lock className="w-3.5 h-3.5 text-muted-foreground" />
+                  <span>{t("currentPassword")}</span>
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="delete-password-input"
+                    type={showDeletePassword ? "text" : "password"}
+                    value={deletePassword}
+                    onChange={(e) => {
+                      setDeletePassword(e.target.value);
+                      if (deleteModalError) setDeleteModalError("");
+                    }}
+                    placeholder={t("passwordPlaceholder")}
+                    className="pr-10 text-xs h-9"
+                    autoFocus
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowDeletePassword(!showDeletePassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showDeletePassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-2.5 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowDeleteModal(false)}
+                  disabled={isDeletingAccount}
+                >
+                  {t("cancel")}
+                </Button>
+                <Button
+                  type="submit"
+                  variant="destructive"
+                  size="sm"
+                  disabled={isDeletingAccount || !deletePassword.trim()}
+                  className="gap-1.5"
+                >
+                  {isDeletingAccount && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                  <span>{isDeletingAccount ? t("deleting") : t("confirmDelete")}</span>
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
       )}

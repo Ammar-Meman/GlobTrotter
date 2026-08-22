@@ -1,5 +1,6 @@
+import bcrypt from "bcrypt";
 import prisma from "../lib/prisma.js";
-import { NotFoundError } from "../lib/errors.js";
+import { NotFoundError, UnauthorizedError, ValidationError } from "../lib/errors.js";
 
 export const updateMe = async (userId, data) => {
   const updatedUser = await prisma.user.update({
@@ -22,7 +23,24 @@ export const updateMe = async (userId, data) => {
   return updatedUser;
 };
 
-export const deleteMe = async (userId) => {
+export const deleteMe = async (userId, password) => {
+  if (!password) {
+    throw new ValidationError("Password is required to delete account");
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user) {
+    throw new NotFoundError("User not found");
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new UnauthorizedError("Incorrect password");
+  }
+
   await prisma.user.delete({
     where: { id: userId },
   });
@@ -59,10 +77,10 @@ export const addSavedDestination = async (userId, { cityName }) => {
   return saved;
 };
 
-export const deleteSavedDestination = async (userId, destinationId) => {
+export const deleteSavedDestination = async (userId, id) => {
   const destination = await prisma.savedDestination.findFirst({
     where: {
-      id: destinationId,
+      id,
       userId,
     },
   });
@@ -72,10 +90,10 @@ export const deleteSavedDestination = async (userId, destinationId) => {
   }
 
   await prisma.savedDestination.delete({
-    where: { id: destinationId },
+    where: { id },
   });
 
   return {
-    message: "removed",
+    message: "destination removed",
   };
 };

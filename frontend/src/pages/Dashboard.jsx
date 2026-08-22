@@ -20,6 +20,7 @@ import {
 import Navbar from "@/components/Navbar";
 import useAuthStore from "@/store/authStore";
 import useTripStore from "@/store/tripStore";
+import useLanguageStore from "@/store/languageStore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -76,8 +77,9 @@ const POPULAR_DESTINATIONS = [
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const user = useAuthStore((state) => state.user);
+  const { user } = useAuthStore();
   const { trips, fetchTrips, loading } = useTripStore();
+  const t = useLanguageStore((state) => state.t);
 
   useEffect(() => {
     fetchTrips().catch((err) => console.error("Error loading trips:", err));
@@ -107,13 +109,6 @@ export default function Dashboard() {
   const totalStops = trips.reduce((acc, t) => acc + (t.stopCount || 0), 0);
   const totalDays = trips.reduce((acc, t) => acc + getDurationDays(t.startDate, t.endDate), 0);
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Good morning";
-    if (hour < 18) return "Good afternoon";
-    return "Good evening";
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
@@ -124,25 +119,25 @@ export default function Dashboard() {
           <div className="relative z-10 max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-semibold text-primary">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Personalized Smart Itinerary Engine</span>
+              <span>GlobeTrotter India</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              {getGreeting()}, {user?.name ? user.name.split(" ")[0] : "Traveler"}! ✈️
+              {t("dashboardGreeting")}, {user?.name ? user.name.split(" ")[0] : "Traveler"}! ✈️
             </h1>
 
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-2xl">
-              Where will your curiosity take you next? Seamlessly organize multi-city stops, track your daily budgets, and explore curated world experiences.
+              {t("dashboardSubtitle")}
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Button onClick={() => navigate("/trips/new")} className="gap-2 shadow-sm font-semibold">
                 <PlusCircle className="w-4 h-4" />
-                Plan a New Journey
+                <span>{t("createNewTrip")}</span>
               </Button>
               <Button variant="outline" onClick={() => navigate("/cities")} className="gap-2">
                 <Compass className="w-4 h-4" />
-                Explore Destinations
+                <span>{t("exploreCities")}</span>
               </Button>
             </div>
           </div>
@@ -161,7 +156,7 @@ export default function Dashboard() {
                 <Luggage className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Planned Trips</p>
+                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{t("totalTrips")}</p>
                 <h3 className="text-2xl font-bold">{loading ? "-" : totalTrips}</h3>
               </div>
             </CardContent>
@@ -173,7 +168,7 @@ export default function Dashboard() {
                 <MapPin className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Total Stops</p>
+                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{t("stops")}</p>
                 <h3 className="text-2xl font-bold">{loading ? "-" : totalStops}</h3>
               </div>
             </CardContent>
@@ -185,7 +180,7 @@ export default function Dashboard() {
                 <Calendar className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Travel Days</p>
+                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">{t("totalDays")}</p>
                 <h3 className="text-2xl font-bold">{loading ? "-" : totalDays}</h3>
               </div>
             </CardContent>
@@ -196,15 +191,15 @@ export default function Dashboard() {
         <div className="space-y-5">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold tracking-tight">Your Upcoming Itineraries</h2>
-              <p className="text-xs text-muted-foreground">Manage and track your active travel plans</p>
+              <h2 className="text-xl font-bold tracking-tight">{t("recentTrips")}</h2>
+              <p className="text-xs text-muted-foreground">{t("dashboardSubtitle")}</p>
             </div>
             {trips.length > 0 && (
               <Link
                 to="/trips"
                 className="text-xs font-semibold text-primary hover:underline flex items-center gap-1"
               >
-                View all ({trips.length})
+                <span>{t("viewAllTrips")} ({trips.length})</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             )}
