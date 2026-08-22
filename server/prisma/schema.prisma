@@ -52,7 +52,7 @@ model Stop {
 }
 
 model Activity {
-  id          String  @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   type        String
   category    String   // transport | stay | activity | meal
@@ -60,6 +60,7 @@ model Activity {
   duration    Int?
   description String?
   imageUrl    String?
+  scheduledAt DateTime
   order       Int      @default(0)
   stopId      String
   stop        Stop     @relation(fields: [stopId], references: [id], onDelete: Cascade)
