@@ -1,3 +1,15 @@
+const GEOAPIFY_KEY = process.env.GEOAPIFY_API_KEY;
+
+// ── Category mapping: our app types → Geoapify "categories" ───────────────
+const TYPE_TO_GEOAPIFY_CATEGORY = {
+  sightseeing: "tourism.attraction,tourism.sights",
+  food: "catering.restaurant,catering.cafe",
+  adventure: "leisure.park,sport",
+  shopping: "commercial.shopping_mall,commercial.marketplace",
+  museum: "tourism.attraction.museum",
+};
+
+// ── Static mock data (unchanged from stub) ────────────────────────────────
 const MOCK_ACTIVITIES_BY_CITY = {
   paris: [
     {
@@ -170,12 +182,93 @@ const DEFAULT_ACTIVITIES = [
   },
 ];
 
+// ─────────────────────────────────────────────────────────────────────────────
+
 /**
- * Searches suggested activities using mock / stub data.
+ * Geocode a city name to lat/lon via Geoapify to obtain coordinates for a
+ * Places search (only needed for the live path; mocks have it built-in).
+ */
+async function geocodeCity(cityName) {
+  const url =
+    `https://api.geoapify.com/v1/geocode/search` +
+    `?text=${encodeURIComponent(cityName)}&type=city&limit=1&apiKey=${GEOAPIFY_KEY}`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Geoapify geocode HTTP ${response.status}`);
+  const json = await response.json();
+  const feature = json.features?.[0];
+  if (!feature) return null;
+  const { lon, lat } = feature.properties;
+  return { lat, lon };
+}
+
+/**
+ * Searches suggested activities using Geoapify Places API when GEOAPIFY_API_KEY
+ * is set, otherwise falls back to static mock data.
  * @param {{ city?: string, type?: string, maxCost?: number }} params
- * @returns {Promise<Array<{name: string, type: string, estimatedCost: number, description: string, imageUrl: string}>>}
+ * @returns {Promise<Array<{name, type, estimatedCost, description, imageUrl}>>}
  */
 export const searchActivities = async ({ city, type, maxCost }) => {
+  // ── Live path ─────────────────────────────────────────────────────────────
+  if (GEOAPIFY_KEY && city) {
+    try {
+      const coords = await geocodeCity(city);
+      if (coords) {
+        const category =
+          (type && TYPE_TO_GEOAPIFY_CATEGORY[type.toLowerCase()]) ||
+          "tourism.attraction,tourism.sights,catering.restaurant,leisure.park";
+
+        const placesUrl =
+          `https://api.geoapify.com/v2/places` +
+          `?categories=${encodeURIComponent(category)}` +
+          `&filter=circle:${coords.lon},${coords.lat},10000` +
+          `&bias=proximity:${coords.lon},${coords.lat}` +
+          `&limit=12` +
+          `&apiKey=${GEOAPIFY_KEY}`;
+
+        const placesRes = await fetch(placesUrl);
+        if (!placesRes.ok) throw new Error(`Geoapify Places HTTP ${placesRes.status}`);
+        const placesJson = await placesRes.json();
+
+        const results = (placesJson.features || [])
+          .map((f) => {
+            const p = f.properties;
+            const detectedType =
+              Object.entries(TYPE_TO_GEOAPIFY_CATEGORY).find(([, cats]) =>
+                cats.split(",").some((cat) =>
+                  (p.categories || []).some((c) => c.startsWith(cat))
+                )
+              )?.[0] || type || "sightseeing";
+
+            return {
+              name: p.name || p.address_line1 || "Local Attraction",
+              type: detectedType,
+              estimatedCost: 0, // Geoapify doesn't provide cost — keep 0 as neutral
+              description: [p.address_line1, p.address_line2].filter(Boolean).join(", ") ||
+                `Popular ${detectedType} spot in ${city}.`,
+              imageUrl: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600",
+            };
+          })
+          .filter((a) => a.name && a.name !== "Local Attraction");
+
+        if (results.length > 0) {
+          let filtered = results;
+          if (type) {
+            const cleanType = type.trim().toLowerCase();
+            filtered = results.filter((a) => a.type === cleanType);
+            if (filtered.length === 0) filtered = results; // don't return empty if no match
+          }
+          if (maxCost !== undefined && !isNaN(maxCost)) {
+            filtered = filtered.filter((a) => a.estimatedCost <= Number(maxCost));
+          }
+          return filtered;
+        }
+      }
+    } catch (err) {
+      console.warn("[geoapify.service] Live API failed, falling back to static:", err.message);
+    }
+  }
+
+  // ── Static fallback ───────────────────────────────────────────────────────
   let list = [];
 
   if (city) {
@@ -202,8 +295,7 @@ export const searchActivities = async ({ city, type, maxCost }) => {
   }
 
   if (maxCost !== undefined && maxCost !== null && !isNaN(maxCost)) {
-    const costLimit = Number(maxCost);
-    list = list.filter((a) => a.estimatedCost <= costLimit);
+    list = list.filter((a) => a.estimatedCost <= Number(maxCost));
   }
 
   return list;
