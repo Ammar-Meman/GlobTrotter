@@ -1,0 +1,1 @@
+export default function ActivitySearch() { return <div>ActivitySearch</div>; }
