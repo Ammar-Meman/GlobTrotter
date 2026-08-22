@@ -42,8 +42,8 @@ export const deleteActivity = async (req, res, next) => {
 export const reorderActivities = async (req, res, next) => {
   try {
     const { stopId } = req.params;
-    const { activityIds } = req.body;
-    const result = await activityService.reorderActivities(req.user.id, stopId, activityIds);
+    const { date, activityIds } = req.body;
+    const result = await activityService.reorderActivities(req.user.id, stopId, date, activityIds);
     res.status(200).json({
       success: true,
       data: result,
