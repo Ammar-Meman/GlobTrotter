@@ -110,8 +110,8 @@ export default function ActivitySearchModal({ open, onClose, cityName, onAdd }) 
                   <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
                     {activity.type}
                   </span>
-                  <span className="flex items-center gap-0.5 text-xs text-muted-foreground">
-                    <IndianRupee className="w-3 h-3" />₹{activity.estimatedCost}
+                  <span className="flex items-center gap-0.5 text-xs text-muted-foreground font-medium">
+                    <IndianRupee className="w-3.5 h-3.5" />{activity.estimatedCost}
                   </span>
                 </div>
               </div>
