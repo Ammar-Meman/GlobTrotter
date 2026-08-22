@@ -16,6 +16,7 @@ import {
 import Navbar from "@/components/Navbar";
 import TripCard from "@/components/TripCard";
 import useTripStore from "@/store/tripStore";
+import useLanguageStore from "@/store/languageStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,6 +24,7 @@ import { Card, CardContent } from "@/components/ui/card";
 export default function MyTrips() {
   const navigate = useNavigate();
   const { trips, fetchTrips, deleteTrip, loading } = useTripStore();
+  const t = useLanguageStore((state) => state.t);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all"); // 'all' | 'upcoming' | 'inprogress' | 'completed'
@@ -115,19 +117,19 @@ export default function MyTrips() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/40 pb-6">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">My Trips</h1>
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">{t("myTripsTitle")}</h1>
               <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                {trips.length} {trips.length === 1 ? "Trip" : "Trips"}
+                {trips.length} {t("myTrips")}
               </span>
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Review, edit, and organize all your upcoming and past global journeys.
+              {t("myTripsSubtitle")}
             </p>
           </div>
 
           <Button onClick={() => navigate("/trips/new")} className="gap-2 shadow-sm font-semibold shrink-0">
             <Plus className="w-4 h-4" />
-            <span>Create New Trip</span>
+            <span>{t("createNewTrip")}</span>
           </Button>
         </div>
 
@@ -138,7 +140,7 @@ export default function MyTrips() {
             <div className="relative flex-1 max-w-md">
               <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
               <Input
-                placeholder="Search trips by name or keyword..."
+                placeholder={t("searchTripsPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-9 pr-8"
@@ -157,7 +159,7 @@ export default function MyTrips() {
             <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground font-medium flex items-center gap-1">
                 <SlidersHorizontal className="w-3.5 h-3.5" />
-                Sort:
+                {t("filters")}:
               </span>
               <select
                 value={sortBy}
@@ -175,10 +177,10 @@ export default function MyTrips() {
           {/* Status Tabs */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
             {[
-              { id: "all", label: "All Itineraries", count: counts.all },
-              { id: "upcoming", label: "Upcoming", count: counts.upcoming },
-              { id: "inprogress", label: "In Progress", count: counts.inprogress },
-              { id: "completed", label: "Past Journeys", count: counts.completed },
+              { id: "all", label: t("allStatus"), count: counts.all },
+              { id: "upcoming", label: t("planned"), count: counts.upcoming },
+              { id: "inprogress", label: t("ongoing"), count: counts.inprogress },
+              { id: "completed", label: t("completed"), count: counts.completed },
             ].map((tab) => {
               const active = statusFilter === tab.id;
               return (
