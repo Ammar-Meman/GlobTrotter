@@ -12,7 +12,6 @@ import {
   Loader2,
   Calendar,
   Users,
-  Compass,
   MapPin,
   Globe as GlobeIcon,
   Sparkles,
@@ -22,6 +21,7 @@ import api from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Logo from "@/components/Logo";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -125,19 +125,19 @@ export default function AuthPage({ initialMode = "login" }) {
   const isSubmitting = isSignup ? isSubmittingSignup : isSubmittingLogin;
 
   return (
-    <div className="min-h-screen w-full relative flex items-center justify-center p-3 sm:p-6 lg:p-10 bg-slate-100 overflow-hidden font-sans select-none">
-      {/* Background 1: Login Scenic Nature/Lake Overlook */}
+    <div className="min-h-screen w-full relative flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-slate-100 overflow-hidden font-sans select-none">
+      {/* Background 1: Bright Daylight Mountain & Lake Overlook */}
       <div
         className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
           !isSignup ? "opacity-100 scale-100" : "opacity-0 scale-105"
         }`}
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=85&w=2400&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=85&w=2400&auto=format&fit=crop')",
         }}
       />
 
-      {/* Background 2: Signup European City/Sunset Overlook */}
+      {/* Background 2: European City Skyline Overlook at Sunset */}
       <div
         className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
           isSignup ? "opacity-100 scale-100" : "opacity-0 scale-105"
@@ -148,122 +148,116 @@ export default function AuthPage({ initialMode = "login" }) {
         }}
       />
 
-      {/* Subtle crisp ambient overlay to preserve text readability */}
-      <div className="absolute inset-0 bg-black/10 backdrop-filter" />
+      {/* Soft Ambient Light Wash for Consistent High-Contrast Text */}
+      <div className="absolute inset-0 bg-white/20 backdrop-filter" />
 
-      {/* Main Full-Width Content Canvas */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto min-h-[720px] flex items-center justify-between">
+      {/* Main Full-Width Content Container */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto min-h-[680px] flex items-center justify-between">
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* ============================================================ */}
           {/* INFORMATIONAL HERO SECTION                                   */}
           {/* ============================================================ */}
           <div
-            className={`transition-all duration-700 ease-in-out lg:col-span-6 p-4 sm:p-8 flex flex-col justify-between space-y-8 ${
+            className={`transition-all duration-700 ease-in-out lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-6 ${
               isSignup ? "lg:order-2" : "lg:order-1"
             }`}
           >
-            {/* Logo */}
-            <div className="flex items-center gap-2.5">
-              <div className="flex items-center justify-center w-9 h-9 rounded-full border-2 border-dashed border-blue-600 bg-white/90 shadow-sm">
-                <svg
-                  className="w-5 h-5 text-blue-600 -rotate-45"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
-                </svg>
+            {/* Luminous Light Card Backing for 100% Razor-Sharp Legibility */}
+            <div className="bg-white/70 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/80 shadow-md space-y-6 max-w-xl">
+              {/* Premium Logo */}
+              <div>
+                <Logo size="lg" to={null} />
               </div>
-              <span className="text-2xl font-extrabold tracking-tight text-slate-900 drop-shadow-xs">
-                GlobeTrotter
-              </span>
-            </div>
 
-            {/* Headline & Description */}
-            <div className="space-y-4 max-w-lg">
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-slate-900 leading-[1.1] drop-shadow-sm">
-                Plan. Explore. <br />
-                <span className="text-blue-600">Experience.</span>
-              </h1>
+              {/* Headline & Description */}
+              <div className="space-y-3">
+                <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-[1.1]">
+                  Plan. Explore. <br />
+                  <span className="bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">
+                    Experience.
+                  </span>
+                </h1>
 
-              <p className="text-slate-800 font-medium text-sm sm:text-base leading-relaxed max-w-md">
-                Your journey begins here. Plan personalized trips, discover amazing destinations and make memories that last a lifetime.
-              </p>
-            </div>
+                <p className="text-slate-700 font-medium text-sm sm:text-base leading-relaxed">
+                  Your journey begins here. Plan personalized multi-city trips, discover amazing destinations and make memories that last a lifetime.
+                </p>
+              </div>
 
-            {/* 3 White Feature Cards */}
-            <div className="space-y-3.5 max-w-md pt-2">
-              {!isSignup ? (
-                <>
-                  {/* Item 1 */}
-                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 backdrop-blur-xs shadow-md border border-white/80 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <GlobeIcon className="w-5 h-5 text-slate-700" />
+              {/* 3 White Feature Cards */}
+              <div className="space-y-3 pt-1">
+                {!isSignup ? (
+                  <>
+                    {/* Item 1 */}
+                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
+                        <GlobeIcon className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">Explore Destinations</h4>
+                        <p className="text-xs text-slate-500 font-medium">Find the best curated cities and landmarks worldwide.</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-sm text-slate-900">Explore Destinations</h4>
-                      <p className="text-xs text-slate-500 font-medium">Find the best places around the world.</p>
-                    </div>
-                  </div>
 
-                  {/* Item 2 */}
-                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 backdrop-blur-xs shadow-md border border-white/80 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <Calendar className="w-5 h-5 text-slate-700" />
+                    {/* Item 2 */}
+                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
+                        <Calendar className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">Plan Your Trip</h4>
+                        <p className="text-xs text-slate-500 font-medium">Build custom itineraries that fit your style.</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-sm text-slate-900">Plan Your Trip</h4>
-                      <p className="text-xs text-slate-500 font-medium">Build custom itineraries that fit your style.</p>
-                    </div>
-                  </div>
 
-                  {/* Item 3 */}
-                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 backdrop-blur-xs shadow-md border border-white/80 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <Users className="w-5 h-5 text-slate-700" />
+                    {/* Item 3 */}
+                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
+                        <Users className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">Share & Collaborate</h4>
+                        <p className="text-xs text-slate-500 font-medium">Share your plans, copy trips, and travel together.</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-sm text-slate-900">Share & Collaborate</h4>
-                      <p className="text-xs text-slate-500 font-medium">Share your plans and travel together.</p>
+                  </>
+                ) : (
+                  <>
+                    {/* Signup Item 1 */}
+                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
+                      <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center shrink-0 border border-teal-100">
+                        <MapPin className="w-5 h-5 text-teal-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">Discover Cities</h4>
+                        <p className="text-xs text-slate-500 font-medium">Explore top destinations and hidden gems.</p>
+                      </div>
                     </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  {/* Signup Item 1 */}
-                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 backdrop-blur-xs shadow-md border border-white/80 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <MapPin className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-sm text-slate-900">Discover Cities</h4>
-                      <p className="text-xs text-slate-500 font-medium">Explore top destinations and hidden gems.</p>
-                    </div>
-                  </div>
 
-                  {/* Signup Item 2 */}
-                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 backdrop-blur-xs shadow-md border border-white/80 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <Calendar className="w-5 h-5 text-blue-600" />
+                    {/* Signup Item 2 */}
+                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
+                      <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center shrink-0 border border-teal-100">
+                        <Calendar className="w-5 h-5 text-teal-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">Plan It Your Way</h4>
+                        <p className="text-xs text-slate-500 font-medium">Build the perfect itinerary that fits your style.</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-sm text-slate-900">Plan It Your Way</h4>
-                      <p className="text-xs text-slate-500 font-medium">Build the perfect itinerary that fits your style.</p>
-                    </div>
-                  </div>
 
-                  {/* Signup Item 3 */}
-                  <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 backdrop-blur-xs shadow-md border border-white/80 transition-transform duration-300 hover:translate-x-1">
-                    <div className="w-11 h-11 rounded-xl bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200/60">
-                      <Users className="w-5 h-5 text-blue-600" />
+                    {/* Signup Item 3 */}
+                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
+                      <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center shrink-0 border border-teal-100">
+                        <Users className="w-5 h-5 text-teal-600" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">Share & Inspire</h4>
+                        <p className="text-xs text-slate-500 font-medium">Share your trips and inspire other travelers.</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-sm text-slate-900">Share & Inspire</h4>
-                      <p className="text-xs text-slate-500 font-medium">Share your trips and inspire other travelers.</p>
-                    </div>
-                  </div>
-                </>
-              )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
@@ -276,7 +270,7 @@ export default function AuthPage({ initialMode = "login" }) {
             }`}
           >
             {/* Header */}
-            <div className="space-y-1">
+            <div className="space-y-1.5">
               <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
                 {!isSignup ? "Welcome Back!" : "Create Your Account"}
               </h2>
@@ -297,7 +291,7 @@ export default function AuthPage({ initialMode = "login" }) {
             {/* FORM */}
             {!isSignup ? (
               /* ================= LOGIN ================= */
-              <form onSubmit={handleSubmitLogin(onLoginSubmit)} className="space-y-4">
+              <form onSubmit={handleSubmitLogin(onLoginSubmit)} className="space-y-5">
                 {/* Email */}
                 <div className="space-y-1.5">
                   <Label htmlFor="email" className="text-xs font-semibold text-slate-700">
@@ -349,7 +343,7 @@ export default function AuthPage({ initialMode = "login" }) {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
                       tabIndex={-1}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -378,14 +372,14 @@ export default function AuthPage({ initialMode = "login" }) {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-500/20 transition-all mt-3"
+                  className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-500/20 transition-all mt-3 cursor-pointer"
                 >
                   {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : "Login"}
                 </Button>
               </form>
             ) : (
               /* ================= SIGNUP ================= */
-              <form onSubmit={handleSubmitSignup(onSignupSubmit)} className="space-y-3.5">
+              <form onSubmit={handleSubmitSignup(onSignupSubmit)} className="space-y-4">
                 {/* Full Name */}
                 <div className="space-y-1.5">
                   <Label htmlFor="signup-name" className="text-xs font-semibold text-slate-700">
@@ -452,7 +446,7 @@ export default function AuthPage({ initialMode = "login" }) {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
                       tabIndex={-1}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -483,7 +477,7 @@ export default function AuthPage({ initialMode = "login" }) {
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
                       tabIndex={-1}
                     >
                       {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -521,81 +515,15 @@ export default function AuthPage({ initialMode = "login" }) {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-500/20 transition-all mt-2"
+                  className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-500/20 transition-all mt-2 cursor-pointer"
                 >
                   {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : "Sign Up"}
                 </Button>
               </form>
             )}
 
-            {/* Social Authentication Section */}
-            <div className="space-y-3.5 pt-1">
-              <div className="relative flex items-center justify-center">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-slate-200" />
-                </div>
-                <span className="relative px-3 bg-white text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                  or continue with
-                </span>
-              </div>
-
-              {/* Social Buttons */}
-              <div className="grid grid-cols-3 gap-3">
-                {/* Google */}
-                <button
-                  type="button"
-                  onClick={() => alert("Google SSO is enabled.")}
-                  className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all shadow-2xs hover:border-slate-300 cursor-pointer"
-                >
-                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
-                    <path
-                      fill="#4285F4"
-                      d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"
-                    />
-                    <path
-                      fill="#34A853"
-                      d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.25 21.37 7.34 24 12 24z"
-                    />
-                    <path
-                      fill="#FBBC05"
-                      d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.17 0 9.99 0 12s.46 3.83 1.26 5.42l4.02-3.15z"
-                    />
-                    <path
-                      fill="#EA4335"
-                      d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.25 2.63 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
-                    />
-                  </svg>
-                  <span className="hidden sm:inline">Google</span>
-                </button>
-
-                {/* Facebook */}
-                <button
-                  type="button"
-                  onClick={() => alert("Facebook login is enabled.")}
-                  className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all shadow-2xs hover:border-slate-300 cursor-pointer"
-                >
-                  <svg className="w-4 h-4 text-[#1877F2] fill-current shrink-0" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                  </svg>
-                  <span className="hidden sm:inline">Facebook</span>
-                </button>
-
-                {/* Apple */}
-                <button
-                  type="button"
-                  onClick={() => alert("Apple Sign-In is enabled.")}
-                  className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all shadow-2xs hover:border-slate-300 cursor-pointer"
-                >
-                  <svg className="w-4 h-4 fill-current text-slate-900 shrink-0" viewBox="0 0 24 24">
-                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.85c.66-.8 1.11-1.92.99-3.04-1 .04-2.22.67-2.92 1.48-.6.69-1.13 1.83-1 2.93 1.12.09 2.27-.57 2.93-1.37z" />
-                  </svg>
-                  <span className="hidden sm:inline">Apple</span>
-                </button>
-              </div>
-            </div>
-
             {/* Bottom Toggle Switch */}
-            <div className="text-center pt-2">
+            <div className="text-center pt-3 border-t border-slate-100">
               {!isSignup ? (
                 <p className="text-xs text-slate-500 font-medium">
                   Don&apos;t have an account?{" "}

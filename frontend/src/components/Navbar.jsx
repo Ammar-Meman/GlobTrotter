@@ -15,6 +15,8 @@ import {
 import useAuthStore from "../store/authStore";
 import { Button } from "./ui/button";
 
+import Logo from "./Logo";
+
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -40,19 +42,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/dashboard" className="flex items-center gap-2.5 transition-opacity hover:opacity-90">
-            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary text-primary-foreground shadow-sm shadow-primary/20">
-              <Globe className="w-5 h-5 animate-pulse" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-muted-foreground bg-clip-text">
-                GlobeTrotter
-              </span>
-              <span className="text-[10px] text-muted-foreground font-medium -mt-1 tracking-wider uppercase">
-                Travel Planner
-              </span>
-            </div>
-          </Link>
+          <Logo size="sm" showTagline={true} to="/dashboard" />
 
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-1">
