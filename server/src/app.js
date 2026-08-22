@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
+import stopRoutes, { tripStopRouter } from "./routes/stop.routes.js";
 import { errorHandler } from "./middleware/error.middleware.js";
 
 const app = express();
@@ -13,6 +14,8 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/stops", stopRoutes);
+app.use("/api/trips", tripStopRouter);
 
 app.use(errorHandler);
 
