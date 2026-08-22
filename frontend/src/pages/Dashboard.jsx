@@ -8,15 +8,12 @@ import {
   IndianRupee,
   PlusCircle,
   ArrowRight,
-  Sparkles,
   ChevronRight,
   Luggage,
   Plus,
   ChevronLeft,
   Search,
-  SlidersHorizontal,
   Flame,
-  Shield,
   Star,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -24,7 +21,6 @@ import Navbar from "@/components/Navbar";
 import useAuthStore from "@/store/authStore";
 import useTripStore from "@/store/tripStore";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 
 /* ── Hero Slides Data (Indian & Global Wonders) ──────────── */
 const HERO_SLIDES = [
@@ -32,12 +28,12 @@ const HERO_SLIDES = [
     id: "jaipur",
     city: "Jaipur, Rajasthan",
     tagline: "The Royal Pink City",
-    title: "Fuel Your Wanderlust • Your Next Escape Awaits!",
+    title: "Fuel Your Wanderlust, Your Next Escape Awaits!",
     description:
       "Crafting Exceptional Journeys: Your Personalized Multi-City Travel Planner. Unleash wanderlust across heritage palaces, majestic forts, and rich royal culture.",
     image:
       "https://images.unsplash.com/photo-1477587458883-47145ed94245?q=85&w=2400&auto=format&fit=crop",
-    vibe: "Palaces & Heritage",
+    vibe: "Palaces & Forts",
     rating: "4.9",
   },
   {
@@ -58,10 +54,10 @@ const HERO_SLIDES = [
     tagline: "Land of High Mountain Passes",
     title: "Conquer Majestic Peaks & Crystal Lakes",
     description:
-      "Experience high-altitude serenity, vibrant Buddhist monasteries, and starlit Himalayan nights with seamless day-by-day itineraries.",
+      "Experience high-altitude serenity, vibrant monasteries, and starlit Himalayan nights with seamless day-by-day itineraries.",
     image:
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=85&w=2400&auto=format&fit=crop",
-    vibe: "Adventure & Mountains",
+    vibe: "Adventure & Peaks",
     rating: "4.92",
   },
   {
@@ -70,7 +66,7 @@ const HERO_SLIDES = [
     tagline: "The World's Oldest Living City",
     title: "Immerse in Timeless Ghats & Ganga Aarti",
     description:
-      "Witness mesmerizing evening rituals along the sacred Ganges, navigate ancient lanes, and immerse yourself in profound spiritual heritage.",
+      "Witness mesmerizing evening rituals along the sacred Ganges, navigate ancient lanes, and explore profound cultural roots.",
     image:
       "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=85&w=2400&auto=format&fit=crop",
     vibe: "Spiritual & Ancient",
@@ -80,12 +76,12 @@ const HERO_SLIDES = [
     id: "goa",
     city: "North & South Goa",
     tagline: "Sun, Sand & Coastal Serenity",
-    title: "Golden Coastlines & Vibrant Nights",
+    title: "Golden Coastlines & Vibrant Seaside Nights",
     description:
-      "From serene palm-fringed southern coves to pulsating seaside cafes, plan your ideal beach escape with instant cost estimates.",
+      "From serene palm-fringed southern coves to pulsating seaside cafes, plan your ideal coastal escape with instant budget tracking in ₹.",
     image:
       "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=85&w=2400&auto=format&fit=crop",
-    vibe: "Beaches & Coastal",
+    vibe: "Beaches & Cafes",
     rating: "4.85",
   },
 ];
@@ -97,8 +93,7 @@ const POPULAR_DESTINATIONS = [
     state: "Rajasthan",
     image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=700&auto=format&fit=crop&q=80",
     cost: "₹₹₹",
-    budgetPerDay: "₹2,800/day",
-    match: "99% Match",
+    budgetPerDay: "₹2,800 / day",
     tag: "Palaces & Forts",
   },
   {
@@ -106,8 +101,7 @@ const POPULAR_DESTINATIONS = [
     state: "Alleppey",
     image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=700&auto=format&fit=crop&q=80",
     cost: "₹₹",
-    budgetPerDay: "₹2,200/day",
-    match: "97% Match",
+    budgetPerDay: "₹2,200 / day",
     tag: "Backwaters & Tea",
   },
   {
@@ -115,8 +109,7 @@ const POPULAR_DESTINATIONS = [
     state: "Leh",
     image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=700&auto=format&fit=crop&q=80",
     cost: "₹₹₹",
-    budgetPerDay: "₹3,500/day",
-    match: "96% Match",
+    budgetPerDay: "₹3,500 / day",
     tag: "Mountains & Lakes",
   },
   {
@@ -124,27 +117,24 @@ const POPULAR_DESTINATIONS = [
     state: "Uttar Pradesh",
     image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=700&auto=format&fit=crop&q=80",
     cost: "₹",
-    budgetPerDay: "₹1,400/day",
-    match: "95% Match",
-    tag: "Ghats & Spiritual",
+    budgetPerDay: "₹1,400 / day",
+    tag: "Ghats & Heritage",
   },
   {
     name: "Goa",
     state: "West Coast",
     image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=700&auto=format&fit=crop&q=80",
     cost: "₹₹",
-    budgetPerDay: "₹2,400/day",
-    match: "94% Match",
-    tag: "Beaches & Cafes",
+    budgetPerDay: "₹2,400 / day",
+    tag: "Beaches & Sunsets",
   },
   {
     name: "Udaipur",
     state: "Rajasthan",
     image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=700&auto=format&fit=crop&q=80",
     cost: "₹₹₹",
-    budgetPerDay: "₹3,100/day",
-    match: "98% Match",
-    tag: "Lakes & Luxury",
+    budgetPerDay: "₹3,100 / day",
+    tag: "Lakes & Royalty",
   },
 ];
 
@@ -218,29 +208,27 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-sky-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       
       {/* ── IMMERSIVE TOP HERO STAGE ──────────────────────────── */}
-      <div className="relative w-full min-h-[580px] lg:min-h-[640px] flex flex-col justify-between overflow-hidden">
+      <div className="relative w-full min-h-[580px] lg:min-h-[620px] flex flex-col justify-between overflow-hidden bg-slate-950">
         
-        {/* Dynamic Background Image Carousel (Cross-fading) */}
+        {/* Dynamic Background Image Carousel (Cross-fading with natural opacity) */}
         {HERO_SLIDES.map((slide, index) => (
           <div
             key={slide.id}
             className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
-              index === currentSlide ? "opacity-60 scale-100" : "opacity-0 scale-105"
+              index === currentSlide ? "opacity-65" : "opacity-0"
             }`}
             style={{
               backgroundImage: `url('${slide.image}')`,
-              transitionProperty: "opacity, transform",
-              transitionDuration: "1000ms",
             }}
           />
         ))}
 
-        {/* Ambient Overlay for Readability (No heavy wash, just rich depth) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/30 to-transparent" />
+        {/* Ambient Natural Gradient Overlay for Clear Contrast (No Glass, No Fake Tint) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-slate-950/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/20 to-transparent" />
 
         {/* Top Navbar Sitting Directly on the Hero Image */}
         <Navbar transparent={true} />
@@ -252,67 +240,59 @@ export default function Dashboard() {
             {/* Left Hero Text Column */}
             <div className="lg:col-span-8 space-y-6">
               
-              {/* Dynamic Greeting & Badge */}
-              <motion.div
-                key={`greeting-${currentSlide}`}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-wrap items-center gap-3"
-              >
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/20 backdrop-blur-md border border-sky-400/30 text-xs font-bold text-sky-200 shadow-sm">
-                  <Sparkles className="w-3.5 h-3.5 text-sky-300 animate-pulse" />
-                  <span>{getGreeting()}, {user?.name ? user.name.split(" ")[0] : "Daksh"}! 🇮🇳</span>
+              {/* Warm Travel Greeting Badge */}
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500 text-slate-950 font-bold text-xs shadow-sm">
+                  <span>🌍 Explore India</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white/90">
-                  <MapPin className="w-3 h-3 text-sky-300" />
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 border border-white/20 text-xs font-semibold text-white">
+                  <MapPin className="w-3.5 h-3.5 text-amber-400" />
                   <span>{currentHero.city}</span>
                 </div>
-              </motion.div>
+              </div>
 
-              {/* Main Headline */}
+              {/* Main Headline & Description */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`hero-title-${currentSlide}`}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  className="space-y-4 max-w-2xl"
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
+                  className="space-y-3.5 max-w-2xl"
                 >
                   <h1
-                    className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]"
-                    style={{ textShadow: "0 4px 24px rgba(0,0,0,0.6)" }}
+                    className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-[1.15]"
+                    style={{ textShadow: "0 2px 16px rgba(0,0,0,0.6)" }}
                   >
                     {currentHero.title}
                   </h1>
 
                   <p
-                    className="text-white/90 text-sm sm:text-base lg:text-lg font-medium leading-relaxed max-w-xl"
-                    style={{ textShadow: "0 2px 12px rgba(0,0,0,0.5)" }}
+                    className="text-white/90 text-sm sm:text-base font-normal leading-relaxed max-w-xl"
+                    style={{ textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}
                   >
-                    {currentHero.description}
+                    {getGreeting()}, <strong className="font-semibold text-amber-300">{user?.name ? user.name.split(" ")[0] : "Daksh"}</strong>! {currentHero.description}
                   </p>
                 </motion.div>
               </AnimatePresence>
 
               {/* Action Buttons & Carousel Arrows */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-3.5 pt-2">
                 <Button
                   onClick={() => navigate("/trips/new")}
-                  className="h-12 px-6 rounded-2xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm shadow-lg shadow-sky-500/30 gap-2 transition-all hover:scale-105 cursor-pointer"
+                  className="h-12 px-6 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md gap-2 transition-transform hover:scale-102 cursor-pointer"
                 >
                   <PlusCircle className="w-4 h-4" />
-                  Plan a New Journey
+                  <span>Plan a New Journey</span>
                 </Button>
 
                 <Button
-                  variant="outline"
                   onClick={() => navigate("/cities")}
-                  className="h-12 px-6 rounded-2xl bg-white/15 hover:bg-white/25 text-white border-white/25 backdrop-blur-md font-semibold text-sm gap-2 transition-all hover:scale-105 cursor-pointer"
+                  className="h-12 px-6 rounded-full bg-white hover:bg-slate-100 text-slate-900 font-semibold text-sm gap-2 transition-transform hover:scale-102 cursor-pointer shadow-sm"
                 >
-                  <Compass className="w-4 h-4 text-sky-300" />
-                  Explore Destinations
+                  <Compass className="w-4 h-4 text-slate-700" />
+                  <span>Explore Destinations</span>
                 </Button>
 
                 {/* Slider Controls */}
@@ -320,14 +300,14 @@ export default function Dashboard() {
                   <button
                     onClick={prevSlide}
                     aria-label="Previous slide"
-                    className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-transform hover:scale-110 cursor-pointer"
+                    className="w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     onClick={nextSlide}
                     aria-label="Next slide"
-                    className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-transform hover:scale-110 cursor-pointer"
+                    className="w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
@@ -337,43 +317,42 @@ export default function Dashboard() {
 
             {/* Right Vignette Cards (Featured Destination Stack) */}
             <div className="hidden lg:flex lg:col-span-4 flex-col gap-3">
-              <div className="text-xs font-bold uppercase tracking-widest text-sky-300/90 mb-1 flex items-center gap-1.5">
+              <div className="text-xs font-bold uppercase tracking-wider text-amber-300 mb-0.5 flex items-center gap-1.5">
                 <Flame className="w-3.5 h-3.5 text-amber-400" />
-                Featured Escapes
+                <span>Featured Escapes</span>
               </div>
 
               {HERO_SLIDES.slice(0, 3).map((item, idx) => {
                 const isActive = idx === currentSlide;
                 return (
-                  <motion.div
+                  <div
                     key={item.id}
                     onClick={() => setCurrentSlide(idx)}
-                    whileHover={{ scale: 1.02 }}
-                    className={`relative rounded-2xl p-3 flex items-center gap-3.5 cursor-pointer transition-all duration-300 border ${
+                    className={`relative rounded-2xl p-3 flex items-center gap-3.5 cursor-pointer transition-all duration-200 border ${
                       isActive
-                        ? "bg-white/20 border-sky-400/80 shadow-lg shadow-sky-500/20 backdrop-blur-md ring-2 ring-sky-400/40"
-                        : "bg-white/10 border-white/15 hover:bg-white/15 backdrop-blur-sm"
+                        ? "bg-slate-900 border-amber-400 text-white shadow-lg ring-1 ring-amber-400"
+                        : "bg-black/50 border-white/15 hover:bg-black/70 text-white"
                     }`}
                   >
                     <img
                       src={item.image}
                       alt={item.city}
-                      className="w-16 h-16 rounded-xl object-cover shrink-0 border border-white/30 shadow-xs"
+                      className="w-14 h-14 rounded-xl object-cover shrink-0 border border-white/20"
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-bold text-white truncate">{item.city.split(",")[0]}</h4>
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-sky-500/30 text-sky-200 border border-sky-400/30">
+                        <h4 className="text-sm font-bold truncate">{item.city.split(",")[0]}</h4>
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
                           {item.vibe.split("&")[0]}
                         </span>
                       </div>
-                      <p className="text-xs text-white/75 truncate mt-0.5">{item.tagline}</p>
-                      <div className="flex items-center gap-1 text-[11px] text-amber-300 font-semibold mt-1">
-                        <Star className="w-3 h-3 fill-amber-300" />
+                      <p className="text-xs text-slate-300 truncate mt-0.5">{item.tagline}</p>
+                      <div className="flex items-center gap-1 text-[11px] text-amber-300 font-medium mt-1">
+                        <Star className="w-3 h-3 fill-amber-300 text-amber-300" />
                         <span>{item.rating}</span>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
@@ -385,15 +364,15 @@ export default function Dashboard() {
         <div className="relative z-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 -mb-10 sm:-mb-12">
           <form
             onSubmit={handleQuickSearch}
-            className="bg-white rounded-3xl p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-slate-100 text-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center"
+            className="bg-white rounded-2xl p-4 sm:p-5 shadow-xl border border-slate-200 text-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center"
           >
             {/* Destination input */}
             <div className="space-y-1 sm:border-r sm:border-slate-200 sm:pr-4">
-              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
                 Destination
               </label>
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-sky-600 shrink-0" />
+                <MapPin className="w-4 h-4 text-slate-700 shrink-0" />
                 <input
                   type="text"
                   value={searchCity}
@@ -406,18 +385,18 @@ export default function Dashboard() {
 
             {/* Travel Vibe */}
             <div className="space-y-1 sm:border-r sm:border-slate-200 sm:pr-4">
-              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
                 Holiday Vibe
               </label>
               <div className="flex items-center gap-2">
-                <Compass className="w-4 h-4 text-sky-600 shrink-0" />
+                <Compass className="w-4 h-4 text-slate-700 shrink-0" />
                 <select
                   value={selectedVibe}
                   onChange={(e) => setSelectedVibe(e.target.value)}
                   className="w-full text-sm font-semibold text-slate-800 bg-transparent border-none outline-none focus:ring-0 p-0 cursor-pointer"
                 >
                   <option value="All">All Experiences</option>
-                  <option value="Heritage">Forts & Heritage</option>
+                  <option value="Heritage">Palaces & Forts</option>
                   <option value="Beach">Beaches & Coastal</option>
                   <option value="Mountains">Himalayas & Trek</option>
                   <option value="Backwaters">Backwaters & Nature</option>
@@ -427,10 +406,10 @@ export default function Dashboard() {
 
             {/* Budget Range (in Rupees) */}
             <div className="space-y-1 sm:border-r sm:border-slate-200 sm:pr-4">
-              <label className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
                 Budget Tier
               </label>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <IndianRupee className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span className="text-sm font-semibold text-slate-800">
                   ₹1,500 – ₹8,000+ / day
@@ -442,7 +421,7 @@ export default function Dashboard() {
             <div className="flex items-center">
               <Button
                 type="submit"
-                className="w-full h-12 rounded-2xl bg-slate-950 hover:bg-sky-600 text-white font-bold text-sm shadow-md gap-2 transition-colors cursor-pointer"
+                className="w-full h-11 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-sm gap-2 transition-colors cursor-pointer"
               >
                 <Search className="w-4 h-4" />
                 <span>Search Trips</span>
@@ -453,60 +432,60 @@ export default function Dashboard() {
 
       </div>
 
-      {/* ── MAIN DASHBOARD BODY (LIGHT/CLEAN BACKGROUND) ─────────── */}
-      <main className="flex-1 bg-slate-900 pt-16 sm:pt-20 pb-16 px-4 sm:px-6 lg:px-8 space-y-12">
+      {/* ── MAIN DASHBOARD BODY (CLEAN LIGHT BACKGROUND) ─────────── */}
+      <main className="flex-1 bg-slate-50 pt-16 sm:pt-20 pb-16 px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="max-w-7xl mx-auto space-y-12">
 
           {/* Quick Analytics & Stats Row */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <div className="rounded-3xl bg-slate-800/80 border border-slate-700/60 p-6 flex items-center gap-4 shadow-sm hover:border-sky-500/40 transition-colors">
-              <div className="w-14 h-14 rounded-2xl bg-sky-500/15 border border-sky-400/30 text-sky-400 flex items-center justify-center shrink-0">
-                <Luggage className="w-7 h-7" />
+            <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 flex items-center gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center shrink-0 border border-slate-200">
+                <Luggage className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Planned Trips</p>
-                <h3 className="text-3xl font-black text-white mt-0.5">{loading ? "-" : totalTrips}</h3>
+                <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Planned Trips</p>
+                <h3 className="text-2xl font-bold text-slate-900 mt-0.5">{loading ? "-" : totalTrips}</h3>
               </div>
             </div>
 
-            <div className="rounded-3xl bg-slate-800/80 border border-slate-700/60 p-6 flex items-center gap-4 shadow-sm hover:border-emerald-500/40 transition-colors">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 text-emerald-400 flex items-center justify-center shrink-0">
-                <MapPin className="w-7 h-7" />
+            <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 flex items-center gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100">
+                <MapPin className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Stops</p>
-                <h3 className="text-3xl font-black text-white mt-0.5">{loading ? "-" : totalStops}</h3>
+                <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Total Stops</p>
+                <h3 className="text-2xl font-bold text-slate-900 mt-0.5">{loading ? "-" : totalStops}</h3>
               </div>
             </div>
 
-            <div className="rounded-3xl bg-slate-800/80 border border-slate-700/60 p-6 flex items-center gap-4 shadow-sm hover:border-amber-500/40 transition-colors">
-              <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-400/30 text-amber-400 flex items-center justify-center shrink-0">
-                <Calendar className="w-7 h-7" />
+            <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 flex items-center gap-4 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-100">
+                <Calendar className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Travel Days</p>
-                <h3 className="text-3xl font-black text-white mt-0.5">{loading ? "-" : totalDays}</h3>
+                <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Travel Days</p>
+                <h3 className="text-2xl font-bold text-slate-900 mt-0.5">{loading ? "-" : totalDays}</h3>
               </div>
             </div>
           </div>
 
           {/* ── Upcoming Itineraries Section ────────────────────── */}
-          <div className="space-y-6">
+          <div className="space-y-5">
             <div className="flex items-center justify-between">
               <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-2xl font-extrabold text-white tracking-tight">Your Upcoming Itineraries</h2>
-                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                <div className="flex items-center gap-2.5">
+                  <h2 className="text-xl font-bold text-slate-900 tracking-tight">Your Upcoming Itineraries</h2>
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
                     {trips.length} Active
                   </span>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">Manage and track your customized route plans</p>
+                <p className="text-xs text-slate-500 mt-0.5">Manage and track your customized route plans</p>
               </div>
 
               {trips.length > 0 && (
                 <Link
                   to="/trips"
-                  className="text-xs font-bold text-sky-400 hover:text-sky-300 hover:underline flex items-center gap-1"
+                  className="text-xs font-semibold text-slate-900 hover:text-amber-600 hover:underline flex items-center gap-1"
                 >
                   View all ({trips.length})
                   <ChevronRight className="w-4 h-4" />
@@ -517,7 +496,7 @@ export default function Dashboard() {
             {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[1, 2, 3].map((n) => (
-                  <div key={n} className="animate-pulse rounded-3xl bg-slate-800 border border-slate-700 h-80" />
+                  <div key={n} className="animate-pulse rounded-2xl bg-white border border-slate-200 h-72" />
                 ))}
               </div>
             ) : trips.length > 0 ? (
@@ -525,52 +504,51 @@ export default function Dashboard() {
                 {trips.map((trip) => {
                   const duration = getDurationDays(trip.startDate, trip.endDate);
                   return (
-                    <motion.div
+                    <div
                       key={trip.id}
-                      whileHover={{ y: -4 }}
-                      className="rounded-3xl overflow-hidden bg-slate-800/90 border border-slate-700/70 hover:border-sky-500/50 shadow-md transition-all duration-300 flex flex-col justify-between group"
+                      className="rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between group"
                     >
                       <div>
                         {/* Trip Card Cover */}
-                        <div className="relative h-48 w-full overflow-hidden bg-slate-900">
+                        <div className="relative h-44 w-full overflow-hidden bg-slate-100">
                           <img
                             src={
                               trip.coverPhoto ||
                               "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop&q=80"
                             }
                             alt={trip.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
                           
                           <div className="absolute top-3 right-3">
-                            <span className="text-xs font-bold px-3 py-1 rounded-full bg-sky-500 text-white shadow-md">
+                            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 shadow-xs">
                               {duration} {duration === 1 ? "Day" : "Days"}
                             </span>
                           </div>
 
                           <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
-                            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20">
+                            <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-black/60 border border-white/20">
                               {trip.stopCount || 0} {trip.stopCount === 1 ? "Stop" : "Stops"}
                             </span>
                           </div>
                         </div>
 
                         {/* Trip Details */}
-                        <div className="p-6 space-y-3">
-                          <h3 className="font-extrabold text-xl text-white group-hover:text-sky-400 transition-colors line-clamp-1">
+                        <div className="p-5 space-y-2.5">
+                          <h3 className="font-bold text-lg text-slate-900 group-hover:text-amber-600 transition-colors line-clamp-1">
                             {trip.name}
                           </h3>
 
-                          <div className="flex items-center gap-2 text-xs text-slate-300 font-medium">
-                            <Calendar className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+                            <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                             <span>
                               {formatDate(trip.startDate)} – {formatDate(trip.endDate)}
                             </span>
                           </div>
 
                           {trip.description && (
-                            <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                            <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
                               {trip.description}
                             </p>
                           )}
@@ -578,11 +556,11 @@ export default function Dashboard() {
                       </div>
 
                       {/* Card Footer Actions */}
-                      <div className="p-6 pt-0 flex items-center gap-2 border-t border-slate-700/60 mt-2 pt-4">
+                      <div className="p-5 pt-0 flex items-center gap-2 border-t border-slate-100 mt-2 pt-3">
                         <Button
                           variant="default"
                           size="sm"
-                          className="flex-1 h-10 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs gap-1.5 cursor-pointer shadow-xs"
+                          className="flex-1 h-9 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs gap-1.5 cursor-pointer shadow-xs"
                           onClick={() => navigate(`/trips/${trip.id}`)}
                         >
                           <span>View Itinerary</span>
@@ -591,31 +569,31 @@ export default function Dashboard() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="h-10 px-4 rounded-xl border-slate-700 hover:bg-slate-700 text-slate-200 text-xs font-semibold cursor-pointer"
+                          className="h-9 px-3.5 rounded-xl border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium cursor-pointer"
                           onClick={() => navigate(`/trips/${trip.id}/edit`)}
                         >
                           Edit
                         </Button>
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
               </div>
             ) : (
               /* Empty Passport State */
-              <div className="rounded-3xl border-2 border-dashed border-slate-700 bg-slate-800/40 p-12 text-center space-y-4">
-                <div className="w-16 h-16 rounded-3xl bg-sky-500/15 border border-sky-400/30 text-sky-400 mx-auto flex items-center justify-center">
-                  <Plane className="w-8 h-8 -rotate-45" />
+              <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center space-y-4 shadow-xs">
+                <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 mx-auto flex items-center justify-center border border-amber-100">
+                  <Plane className="w-7 h-7 -rotate-45" />
                 </div>
-                <div className="max-w-md mx-auto space-y-1.5">
-                  <h3 className="font-extrabold text-xl text-white">Your Travel Passport is Empty</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                <div className="max-w-md mx-auto space-y-1">
+                  <h3 className="font-bold text-lg text-slate-900">Your Travel Passport is Empty</h3>
+                  <p className="text-xs text-slate-500 leading-relaxed">
                     Start crafting your multi-city Indian adventure in minutes. Pick your dream destinations, organize stops, and track budgets in ₹.
                   </p>
                 </div>
                 <Button
                   onClick={() => navigate("/trips/new")}
-                  className="h-11 px-6 rounded-2xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-sm gap-2 shadow-lg shadow-sky-500/25 cursor-pointer"
+                  className="h-10 px-5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm gap-2 shadow-xs cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   Create Your First Trip
@@ -625,17 +603,17 @@ export default function Dashboard() {
           </div>
 
           {/* ── Trending Indian Destinations Showcase ────────────── */}
-          <div className="space-y-6 pt-4">
+          <div className="space-y-5 pt-2">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-extrabold text-white tracking-tight">Popular Destinations Across India</h2>
-                <p className="text-xs text-slate-400 mt-1">Handpicked traveler-favorite cities to spark your next adventure</p>
+                <h2 className="text-xl font-bold text-slate-900 tracking-tight">Popular Destinations Across India</h2>
+                <p className="text-xs text-slate-500 mt-0.5">Handpicked traveler-favorite cities to spark your next adventure</p>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/cities")}
-                className="text-xs font-bold text-sky-400 hover:text-sky-300 hover:bg-slate-800 gap-1 rounded-xl"
+                className="text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100 gap-1 rounded-lg cursor-pointer"
               >
                 <span>View All Cities</span>
                 <ChevronRight className="w-4 h-4" />
@@ -644,43 +622,42 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               {POPULAR_DESTINATIONS.map((dest) => (
-                <motion.div
+                <div
                   key={dest.name}
-                  whileHover={{ y: -4 }}
-                  className="group relative rounded-3xl overflow-hidden border border-slate-700/60 bg-slate-800/80 hover:border-sky-400/60 shadow-md transition-all duration-300 cursor-pointer flex flex-col justify-between"
+                  className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-white hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between"
                   onClick={() =>
                     navigate(
                       `/trips/new?name=${encodeURIComponent(dest.name + " Gateway")}&city=${encodeURIComponent(dest.name)}`
                     )
                   }
                 >
-                  <div className="h-36 w-full overflow-hidden bg-slate-900 relative">
+                  <div className="h-32 w-full overflow-hidden bg-slate-100 relative">
                     <img
                       src={dest.image}
                       alt={dest.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
                     
-                    <span className="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white border border-white/20 backdrop-blur-xs">
+                    <span className="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white">
                       {dest.cost}
                     </span>
                   </div>
 
-                  <div className="p-3.5 space-y-1">
-                    <h4 className="font-bold text-sm text-white group-hover:text-sky-300 transition-colors">
+                  <div className="p-3 space-y-1">
+                    <h4 className="font-bold text-sm text-slate-900 group-hover:text-amber-600 transition-colors">
                       {dest.name}
                     </h4>
-                    <p className="text-[11px] text-slate-400 truncate">{dest.tag}</p>
-                    <p className="text-[10px] text-emerald-400 font-bold">{dest.budgetPerDay}</p>
+                    <p className="text-[11px] text-slate-500 truncate">{dest.tag}</p>
+                    <p className="text-[11px] text-emerald-700 font-semibold">{dest.budgetPerDay}</p>
                   </div>
 
-                  <div className="px-3.5 pb-3">
-                    <div className="w-full py-1.5 rounded-xl bg-slate-700/50 group-hover:bg-sky-500 group-hover:text-white text-slate-300 text-center text-xs font-bold transition-colors">
+                  <div className="px-3 pb-3">
+                    <div className="w-full py-1.5 rounded-lg bg-slate-100 group-hover:bg-slate-900 group-hover:text-white text-slate-700 text-center text-xs font-semibold transition-colors">
                       + Plan Trip
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
