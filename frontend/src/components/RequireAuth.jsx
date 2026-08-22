@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
+import useAuthStore from "../store/authStore";
 
 export default function RequireAuth() {
-  // TODO: integrate with authStore
-  const isAuthenticated = false; // Mock
+  const token = useAuthStore((state) => state.token);
 
-  if (!isAuthenticated) {
+  if (!token) {
     return <Navigate to="/login" replace />;
   }
 

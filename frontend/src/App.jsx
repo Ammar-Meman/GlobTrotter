@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RequireAuth from "./components/RequireAuth";
+import useAuthStore from "./store/authStore";
 
 // Lazy-loaded or standard imports for pages
 import Login from "./pages/Login";
@@ -19,6 +21,12 @@ import AdminDashboard from "./pages/AdminDashboard";
 import PublicShare from "./pages/PublicShare";
 
 export default function App() {
+  const hydrate = useAuthStore((state) => state.hydrate);
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
   return (
     <BrowserRouter>
       <Routes>
