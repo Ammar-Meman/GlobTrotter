@@ -7,6 +7,19 @@ cloudinary.config({
 });
 
 export const uploadBufferToCloudinary = (fileBuffer, folder = "globetrotter") => {
+  if (
+    !process.env.CLOUDINARY_CLOUD_NAME ||
+    !process.env.CLOUDINARY_API_KEY ||
+    !process.env.CLOUDINARY_API_SECRET
+  ) {
+    const base64 = fileBuffer.toString("base64");
+    const dataUri = `data:image/jpeg;base64,${base64}`;
+    return Promise.resolve({
+      secure_url: dataUri,
+      url: dataUri,
+    });
+  }
+
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
@@ -15,7 +28,13 @@ export const uploadBufferToCloudinary = (fileBuffer, folder = "globetrotter") =>
       },
       (error, result) => {
         if (error) {
-          return reject(error);
+          console.warn("[cloudinary] Upload error, falling back to data URI:", error.message);
+          const base64 = fileBuffer.toString("base64");
+          const dataUri = `data:image/jpeg;base64,${base64}`;
+          return resolve({
+            secure_url: dataUri,
+            url: dataUri,
+          });
         }
         resolve(result);
       }
