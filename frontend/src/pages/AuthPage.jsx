@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import {
   Mail,
   Lock,
@@ -137,87 +137,92 @@ export default function AuthPage({ initialMode = "login" }) {
       {/* ── Desktop Layout ────────────────────────────────────── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto hidden lg:block" style={{ minHeight: 680 }}>
 
-        {/* Info panel – fades on the side opposite to the card */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={isSignup ? "info-r" : "info-l"}
-            className={`absolute inset-y-0 w-1/2 flex flex-col justify-center px-10 ${isSignup ? "right-0" : "left-0"}`}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -18 }}
-            transition={{ duration: 0.45, ease: "easeInOut" }}
-          >
-            {/* Logo – stands out with accent ring + size */}
-            <div className="flex items-center gap-4 mb-8">
-              <div
-                className="relative w-14 h-14 flex items-center justify-center rounded-2xl border-2 border-blue-400/40"
-                style={{ boxShadow: "0 0 20px rgba(59,130,246,0.2), inset 0 0 12px rgba(59,130,246,0.08)" }}
-              >
-                <svg className="absolute inset-1 w-[calc(100%-8px)] h-[calc(100%-8px)] text-white/40" viewBox="0 0 36 36" fill="none">
-                  <circle cx="18" cy="18" r="16" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
-                </svg>
-                <svg className="w-7 h-7 text-blue-300 -rotate-45 relative z-10 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
-                </svg>
-              </div>
-              <div className="flex flex-col">
-                <span
-                  className="text-4xl font-black tracking-tight text-white leading-none"
-                  style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5), 0 0 30px rgba(59,130,246,0.15)" }}
+        {/* Info panels – both render, crossfade via opacity for seamless transition */}
+        {[false, true].map((forSignup) => {
+          const side = forSignup ? "right-0" : "left-0";
+          const isActive = isSignup === forSignup;
+          const ftrs = forSignup ? signupFeatures : loginFeatures;
+          return (
+            <motion.div
+              key={forSignup ? "info-r" : "info-l"}
+              className={`absolute inset-y-0 w-1/2 flex flex-col justify-center px-10 ${side}`}
+              initial={false}
+              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 12 }}
+              transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+              style={{ pointerEvents: isActive ? "auto" : "none" }}
+            >
+              {/* Logo – accent ring + soft sky color */}
+              <div className="flex items-center gap-4 mb-8">
+                <div
+                  className="relative w-14 h-14 flex items-center justify-center rounded-2xl border-2 border-blue-400/40"
+                  style={{ boxShadow: "0 0 20px rgba(59,130,246,0.2), inset 0 0 12px rgba(59,130,246,0.08)" }}
                 >
-                  GlobeTrotter
-                </span>
-                <span className="text-xs font-semibold text-blue-300/80 tracking-widest uppercase mt-1">Your Journey Starts Here</span>
-              </div>
-            </div>
-
-            {/* Headline */}
-            <h1
-              className="text-5xl lg:text-[58px] font-extrabold text-white tracking-tight leading-[1.1] mb-4"
-              style={{ textShadow: "0 2px 20px rgba(0,0,0,0.4)" }}
-            >
-              Plan. Explore. <br />
-              <span className="text-blue-400">Experience.</span>
-            </h1>
-
-            <p
-              className="text-white/90 text-lg font-medium leading-relaxed max-w-lg mb-8"
-              style={{ textShadow: "0 1px 8px rgba(0,0,0,0.35)" }}
-            >
-              Your journey begins here. Plan personalized multi-city trips, discover amazing destinations and make memories that last a lifetime.
-            </p>
-
-            {/* Feature rows */}
-            <div className="space-y-4 max-w-lg">
-              {features.map((f, i) => {
-                const Icon = f.icon;
-                return (
-                  <motion.div
-                    key={f.title}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15 + i * 0.1, duration: 0.35 }}
-                    className="flex items-center gap-4 group"
+                  <svg className="absolute inset-1 w-[calc(100%-8px)] h-[calc(100%-8px)] text-white/40" viewBox="0 0 36 36" fill="none">
+                    <circle cx="18" cy="18" r="16" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
+                  </svg>
+                  <svg className="w-7 h-7 text-blue-300 -rotate-45 relative z-10 drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
+                  </svg>
+                </div>
+                <div className="flex flex-col">
+                  <span
+                    className="text-4xl font-black tracking-tight text-sky-200 leading-none"
+                    style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5), 0 0 30px rgba(56,189,248,0.2)" }}
                   >
-                    <div className="w-12 h-12 rounded-2xl bg-white/15 border border-white/25 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105">
-                      <Icon className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-base text-white" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.3)" }}>{f.title}</h4>
-                      <p className="text-sm text-white/75 font-medium">{f.desc}</p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+                    GlobeTrotter
+                  </span>
+                  <span className="text-xs font-semibold text-blue-300/80 tracking-widest uppercase mt-1">Your Journey Starts Here</span>
+                </div>
+              </div>
 
-        {/* Form card – slides left↔right with spring */}
+              {/* Headline */}
+              <h1
+                className="text-5xl lg:text-[58px] font-extrabold text-white tracking-tight leading-[1.1] mb-4"
+                style={{ textShadow: "0 2px 20px rgba(0,0,0,0.4)" }}
+              >
+                Plan. Explore. <br />
+                <span className="text-blue-400">Experience.</span>
+              </h1>
+
+              <p
+                className="text-white/90 text-lg font-medium leading-relaxed max-w-lg mb-8"
+                style={{ textShadow: "0 1px 8px rgba(0,0,0,0.35)" }}
+              >
+                Your journey begins here. Plan personalized multi-city trips, discover amazing destinations and make memories that last a lifetime.
+              </p>
+
+              {/* Feature rows */}
+              <div className="space-y-4 max-w-lg">
+                {ftrs.map((f, i) => {
+                  const Icon = f.icon;
+                  return (
+                    <motion.div
+                      key={f.title}
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 16 }}
+                      transition={{ delay: isActive ? 0.25 + i * 0.1 : 0, duration: 0.4, ease: "easeOut" }}
+                      className="flex items-center gap-4 group"
+                    >
+                      <div className="w-12 h-12 rounded-2xl bg-white/15 border border-white/25 flex items-center justify-center shrink-0 transition-transform group-hover:scale-105">
+                        <Icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-base text-white" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.3)" }}>{f.title}</h4>
+                        <p className="text-sm text-white/75 font-medium">{f.desc}</p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          );
+        })}
+
+        {/* Form card – slides left↔right with smooth spring */}
         <motion.div
           className="absolute inset-y-0 w-1/2 flex items-center px-6"
           animate={{ left: isSignup ? "0%" : "50%" }}
-          transition={{ type: "spring", stiffness: 170, damping: 26 }}
+          transition={{ type: "spring", stiffness: 100, damping: 22, mass: 1.1 }}
         >
           <div className="w-full bg-white rounded-[32px] p-10 sm:p-12 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.3)] border border-slate-100 flex flex-col space-y-6">
             <FormContent
