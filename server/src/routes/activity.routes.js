@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as activityController from "../controllers/activity.controller.js";
+import * as activityDiscoveryController from "../controllers/activityDiscovery.controller.js";
 import { requireAuth } from "../middleware/auth.middleware.js";
 import { validateBody } from "../middleware/validate.middleware.js";
 import {
@@ -9,6 +10,9 @@ import {
 } from "../validators/activity.validator.js";
 
 const activityRouter = Router();
+
+// GET /api/activities/search?city=...&type=...&maxCost=...
+activityRouter.get("/search", requireAuth, activityDiscoveryController.searchActivities);
 
 activityRouter.put("/:id", requireAuth, validateBody(updateActivitySchema), activityController.updateActivity);
 activityRouter.delete("/:id", requireAuth, activityController.deleteActivity);
