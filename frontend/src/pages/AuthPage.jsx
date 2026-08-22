@@ -57,8 +57,9 @@ const signupFeatures = [
 ];
 
 /* ── Smooth Transition Config ─────────────────────────────── */
-const SMOOTH_EASE = [0.25, 1, 0.5, 1]; // Fluid cubic-bezier for natural physical feel
-const DURATION = 0.65;
+const SMOOTH_EASE = [0.22, 1, 0.36, 1]; // Gentle, silky cubic-bezier
+const DURATION = 0.95; // Slightly slower, deliberate transition
+const FORM_DELAY = 0.12; // Subtle delay so motion initiates cleanly before content blooms
 
 export default function AuthPage({ initialMode = "login" }) {
   const [isSignup, setIsSignup] = useState(initialMode === "signup");
@@ -262,7 +263,7 @@ export default function AuthPage({ initialMode = "login" }) {
                 key={isSignup ? "h2-signup" : "h2-login"}
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.4, delay: FORM_DELAY }}
                 className="text-3xl font-extrabold text-slate-950 tracking-tight"
               >
                 {!isSignup ? "Welcome Back!" : "Create Your Account"}
@@ -271,7 +272,7 @@ export default function AuthPage({ initialMode = "login" }) {
                 key={isSignup ? "p-signup" : "p-login"}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.05 }}
+                transition={{ duration: 0.4, delay: FORM_DELAY + 0.05 }}
                 className="text-sm text-slate-500"
               >
                 {!isSignup
@@ -293,7 +294,7 @@ export default function AuthPage({ initialMode = "login" }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.35 }}
+                transition={{ duration: 0.45, delay: FORM_DELAY }}
                 onSubmit={hsLogin(onLogin)}
                 className="space-y-5"
               >
@@ -358,7 +359,7 @@ export default function AuthPage({ initialMode = "login" }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.35 }}
+                transition={{ duration: 0.45, delay: FORM_DELAY }}
                 onSubmit={hsSignup(onSignup)}
                 className="space-y-4"
               >
