@@ -24,14 +24,14 @@ import { Label } from "@/components/ui/label";
 
 /* ── Validation Schemas ───────────────────────────────────── */
 const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().trim().email("Please enter a valid email address"),
   password: z.string().min(1, "Password is required"),
 });
 
 const signupSchema = z
   .object({
-    name: z.string().min(2, "Full name must be at least 2 characters"),
-    email: z.string().email("Please enter a valid email address"),
+    name: z.string().trim().min(2, "Full name must be at least 2 characters"),
+    email: z.string().trim().email("Please enter a valid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string().min(1, "Please confirm your password"),
     agreeTerms: z.boolean().refine((v) => v, {
@@ -95,10 +95,14 @@ export default function AuthPage({ initialMode = "login" }) {
   const onLogin = async (v) => {
     setServerError("");
     try {
-      const d = await api.post("/auth/login", v);
+      const d = await api.post("/auth/login", {
+        email: v.email.trim(),
+        password: v.password,
+      });
       loginAction(d.token, d.user);
       navigate("/dashboard");
     } catch (e) {
+      console.error("Login error:", e);
       setServerError(e.message || "Invalid email or password.");
     }
   };
@@ -114,6 +118,7 @@ export default function AuthPage({ initialMode = "login" }) {
       loginAction(d.token, d.user);
       navigate("/dashboard");
     } catch (e) {
+      console.error("Signup error:", e);
       setServerError(e.message || "Failed to create account.");
     }
   };
@@ -127,6 +132,18 @@ export default function AuthPage({ initialMode = "login" }) {
   };
 
   const isSub = isSignup ? subSignup : subLogin;
+
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth >= 1024 : true
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 1024px)");
+    const handler = (e) => setIsDesktop(e.matches);
+    setIsDesktop(mql.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
 
   return (
     <div className="min-h-screen w-full relative flex items-center justify-center p-4 sm:p-6 lg:p-12 bg-slate-950 overflow-hidden font-sans select-none">
@@ -153,7 +170,8 @@ export default function AuthPage({ initialMode = "login" }) {
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-slate-950/15 to-slate-950/20" />
 
       {/* ── Desktop Layout (Two Column Morphing Stage) ───────── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto hidden lg:block" style={{ minHeight: 680 }}>
+      {isDesktop && (
+        <div className="relative z-10 w-full max-w-7xl mx-auto hidden lg:block" style={{ minHeight: 680 }}>
 
         {/* Info Panels (Cross-fading on Left / Right without abrupt jumps) */}
         {[false, true].map((forSignup) => {
@@ -486,9 +504,11 @@ export default function AuthPage({ initialMode = "login" }) {
           </motion.div>
         </motion.div>
       </div>
+      )}
 
       {/* ── Mobile Layout (Responsive Stacked View) ─────────── */}
-      <div className="relative z-10 w-full max-w-md mx-auto lg:hidden space-y-6">
+      {!isDesktop && (
+        <div className="relative z-10 w-full max-w-md mx-auto lg:hidden space-y-6">
         <div className="flex items-center gap-3 mb-2">
           <div
             className="relative w-11 h-11 flex items-center justify-center rounded-xl border-2 border-sky-400/40"
@@ -671,6 +691,7 @@ export default function AuthPage({ initialMode = "login" }) {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }
