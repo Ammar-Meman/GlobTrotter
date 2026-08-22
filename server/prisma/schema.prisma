@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  password     String
+  name         String
+  photoUrl     String?
+  language     String   @default("en")
+  isAdmin      Boolean  @default(false)
+  trips        Trip[]
+  savedCities  SavedDestination[]
+  createdAt    DateTime @default(now())
+}
+
+model Trip {
+  id          String   @id @default(uuid())
+  name        String
+  startDate   DateTime
+  endDate     DateTime
+  description String?
+  coverPhoto  String?
+  shareId     String   @unique @default(uuid())
+  isPublic    Boolean  @default(false)
+  budgetLimit Float?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stops       Stop[]
+  createdAt   DateTime @default(now())
+}
+
+model Stop {
+  id         String     @id @default(uuid())
+  cityName   String
+  country    String?
+  latitude   Float?
+  longitude  Float?
+  costIndex  Float?
+  popularity Int?
+  startDate  DateTime
+  endDate    DateTime
+  order      Int
+  tripId     String
+  trip       Trip       @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  activities Activity[]
+}
+
+model Activity {
+  id          String  @id @default(uuid())
+  name        String
+  type        String
+  category    String   // transport | stay | activity | meal
+  cost        Float
+  duration    Int?
+  description String?
+  imageUrl    String?
+  order       Int      @default(0)
+  stopId      String
+  stop        Stop     @relation(fields: [stopId], references: [id], onDelete: Cascade)
+}
+
+model SavedDestination {
+  id       String @id @default(uuid())
+  cityName String
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
