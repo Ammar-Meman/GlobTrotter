@@ -12,7 +12,7 @@ import {
   X,
   Check,
   Calendar,
-  DollarSign,
+  IndianRupee,
   Utensils,
   Landmark,
   Layers,
@@ -559,7 +559,7 @@ export default function CitySearch() {
           {/* Row 3: Cost Level Filter */}
           <div className="flex items-center gap-2 pt-1 border-t border-border/40 text-xs">
             <span className="text-muted-foreground font-medium flex items-center gap-1">
-              <DollarSign className="w-3.5 h-3.5" />
+              <IndianRupee className="w-3.5 h-3.5" />
               Cost Tier:
             </span>
             <div className="flex items-center gap-1.5 overflow-x-auto">
@@ -924,7 +924,7 @@ export default function CitySearch() {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
               <div className="p-3.5 rounded-xl bg-secondary/50 border border-border/60 space-y-1">
                 <span className="text-[11px] text-muted-foreground font-semibold flex items-center gap-1">
-                  <DollarSign className="w-3.5 h-3.5 text-emerald-500" />
+                  <IndianRupee className="w-3.5 h-3.5 text-emerald-500" />
                   Estimated Budget
                 </span>
                 <p className="font-bold text-sm text-foreground">~${activeCityDetail.dailyBudget} / day</p>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { Search, X, MapPin, TrendingUp, DollarSign, Loader2 } from "lucide-react";
+import { Search, X, MapPin, TrendingUp, IndianRupee, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import api from "../../lib/api";
 
@@ -104,7 +104,7 @@ export default function CitySearchModal({ open, onClose, onSelect }) {
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 <div className="flex items-center gap-1 text-xs text-muted-foreground" title="Cost Index">
-                  <DollarSign className="w-3 h-3" />
+                  <IndianRupee className="w-3 h-3" />
                   {city.costIndex}
                 </div>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground" title="Popularity">

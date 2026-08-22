@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { Search, X, Clock, DollarSign, Loader2, Plus, Sparkles } from "lucide-react";
+import { Search, X, Clock, IndianRupee, Loader2, Plus, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 import api from "../../lib/api";
 
@@ -111,7 +111,7 @@ export default function ActivitySearchModal({ open, onClose, cityName, onAdd }) 
                     {activity.type}
                   </span>
                   <span className="flex items-center gap-0.5 text-xs text-muted-foreground">
-                    <DollarSign className="w-3 h-3" />${activity.estimatedCost}
+                    <IndianRupee className="w-3 h-3" />₹{activity.estimatedCost}
                   </span>
                 </div>
               </div>

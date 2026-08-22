@@ -1,4 +1,4 @@
-import { Clock, DollarSign, Pencil, Trash2, Eye } from "lucide-react";
+import { Clock, IndianRupee, Pencil, Trash2, Eye } from "lucide-react";
 
 const CATEGORY_COLORS = {
   transport: "bg-blue-500/10 text-blue-600 border-blue-500/20",
@@ -86,7 +86,7 @@ export default function ActivityCard({ activity, onEdit, onRemove, onQuickView, 
 
         <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
-            <DollarSign className="w-3 h-3" />${cost}
+            <IndianRupee className="w-3 h-3" />₹{cost}
           </span>
           {duration > 0 && (
             <span className="flex items-center gap-1">
