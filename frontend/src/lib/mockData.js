@@ -298,6 +298,29 @@ export async function mockApi(endpoint, options = {}) {
     };
   }
 
+  // Admin Stats endpoint
+  if (endpoint === "/admin/stats" && method === "GET") {
+    return {
+      totalUsers: 48,
+      totalTrips: 92,
+      topCities: [
+        { cityName: "Paris", count: 28 },
+        { cityName: "Tokyo", count: 24 },
+        { cityName: "Rome", count: 19 },
+        { cityName: "Kyoto", count: 15 },
+        { cityName: "Barcelona", count: 12 },
+      ],
+      topActivities: [
+        { name: "Louvre Museum Tour", count: 22 },
+        { name: "Seine Sunset Dinner Cruise", count: 18 },
+        { name: "Colosseum Arena Walk", count: 16 },
+        { name: "Sagrada Familia Exploration", count: 14 },
+        { name: "Shibuya Crossing Food Tour", count: 11 },
+      ],
+      activeUsersLast7Days: 26,
+    };
+  }
+
   // Fallback
   throw { code: "NOT_FOUND", message: `Mock route ${method} ${endpoint} not implemented` };
 }
