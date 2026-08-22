@@ -152,6 +152,13 @@ let MOCK_TRIPS = [
   }
 ];
 
+let MOCK_SAVED_DESTINATIONS = [
+  { id: "sd-1", cityName: "Kyoto" },
+  { id: "sd-2", cityName: "Reykjavik" },
+  { id: "sd-3", cityName: "Zurich" },
+  { id: "sd-4", cityName: "Vancouver" },
+];
+
 export async function mockApi(endpoint, options = {}) {
   // Simulate natural network delay
   await new Promise((resolve) => setTimeout(resolve, 300));
@@ -179,7 +186,7 @@ export async function mockApi(endpoint, options = {}) {
 
   // Upload Route (Cloudinary Mock)
   if (endpoint === "/uploads" && method === "POST") {
-    return { url: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&auto=format&fit=crop&q=80" };
+    return { url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80" };
   }
 
   // User Profile Routes
@@ -187,6 +194,30 @@ export async function mockApi(endpoint, options = {}) {
     const body = options.body ? (typeof options.body === "string" ? JSON.parse(options.body) : options.body) : {};
     MOCK_USER = { ...MOCK_USER, ...body };
     return MOCK_USER;
+  }
+
+  if (endpoint === "/users/me" && method === "DELETE") {
+    MOCK_TRIPS = [];
+    return { message: "account deleted" };
+  }
+
+  // Saved Destinations Routes
+  if (endpoint === "/users/me/saved-destinations" && method === "GET") {
+    return MOCK_SAVED_DESTINATIONS;
+  }
+
+  if (endpoint === "/users/me/saved-destinations" && method === "POST") {
+    const body = options.body ? (typeof options.body === "string" ? JSON.parse(options.body) : options.body) : {};
+    const newDest = { id: "sd-" + Date.now(), cityName: body.cityName || "New Destination" };
+    MOCK_SAVED_DESTINATIONS.push(newDest);
+    return newDest;
+  }
+
+  const savedDestMatch = endpoint.match(/^\/users\/me\/saved-destinations\/([^/]+)$/);
+  if (savedDestMatch && method === "DELETE") {
+    const id = savedDestMatch[1];
+    MOCK_SAVED_DESTINATIONS = MOCK_SAVED_DESTINATIONS.filter((d) => d.id !== id);
+    return { message: "removed" };
   }
 
   // Trips Routes
