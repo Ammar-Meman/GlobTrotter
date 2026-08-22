@@ -13,6 +13,7 @@ import {
   Luggage,
 } from "lucide-react";
 import useAuthStore from "../store/authStore";
+import useLanguageStore from "../store/languageStore";
 import { Button } from "./ui/button";
 
 import Logo from "./Logo";
@@ -22,6 +23,7 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const t = useLanguageStore((state) => state.t);
 
   const handleLogout = () => {
     logout();
@@ -29,10 +31,10 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: "Dashboard", href: "/dashboard", icon: Compass },
-    { name: "My Trips", href: "/trips", icon: Luggage },
-    { name: "Explore Cities", href: "/cities", icon: Map },
-    { name: "Profile", href: "/profile", icon: User },
+    { name: t("dashboard"), href: "/dashboard", icon: Compass },
+    { name: t("myTrips"), href: "/trips", icon: Luggage },
+    { name: t("exploreCities"), href: "/cities", icon: Map },
+    { name: t("profile"), href: "/profile", icon: User },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -51,7 +53,7 @@ export default function Navbar() {
               const active = isActive(item.href);
               return (
                 <Link
-                  key={item.name}
+                  key={item.href}
                   to={item.href}
                   className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
                     active
@@ -71,7 +73,7 @@ export default function Navbar() {
             <Link to="/trips/new">
               <Button size="sm" className="gap-1.5 shadow-sm font-medium">
                 <Plus className="w-4 h-4" />
-                <span>New Trip</span>
+                <span>{t("newTrip")}</span>
               </Button>
             </Link>
 

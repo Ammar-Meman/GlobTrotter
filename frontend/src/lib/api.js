@@ -62,7 +62,16 @@ const api = {
       body: isFormData ? body : JSON.stringify(body),
     });
   },
-  delete: (endpoint, options) => fetchWrapper(endpoint, { ...options, method: "DELETE" }),
+  delete: (endpoint, bodyOrOptions, options) => {
+    if (bodyOrOptions && !bodyOrOptions.headers && !bodyOrOptions.body && typeof bodyOrOptions === "object" && !(bodyOrOptions instanceof FormData)) {
+      return fetchWrapper(endpoint, {
+        ...options,
+        method: "DELETE",
+        body: JSON.stringify(bodyOrOptions),
+      });
+    }
+    return fetchWrapper(endpoint, { ...(bodyOrOptions || {}), method: "DELETE" });
+  },
   upload: (file) => {
     const formData = new FormData();
     formData.append("file", file);
