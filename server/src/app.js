@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
+import tripRoutes from "./routes/trip.routes.js";
 import stopRoutes, { tripStopRouter } from "./routes/stop.routes.js";
 import { errorHandler } from "./middleware/error.middleware.js";
 
@@ -14,8 +16,10 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/stops", stopRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/trips", tripRoutes);
 app.use("/api/trips", tripStopRouter);
+app.use("/api/stops", stopRoutes);
 
 app.use(errorHandler);
 
