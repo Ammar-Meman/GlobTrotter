@@ -13,7 +13,6 @@ import {
   Calendar,
   Users,
   MapPin,
-  Globe as GlobeIcon,
   Sparkles,
 } from "lucide-react";
 import useAuthStore from "@/store/authStore";
@@ -126,138 +125,133 @@ export default function AuthPage({ initialMode = "login" }) {
 
   return (
     <div className="min-h-screen w-full relative flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-slate-100 overflow-hidden font-sans select-none">
-      {/* Background 1: Bright Daylight Mountain & Lake Overlook */}
+      {/* Background 1: Login Scenic Udaipur Lake Palace / Mountains with Bright Sky */}
       <div
         className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
           !isSignup ? "opacity-100 scale-100" : "opacity-0 scale-105"
         }`}
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=85&w=2400&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1599661046289-e31897846e41?q=85&w=2400&auto=format&fit=crop')",
         }}
       />
 
-      {/* Background 2: European City Skyline Overlook at Sunset */}
+      {/* Background 2: Signup Jaipur / Royal Heritage Sunset Skyline */}
       <div
         className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
           isSignup ? "opacity-100 scale-100" : "opacity-0 scale-105"
         }`}
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=85&w=2400&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1609137144822-09c31405b583?q=85&w=2400&auto=format&fit=crop')",
         }}
       />
 
-      {/* Soft Ambient Light Wash for Consistent High-Contrast Text */}
-      <div className="absolute inset-0 bg-white/20 backdrop-filter" />
+      {/* Gentle Soft Light Gradient for 100% Crisp Natural Contrast Without Card Wrappers */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-white/10 to-black/10 backdrop-filter" />
 
       {/* Main Full-Width Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto min-h-[680px] flex items-center justify-between">
+      <div className="relative z-10 w-full max-w-7xl mx-auto min-h-[660px] flex items-center justify-between">
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* ============================================================ */}
-          {/* INFORMATIONAL HERO SECTION                                   */}
+          {/* INFORMATIONAL HERO SECTION (Direct Clean Text on Canvas)     */}
           {/* ============================================================ */}
           <div
-            className={`transition-all duration-700 ease-in-out lg:col-span-6 p-4 sm:p-6 flex flex-col justify-between space-y-6 ${
+            className={`transition-all duration-700 ease-in-out lg:col-span-6 p-4 sm:p-8 flex flex-col justify-between space-y-7 ${
               isSignup ? "lg:order-2" : "lg:order-1"
             }`}
           >
-            {/* Luminous Light Card Backing for 100% Razor-Sharp Legibility */}
-            <div className="bg-white/70 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-white/80 shadow-md space-y-6 max-w-xl">
-              {/* Premium Logo */}
-              <div>
-                <Logo size="lg" to={null} />
-              </div>
+            {/* Logo */}
+            <div className="flex items-center gap-2">
+              <Logo size="md" to={null} />
+            </div>
 
-              {/* Headline & Description */}
-              <div className="space-y-3">
-                <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-[1.1]">
-                  Plan. Explore. <br />
-                  <span className="bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">
-                    Experience.
-                  </span>
-                </h1>
+            {/* Headline & Description */}
+            <div className="space-y-3.5 max-w-lg">
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black tracking-tight text-slate-950 leading-[1.1] drop-shadow-xs">
+                Plan. Explore. <br />
+                <span className="text-blue-600">Experience.</span>
+              </h1>
 
-                <p className="text-slate-700 font-medium text-sm sm:text-base leading-relaxed">
-                  Your journey begins here. Plan personalized multi-city trips, discover amazing destinations and make memories that last a lifetime.
-                </p>
-              </div>
+              <p className="text-slate-900 font-semibold text-sm sm:text-base leading-relaxed max-w-md drop-shadow-xs">
+                Your journey across India begins here. Plan personalized multi-city itineraries, discover heritage destinations, and track budgets in ₹.
+              </p>
+            </div>
 
-              {/* 3 White Feature Cards */}
-              <div className="space-y-3 pt-1">
-                {!isSignup ? (
-                  <>
-                    {/* Item 1 */}
-                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
-                        <GlobeIcon className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-sm text-slate-900">Explore Destinations</h4>
-                        <p className="text-xs text-slate-500 font-medium">Find the best curated cities and landmarks worldwide.</p>
-                      </div>
+            {/* 3 Individual White Feature Cards */}
+            <div className="space-y-3.5 max-w-md pt-1">
+              {!isSignup ? (
+                <>
+                  {/* Item 1 */}
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
+                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
+                      🏛️
                     </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-900">Explore Destinations</h4>
+                      <p className="text-xs text-slate-600 font-medium">Discover royal palaces, hill stations, and coastal retreats.</p>
+                    </div>
+                  </div>
 
-                    {/* Item 2 */}
-                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
-                        <Calendar className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-sm text-slate-900">Plan Your Trip</h4>
-                        <p className="text-xs text-slate-500 font-medium">Build custom itineraries that fit your style.</p>
-                      </div>
+                  {/* Item 2 */}
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
+                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
+                      📅
                     </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-900">Plan Your Trip</h4>
+                      <p className="text-xs text-slate-600 font-medium">Build custom day-by-day itineraries with estimated budgets in ₹.</p>
+                    </div>
+                  </div>
 
-                    {/* Item 3 */}
-                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100">
-                        <Users className="w-5 h-5 text-blue-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-sm text-slate-900">Share & Collaborate</h4>
-                        <p className="text-xs text-slate-500 font-medium">Share your plans, copy trips, and travel together.</p>
-                      </div>
+                  {/* Item 3 */}
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
+                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
+                      👥
                     </div>
-                  </>
-                ) : (
-                  <>
-                    {/* Signup Item 1 */}
-                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
-                      <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center shrink-0 border border-teal-100">
-                        <MapPin className="w-5 h-5 text-teal-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-sm text-slate-900">Discover Cities</h4>
-                        <p className="text-xs text-slate-500 font-medium">Explore top destinations and hidden gems.</p>
-                      </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-900">Share & Collaborate</h4>
+                      <p className="text-xs text-slate-600 font-medium">Share your travel plans, copy itineraries, and travel together.</p>
                     </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Signup Item 1 */}
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
+                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
+                      📍
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-900">Discover Indian Cities</h4>
+                      <p className="text-xs text-slate-600 font-medium">Explore top destinations from Udaipur to Ladakh and Kerala.</p>
+                    </div>
+                  </div>
 
-                    {/* Signup Item 2 */}
-                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
-                      <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center shrink-0 border border-teal-100">
-                        <Calendar className="w-5 h-5 text-teal-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-sm text-slate-900">Plan It Your Way</h4>
-                        <p className="text-xs text-slate-500 font-medium">Build the perfect itinerary that fits your style.</p>
-                      </div>
+                  {/* Signup Item 2 */}
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
+                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
+                      🧭
                     </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-900">Plan It Your Way</h4>
+                      <p className="text-xs text-slate-600 font-medium">Organize multi-city routes, durations, and day-by-day stops.</p>
+                    </div>
+                  </div>
 
-                    {/* Signup Item 3 */}
-                    <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-white/95 shadow-sm border border-slate-100 transition-all duration-300 hover:shadow-md hover:translate-x-1">
-                      <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center shrink-0 border border-teal-100">
-                        <Users className="w-5 h-5 text-teal-600" />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-sm text-slate-900">Share & Inspire</h4>
-                        <p className="text-xs text-slate-500 font-medium">Share your trips and inspire other travelers.</p>
-                      </div>
+                  {/* Signup Item 3 */}
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/95 backdrop-blur-xs shadow-md border border-white/90 transition-transform duration-300 hover:translate-x-1">
+                    <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100 text-xl">
+                      ✨
                     </div>
-                  </>
-                )}
-              </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-900">Share & Inspire</h4>
+                      <p className="text-xs text-slate-600 font-medium">Share your public tour links and inspire fellow travelers.</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -277,7 +271,7 @@ export default function AuthPage({ initialMode = "login" }) {
               <p className="text-sm text-slate-500 font-medium">
                 {!isSignup
                   ? "Login to continue planning your next adventure."
-                  : "Join GlobeTrotter and start planning your next adventure."}
+                  : "Join GlobeTrotter and start planning your next journey."}
               </p>
             </div>
 
@@ -372,7 +366,7 @@ export default function AuthPage({ initialMode = "login" }) {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-500/20 transition-all mt-3 cursor-pointer"
+                  className="w-full h-12 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-500/20 transition-all mt-4 cursor-pointer"
                 >
                   {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : "Login"}
                 </Button>
