@@ -68,6 +68,7 @@ export const getTripById = async (userId, tripId) => {
               duration: true,
               description: true,
               imageUrl: true,
+              scheduledAt: true,
               order: true,
             },
           },
@@ -127,6 +128,7 @@ export const getPublicTripByShareId = async (shareId) => {
               duration: true,
               description: true,
               imageUrl: true,
+              scheduledAt: true,
               order: true,
             },
           },
@@ -222,16 +224,24 @@ export const copyTrip = async (userId, tripId) => {
             endDate: newStopEnd,
             order: stop.order,
             activities: {
-              create: stop.activities.map((act) => ({
-                name: act.name,
-                type: act.type,
-                category: act.category,
-                cost: act.cost,
-                duration: act.duration,
-                description: act.description,
-                imageUrl: act.imageUrl,
-                order: act.order,
-              })),
+              create: stop.activities.map((act) => {
+                let newScheduledAt = null;
+                if (act.scheduledAt) {
+                  const actOffset = new Date(act.scheduledAt).getTime() - origStart.getTime();
+                  newScheduledAt = new Date(newStart.getTime() + actOffset);
+                }
+                return {
+                  name: act.name,
+                  type: act.type,
+                  category: act.category,
+                  cost: act.cost,
+                  duration: act.duration,
+                  description: act.description,
+                  imageUrl: act.imageUrl,
+                  scheduledAt: newScheduledAt,
+                  order: act.order,
+                };
+              }),
             },
           };
         }),
@@ -252,6 +262,7 @@ export const copyTrip = async (userId, tripId) => {
               duration: true,
               description: true,
               imageUrl: true,
+              scheduledAt: true,
               order: true,
             },
           },
