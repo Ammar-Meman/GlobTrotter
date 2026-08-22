@@ -1,4 +1,4 @@
-const GEOAPIFY_KEY = process.env.GEOAPIFY_API_KEY;
+import { CITIES_DATA } from "../data/cities.data.js";
 
 // ── Category mapping: our app types → Geoapify "categories" ───────────────
 const TYPE_TO_GEOAPIFY_CATEGORY = {
@@ -9,7 +9,7 @@ const TYPE_TO_GEOAPIFY_CATEGORY = {
   museum: "tourism.attraction.museum",
 };
 
-// ── Static mock data (unchanged from stub) ────────────────────────────────
+// ── Static mock data ──────────────────────────────────────────────────────
 const MOCK_ACTIVITIES_BY_CITY = {
   paris: [
     {
@@ -17,28 +17,28 @@ const MOCK_ACTIVITIES_BY_CITY = {
       type: "sightseeing",
       estimatedCost: 25,
       description: "World's largest art museum and historic monument in Paris.",
-      imageUrl: "https://images.unsplash.com/photo-1565099824688-e93eb20fe622?w=600",
+      imageUrl: "https://images.pexels.com/photos/2363/france-landmark-lights-night.jpg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Eiffel Tower Summit Access",
       type: "sightseeing",
       estimatedCost: 35,
       description: "Panoramic views of Paris from the iconic landmark.",
-      imageUrl: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=600",
+      imageUrl: "https://images.pexels.com/photos/532826/pexels-photo-532826.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Seine River Dinner Cruise",
       type: "food",
       estimatedCost: 85,
       description: "Gourmet French dinner while cruising along the illuminated Seine.",
-      imageUrl: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600",
+      imageUrl: "https://images.pexels.com/photos/161853/prague-czech-republic-city-161853.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Montmartre Walking Tour",
       type: "sightseeing",
       estimatedCost: 15,
       description: "Explore the bohemian hill with Sacre-Coeur and artists square.",
-      imageUrl: "https://images.unsplash.com/photo-1509299349698-dd22323b5963?w=600",
+      imageUrl: "https://images.pexels.com/photos/1486974/pexels-photo-1486974.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
   ],
   tokyo: [
@@ -47,28 +47,28 @@ const MOCK_ACTIVITIES_BY_CITY = {
       type: "sightseeing",
       estimatedCost: 0,
       description: "Tokyo's oldest and most significant ancient Buddhist temple.",
-      imageUrl: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=600",
+      imageUrl: "https://images.pexels.com/photos/402028/pexels-photo-402028.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Shibuya Crossing & Hachiko Statue",
       type: "sightseeing",
       estimatedCost: 0,
       description: "Experience the world-famous scramble crossing in bustling Shibuya.",
-      imageUrl: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=600",
+      imageUrl: "https://images.pexels.com/photos/2506923/pexels-photo-2506923.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Tsukiji Outer Market Food Tour",
       type: "food",
       estimatedCost: 45,
       description: "Sample fresh sashimi, tamagoyaki, and Japanese street food delicacies.",
-      imageUrl: "https://images.unsplash.com/photo-1535189043414-47a3c49a0bed?w=600",
+      imageUrl: "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "teamLab Planets Digital Art",
       type: "adventure",
       estimatedCost: 38,
       description: "Immersive body-interactive digital art museum.",
-      imageUrl: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=600",
+      imageUrl: "https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
   ],
   rome: [
@@ -77,21 +77,21 @@ const MOCK_ACTIVITIES_BY_CITY = {
       type: "sightseeing",
       estimatedCost: 28,
       description: "Walk in the footsteps of gladiators in ancient Rome.",
-      imageUrl: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600",
+      imageUrl: "https://images.pexels.com/photos/532263/pexels-photo-532263.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Vatican Museums & Sistine Chapel",
       type: "sightseeing",
       estimatedCost: 32,
       description: "Marvel at Michelangelo's ceiling fresco and Renaissance masterpieces.",
-      imageUrl: "https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=600",
+      imageUrl: "https://images.pexels.com/photos/208701/pexels-photo-208701.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Trastevere Food & Wine Walking Tour",
       type: "food",
       estimatedCost: 55,
       description: "Authentic Roman pasta, supplì, gelato, and regional Italian wines.",
-      imageUrl: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=600",
+      imageUrl: "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
   ],
   barcelona: [
@@ -100,21 +100,21 @@ const MOCK_ACTIVITIES_BY_CITY = {
       type: "sightseeing",
       estimatedCost: 30,
       description: "Gaudí's unfinished architectural marvel and UNESCO World Heritage site.",
-      imageUrl: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600",
+      imageUrl: "https://images.pexels.com/photos/1388030/pexels-photo-1388030.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Park Güell Monumental Zone",
       type: "sightseeing",
       estimatedCost: 15,
       description: "Colorful mosaic park overlooking the city of Barcelona.",
-      imageUrl: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=600",
+      imageUrl: "https://images.pexels.com/photos/819764/pexels-photo-819764.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Tapas & Flamenco Show",
       type: "food",
       estimatedCost: 60,
       description: "Live flamenco performance paired with traditional Catalan tapas.",
-      imageUrl: "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?w=600",
+      imageUrl: "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
   ],
   london: [
@@ -123,14 +123,14 @@ const MOCK_ACTIVITIES_BY_CITY = {
       type: "sightseeing",
       estimatedCost: 35,
       description: "Historic royal fortress and home to the glittering Crown Jewels.",
-      imageUrl: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600",
+      imageUrl: "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "British Museum Highlights",
       type: "sightseeing",
       estimatedCost: 0,
       description: "World-class collection spanning 2 million years of human history.",
-      imageUrl: "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=600",
+      imageUrl: "https://images.pexels.com/photos/1128408/pexels-photo-1128408.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
   ],
   "new york": [
@@ -139,14 +139,14 @@ const MOCK_ACTIVITIES_BY_CITY = {
       type: "sightseeing",
       estimatedCost: 44,
       description: "Iconic art deco skyscraper with 360-degree views of Manhattan.",
-      imageUrl: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=600",
+      imageUrl: "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       name: "Central Park Bike Rental Tour",
       type: "adventure",
       estimatedCost: 25,
       description: "Cycle through Bow Bridge, Strawberry Fields, and Bethesda Terrace.",
-      imageUrl: "https://images.unsplash.com/photo-1534430480872-3498386e7856?w=600",
+      imageUrl: "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
   ],
 };
@@ -157,41 +157,132 @@ const DEFAULT_ACTIVITIES = [
     type: "sightseeing",
     estimatedCost: 15,
     description: "Guided cultural walk through the historic center and notable landmarks.",
-    imageUrl: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600",
+    imageUrl: "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     name: "Local Food Market Tasting Tour",
     type: "food",
     estimatedCost: 40,
     description: "Sample delicious regional cuisine, fresh street food, and local specialties.",
-    imageUrl: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600",
+    imageUrl: "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     name: "City Art & History Museum",
     type: "sightseeing",
     estimatedCost: 20,
     description: "Discover regional history, cultural treasures, and masterworks.",
-    imageUrl: "https://images.unsplash.com/photo-1566127444979-b3d2b654e3d7?w=600",
+    imageUrl: "https://images.pexels.com/photos/1128408/pexels-photo-1128408.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
     name: "Scenic Riverfront or Harbor Cruise",
     type: "adventure",
     estimatedCost: 30,
     description: "Relaxing sightseeing boat tour offering scenic skyline viewpoints.",
-    imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600",
+    imageUrl: "https://images.pexels.com/photos/161853/prague-czech-republic-city-161853.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
+ * Merge a geocoded result with our cost-index/popularity lookup.
+ * @param {string} cityName
+ * @param {string} country
+ * @param {number} lat
+ * @param {number} lon
+ */
+function mergeWithStaticData(cityName, country, lat, lon) {
+  const clean = cityName.trim().toLowerCase();
+  const staticEntry = CITIES_DATA.find(
+    (c) =>
+      c.cityName.toLowerCase() === clean ||
+      c.cityName.toLowerCase().includes(clean) ||
+      clean.includes(c.cityName.toLowerCase())
+  );
+  return {
+    cityName,
+    country: country || staticEntry?.country || "Unknown",
+    latitude: lat,
+    longitude: lon,
+    costIndex: staticEntry?.costIndex ?? 50.0,
+    popularity: staticEntry?.popularity ?? 70,
+  };
+}
+
+/**
+ * Calls Geoapify Geocoding API if GEOAPIFY_API_KEY is set, otherwise falls back to
+ * static CITIES_DATA lookup.
+ * @param {string} query
+ * @returns {Promise<Array<{cityName: string, country: string, latitude: number, longitude: number, costIndex: number, popularity: number}>>}
+ */
+export const searchCities = async (query) => {
+  const apiKey = process.env.GEOAPIFY_API_KEY;
+
+  // ── Live path ─────────────────────────────────────────────────────────────
+  if (apiKey && apiKey.trim() !== "" && query && query.trim() !== "") {
+    try {
+      const encoded = encodeURIComponent(query.trim());
+      const url =
+        `https://api.geoapify.com/v1/geocode/search` +
+        `?text=${encoded}&type=city&limit=8&apiKey=${apiKey.trim()}`;
+
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Geoapify Geocoding HTTP ${response.status}`);
+      const json = await response.json();
+
+      const results = (json.features || []).map((feature) => {
+        const p = feature.properties || {};
+        const lat = p.lat ?? feature.geometry?.coordinates?.[1] ?? 0;
+        const lon = p.lon ?? feature.geometry?.coordinates?.[0] ?? 0;
+        const cityName = p.city || p.name || p.formatted?.split(",")?.[0]?.trim() || query.trim();
+        const country = p.country || "";
+        return mergeWithStaticData(cityName, country, lat, lon);
+      });
+
+      if (results.length > 0) return results;
+      // fall through to static if Geoapify returned nothing
+    } catch (err) {
+      console.warn("[geoapify.service] Geocoding API failed, falling back to static:", err.message);
+    }
+  }
+
+  // ── Static fallback ───────────────────────────────────────────────────────
+  if (!query || query.trim() === "") {
+    return CITIES_DATA.slice(0, 10);
+  }
+
+  const cleanQuery = query.trim().toLowerCase();
+  const matched = CITIES_DATA.filter(
+    (c) =>
+      c.cityName.toLowerCase().includes(cleanQuery) ||
+      (c.country && c.country.toLowerCase().includes(cleanQuery))
+  );
+
+  if (matched.length > 0) return matched;
+
+  // Unknown city fallback
+  const capitalized = query.charAt(0).toUpperCase() + query.slice(1);
+  return [
+    {
+      cityName: capitalized,
+      country: "Global Destination",
+      latitude: 0.0,
+      longitude: 0.0,
+      costIndex: 50.0,
+      popularity: 70,
+    },
+  ];
+};
+
+/**
  * Geocode a city name to lat/lon via Geoapify to obtain coordinates for a
  * Places search (only needed for the live path; mocks have it built-in).
  */
 async function geocodeCity(cityName) {
+  const apiKey = process.env.GEOAPIFY_API_KEY;
   const url =
     `https://api.geoapify.com/v1/geocode/search` +
-    `?text=${encodeURIComponent(cityName)}&type=city&limit=1&apiKey=${GEOAPIFY_KEY}`;
+    `?text=${encodeURIComponent(cityName)}&type=city&limit=1&apiKey=${apiKey?.trim()}`;
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Geoapify geocode HTTP ${response.status}`);
   const json = await response.json();
@@ -205,11 +296,13 @@ async function geocodeCity(cityName) {
  * Searches suggested activities using Geoapify Places API when GEOAPIFY_API_KEY
  * is set, otherwise falls back to static mock data.
  * @param {{ city?: string, type?: string, maxCost?: number }} params
- * @returns {Promise<Array<{name, type, estimatedCost, description, imageUrl}>>}
+ * @returns {Promise<Array<{name: string, type: string, estimatedCost: number, description: string, imageUrl: string}>>}
  */
 export const searchActivities = async ({ city, type, maxCost }) => {
+  const apiKey = process.env.GEOAPIFY_API_KEY;
+
   // ── Live path ─────────────────────────────────────────────────────────────
-  if (GEOAPIFY_KEY && city) {
+  if (apiKey && apiKey.trim() !== "" && city) {
     try {
       const coords = await geocodeCity(city);
       if (coords) {
@@ -223,7 +316,7 @@ export const searchActivities = async ({ city, type, maxCost }) => {
           `&filter=circle:${coords.lon},${coords.lat},10000` +
           `&bias=proximity:${coords.lon},${coords.lat}` +
           `&limit=12` +
-          `&apiKey=${GEOAPIFY_KEY}`;
+          `&apiKey=${apiKey.trim()}`;
 
         const placesRes = await fetch(placesUrl);
         if (!placesRes.ok) throw new Error(`Geoapify Places HTTP ${placesRes.status}`);
@@ -245,7 +338,7 @@ export const searchActivities = async ({ city, type, maxCost }) => {
               estimatedCost: 0, // Geoapify doesn't provide cost — keep 0 as neutral
               description: [p.address_line1, p.address_line2].filter(Boolean).join(", ") ||
                 `Popular ${detectedType} spot in ${city}.`,
-              imageUrl: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600",
+              imageUrl: "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=600",
             };
           })
           .filter((a) => a.name && a.name !== "Local Attraction");
