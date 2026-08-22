@@ -36,6 +36,7 @@
 - [💻 Local Development & Setup](#-local-development--setup)
 - [🧪 Automated Test Suite](#-automated-test-suite)
 - [👤 Demo Accounts](#-demo-accounts)
+- [👥 Contributors](#-contributors)
 
 ---
 
@@ -436,6 +437,10 @@ pnpm test:sharing
 
 ---
 
-<div align="center">
-Built with ❤️ for the Odoo Global Hackathon.
-</div>
+## 👥 Contributors
+
+- **Ammar** ([@Ammar-Meman](https://github.com/Ammar-Meman)) — Itinerary Builder & View, Drag-and-Drop Timeline, Budget Charts, Public Share UI
+- **Rishab** ([@rishab11250](https://github.com/rishab11250)) — Backend Scaffold, Prisma & JWT Auth, Trip CRUD, Public Sharing & Clone Endpoints, Cloudinary Uploads, Render Deployment, Postman Docs
+- **Vineet** ([@vineet1cg](https://github.com/vineet1cg)) — Stop & Activity CRUD, Bulk Reorder, Budget Aggregation, Discovery Services, Admin Stats, Server Security
+- **Daksh** ([@daksh006v](https://github.com/daksh006v)) — Frontend Scaffold, Auth Store & Pages (Login/Signup/Forgot Password), Dashboard, MyTrips, Profile, Vercel Deployment
+
