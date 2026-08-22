@@ -115,8 +115,8 @@ export default function MyTrips() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/40 pb-6">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">My Trips</h1>
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+              <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">My Trips</h1>
+              <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200">
                 {trips.length} {trips.length === 1 ? "Trip" : "Trips"}
               </span>
             </div>

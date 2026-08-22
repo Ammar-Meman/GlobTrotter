@@ -24,9 +24,9 @@ export default function Navbar({ transparent = false }) {
   useEffect(() => {
     if (!transparent) return;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [transparent]);
 
@@ -47,10 +47,10 @@ export default function Navbar({ transparent = false }) {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-colors duration-200 ${
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         isLight
-          ? "bg-slate-950/40 border-b border-white/10 text-white"
-          : "bg-white border-b border-slate-200 text-slate-900 shadow-xs"
+          ? "bg-transparent border-b border-white/10 text-white"
+          : "bg-white/95 backdrop-blur-md border-b border-slate-200 text-slate-900 shadow-xs"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,9 +76,9 @@ export default function Navbar({ transparent = false }) {
                     isLight
                       ? active
                         ? "bg-white/20 text-white font-semibold"
-                        : "text-white/80 hover:text-white hover:bg-white/10"
+                        : "text-white/85 hover:text-white hover:bg-white/10"
                       : active
-                      ? "bg-slate-100 text-slate-900 font-semibold"
+                      ? "bg-sky-50 text-sky-700 font-semibold"
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                   }`}
                 >
@@ -96,7 +96,7 @@ export default function Navbar({ transparent = false }) {
                 size="sm"
                 className={`gap-1.5 rounded-full font-semibold px-4 cursor-pointer transition-colors ${
                   isLight
-                    ? "bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold"
+                    ? "bg-sky-500 hover:bg-sky-600 text-white font-semibold shadow-sm"
                     : "bg-slate-900 hover:bg-slate-800 text-white"
                 }`}
               >
@@ -128,8 +128,8 @@ export default function Navbar({ transparent = false }) {
                   <div
                     className={`w-7 h-7 rounded-full font-bold flex items-center justify-center text-xs ${
                       isLight
-                        ? "bg-amber-500 text-slate-950 font-extrabold"
-                        : "bg-slate-100 text-slate-800 font-bold border border-slate-200"
+                        ? "bg-sky-500 text-white font-bold"
+                        : "bg-sky-100 text-sky-800 font-bold border border-sky-200"
                     }`}
                   >
                     {user?.name ? user.name.charAt(0).toUpperCase() : "D"}
@@ -161,8 +161,8 @@ export default function Navbar({ transparent = false }) {
             <Link to="/trips/new">
               <Button
                 size="sm"
-                className={`h-8 px-3 text-xs gap-1 rounded-full font-bold ${
-                  isLight ? "bg-amber-500 text-slate-950" : "bg-slate-900 text-white"
+                className={`h-8 px-3 text-xs gap-1 rounded-full font-semibold ${
+                  isLight ? "bg-sky-500 text-white" : "bg-slate-900 text-white"
                 }`}
               >
                 <Plus className="w-3.5 h-3.5" />
@@ -206,7 +206,7 @@ export default function Navbar({ transparent = false }) {
           })}
           <div className="pt-3 border-t border-white/15 flex items-center justify-between px-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-amber-500 text-slate-950 font-bold flex items-center justify-center text-xs">
+              <div className="w-7 h-7 rounded-full bg-sky-500 text-white font-bold flex items-center justify-center text-xs">
                 {user?.name ? user.name.charAt(0).toUpperCase() : "D"}
               </div>
               <span className="text-xs font-medium text-white/80">{user?.email}</span>

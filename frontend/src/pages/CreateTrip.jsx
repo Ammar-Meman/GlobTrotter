@@ -25,28 +25,28 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 const PRESET_COVERS = [
   {
-    name: "European Alps",
-    url: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&auto=format&fit=crop&q=80",
+    name: "Jaipur Amber Fort",
+    url: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1200&auto=format&fit=crop&q=80",
   },
   {
-    name: "Tokyo Nightline",
-    url: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=1200&auto=format&fit=crop&q=80",
+    name: "Kerala Backwaters",
+    url: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1200&auto=format&fit=crop&q=80",
   },
   {
-    name: "Rome Colosseum",
-    url: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1200&auto=format&fit=crop&q=80",
+    name: "Ladakh Pangong Tso",
+    url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&auto=format&fit=crop&q=80",
   },
   {
-    name: "Tropical Bali",
-    url: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&auto=format&fit=crop&q=80",
+    name: "Varanasi Ganga Ghats",
+    url: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=1200&auto=format&fit=crop&q=80",
   },
   {
-    name: "Kyoto Fall Temples",
-    url: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1200&auto=format&fit=crop&q=80",
+    name: "Goa Coastline",
+    url: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=1200&auto=format&fit=crop&q=80",
   },
   {
-    name: "Barcelona Coast",
-    url: "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=1200&auto=format&fit=crop&q=80",
+    name: "Udaipur Lake Palace",
+    url: "https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?w=1200&auto=format&fit=crop&q=80",
   },
 ];
 
@@ -173,12 +173,12 @@ export default function CreateTrip() {
 
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">Create New Trip</h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
+              <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900">Create New Trip</h1>
+              <p className="text-sm text-slate-500 mt-0.5 font-normal">
                 Set up the foundations of your journey and start building your custom itinerary
               </p>
             </div>
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-medium border border-sky-200">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Step 1 of Planning</span>
             </div>

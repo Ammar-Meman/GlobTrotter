@@ -139,9 +139,9 @@ export default function TripCard({
           )}
 
           {trip?.budgetLimit && (
-            <div className="pt-1 flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+            <div className="pt-1 flex items-center gap-1.5 text-xs text-sky-600 dark:text-sky-400 font-semibold">
               <IndianRupee className="w-3.5 h-3.5" />
-              <span>Target Budget: ${Number(trip.budgetLimit).toLocaleString()}</span>
+              <span>Target Budget: ₹{Number(trip.budgetLimit).toLocaleString("en-IN")}</span>
             </div>
           )}
         </CardContent>

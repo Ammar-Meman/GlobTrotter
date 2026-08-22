@@ -11,10 +11,7 @@ import {
   ChevronRight,
   Luggage,
   Plus,
-  ChevronLeft,
   Search,
-  Flame,
-  Star,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Navbar from "@/components/Navbar";
@@ -22,76 +19,114 @@ import useAuthStore from "@/store/authStore";
 import useTripStore from "@/store/tripStore";
 import { Button } from "@/components/ui/button";
 
-/* ── Hero Slides Data (Indian & Global Wonders) ──────────── */
+/* ── Hero Slides with Verified Authentic Indian Destinations ─── */
 const HERO_SLIDES = [
+  {
+    id: "tajmahal",
+    city: "Agra, Uttar Pradesh",
+    title: "Timeless Wonder, The Monument of Eternal Love",
+    description:
+      "Witness the ethereal marble beauty of the Taj Mahal at dawn and explore the Mughal citadel of Agra Fort.",
+    image:
+      "https://images.unsplash.com/photo-1564507592333-c60657eea523?q=85&w=2400&auto=format&fit=crop",
+  },
   {
     id: "jaipur",
     city: "Jaipur, Rajasthan",
-    tagline: "The Royal Pink City",
-    title: "Fuel Your Wanderlust, Your Next Escape Awaits!",
+    title: "Fuel Your Wanderlust Across the Royal Pink City",
     description:
-      "Crafting Exceptional Journeys: Your Personalized Multi-City Travel Planner. Unleash wanderlust across heritage palaces, majestic forts, and rich royal culture.",
+      "Explore heritage palaces, majestic forts, and rich royal culture across Rajasthan's historic capital.",
     image:
-      "https://images.unsplash.com/photo-1477587458883-47145ed94245?q=85&w=2400&auto=format&fit=crop",
-    vibe: "Palaces & Forts",
-    rating: "4.9",
+      "https://images.unsplash.com/photo-1599661046289-e31897846e41?q=85&w=2400&auto=format&fit=crop",
   },
   {
     id: "kerala",
-    city: "Alleppey & Munnar, Kerala",
-    tagline: "God's Own Country",
+    city: "Alleppey, Kerala",
     title: "Drift Through Backwaters & Emerald Hills",
     description:
-      "Cruise on tranquil houseboats, savor fragrant tea estates, and design effortless tropical getaways tailored to your rhythm.",
+      "Cruise on tranquil houseboats, savor fragrant tea estates, and design effortless tropical getaways.",
     image:
       "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=85&w=2400&auto=format&fit=crop",
-    vibe: "Nature & Backwaters",
-    rating: "4.95",
   },
   {
     id: "ladakh",
     city: "Leh & Pangong, Ladakh",
-    tagline: "Land of High Mountain Passes",
     title: "Conquer Majestic Peaks & Crystal Lakes",
     description:
-      "Experience high-altitude serenity, vibrant monasteries, and starlit Himalayan nights with seamless day-by-day itineraries.",
+      "Experience high-altitude serenity, vibrant monasteries, and starlit Himalayan nights.",
     image:
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=85&w=2400&auto=format&fit=crop",
-    vibe: "Adventure & Peaks",
-    rating: "4.92",
   },
   {
     id: "varanasi",
     city: "Varanasi, Uttar Pradesh",
-    tagline: "The World's Oldest Living City",
     title: "Immerse in Timeless Ghats & Ganga Aarti",
     description:
-      "Witness mesmerizing evening rituals along the sacred Ganges, navigate ancient lanes, and explore profound cultural roots.",
+      "Witness mesmerizing evening rituals along the sacred Ganges and navigate ancient spiritual lanes.",
     image:
       "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=85&w=2400&auto=format&fit=crop",
-    vibe: "Spiritual & Ancient",
-    rating: "4.88",
   },
   {
     id: "goa",
     city: "North & South Goa",
-    tagline: "Sun, Sand & Coastal Serenity",
     title: "Golden Coastlines & Vibrant Seaside Nights",
     description:
-      "From serene palm-fringed southern coves to pulsating seaside cafes, plan your ideal coastal escape with instant budget tracking in ₹.",
+      "From serene palm-fringed coves to pulsating seaside cafes, plan your ideal coastal escape.",
     image:
       "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=85&w=2400&auto=format&fit=crop",
-    vibe: "Beaches & Cafes",
-    rating: "4.85",
+  },
+  {
+    id: "udaipur",
+    city: "Udaipur, Rajasthan",
+    title: "The City of Lakes Awaits Your Footsteps",
+    description:
+      "Discover floating palaces, serene Lake Pichola sunsets, and the romantic heart of Mewar.",
+    image:
+      "https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?q=85&w=2400&auto=format&fit=crop",
+  },
+  {
+    id: "hampi",
+    city: "Hampi, Karnataka",
+    title: "Walk Among the Ruins of a Forgotten Empire",
+    description:
+      "Explore boulder-strewn landscapes, ancient Vijayanagara temples, and Tungabhadra riverbanks.",
+    image:
+      "https://images.unsplash.com/photo-1600100397608-f010f444f434?q=85&w=2400&auto=format&fit=crop",
+  },
+  {
+    id: "amritsar",
+    city: "Amritsar, Punjab",
+    title: "The Golden Sanctuary of Peace & Devotion",
+    description:
+      "Experience the serene waters of the Harmandir Sahib and the legendary hospitality of Punjab.",
+    image:
+      "https://images.unsplash.com/photo-1588096344356-9b48a0f074a3?q=85&w=2400&auto=format&fit=crop",
+  },
+  {
+    id: "rishikesh",
+    city: "Rishikesh, Uttarakhand",
+    title: "Adventure Meets Serenity in the Yoga Capital",
+    description:
+      "Raft through rapids, meditate by the holy Ganges, and experience the spiritual Himalayan gateway.",
+    image:
+      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=85&w=2400&auto=format&fit=crop",
   },
 ];
 
-/* ── Popular Indian Destinations ──────────────────────────── */
+/* ── Popular Destinations Grid ───────────────────────────── */
 const POPULAR_DESTINATIONS = [
+  {
+    name: "Agra",
+    state: "Uttar Pradesh",
+    image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=700&auto=format&fit=crop&q=80",
+    cost: "₹₹",
+    budgetPerDay: "₹2,000 / day",
+    tag: "Taj Mahal & Heritage",
+  },
   {
     name: "Jaipur",
     state: "Rajasthan",
-    image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=700&auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=700&auto=format&fit=crop&q=80",
     cost: "₹₹₹",
     budgetPerDay: "₹2,800 / day",
     tag: "Palaces & Forts",
@@ -128,14 +163,6 @@ const POPULAR_DESTINATIONS = [
     budgetPerDay: "₹2,400 / day",
     tag: "Beaches & Sunsets",
   },
-  {
-    name: "Udaipur",
-    state: "Rajasthan",
-    image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=700&auto=format&fit=crop&q=80",
-    cost: "₹₹₹",
-    budgetPerDay: "₹3,100 / day",
-    tag: "Lakes & Royalty",
-  },
 ];
 
 export default function Dashboard() {
@@ -151,17 +178,12 @@ export default function Dashboard() {
     fetchTrips().catch((err) => console.error("Error loading trips:", err));
   }, [fetchTrips]);
 
-  // Auto-advance hero slides every 7 seconds
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
   }, []);
 
-  const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
-  }, []);
-
   useEffect(() => {
-    const timer = setInterval(nextSlide, 7000);
+    const timer = setInterval(nextSlide, 7500);
     return () => clearInterval(timer);
   }, [nextSlide]);
 
@@ -184,7 +206,6 @@ export default function Dashboard() {
     return Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
   };
 
-  // Compute summary stats
   const totalTrips = trips.length;
   const totalStops = trips.reduce((acc, t) => acc + (t.stopCount || 0), 0);
   const totalDays = trips.reduce((acc, t) => acc + getDurationDays(t.startDate, t.endDate), 0);
@@ -208,192 +229,122 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
-      
-      {/* ── IMMERSIVE TOP HERO STAGE ──────────────────────────── */}
-      <div className="relative w-full min-h-[580px] lg:min-h-[620px] flex flex-col justify-between overflow-hidden bg-slate-950">
-        
-        {/* Dynamic Background Image Carousel (Cross-fading with natural opacity) */}
-        {HERO_SLIDES.map((slide, index) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
-              index === currentSlide ? "opacity-65" : "opacity-0"
-            }`}
-            style={{
-              backgroundImage: `url('${slide.image}')`,
-            }}
-          />
-        ))}
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
 
-        {/* Ambient Natural Gradient Overlay for Clear Contrast (No Glass, No Fake Tint) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-slate-950/50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/20 to-transparent" />
+      {/* Sticky Immersed Navbar at Top */}
+      <Navbar transparent={true} />
 
-        {/* Top Navbar Sitting Directly on the Hero Image */}
-        <Navbar transparent={true} />
+      {/* ══════════════════════════════════════════════════════════
+          HERO — 100% Full Window Viewport Height
+         ══════════════════════════════════════════════════════════ */}
+      <section className="relative -mt-16 w-full min-h-screen flex flex-col justify-between overflow-hidden bg-slate-950">
 
-        {/* Hero Main Content */}
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-1 flex flex-col justify-center">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Hero Text Column */}
-            <div className="lg:col-span-8 space-y-6">
-              
-              {/* Warm Travel Greeting Badge */}
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500 text-slate-950 font-bold text-xs shadow-sm">
-                  <span>🌍 Explore India</span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/50 border border-white/20 text-xs font-semibold text-white">
-                  <MapPin className="w-3.5 h-3.5 text-amber-400" />
-                  <span>{currentHero.city}</span>
-                </div>
-              </div>
+        {/* Cross-fading Background Images */}
+        <div className="absolute inset-0 z-0">
+          {HERO_SLIDES.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-[1400ms] ease-in-out ${
+                index === currentSlide ? "opacity-75" : "opacity-0"
+              }`}
+              style={{
+                backgroundImage: `url('${slide.image}')`,
+              }}
+            />
+          ))}
 
-              {/* Main Headline & Description */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`hero-title-${currentSlide}`}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.45, ease: "easeOut" }}
-                  className="space-y-3.5 max-w-2xl"
-                >
-                  <h1
-                    className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-[1.15]"
-                    style={{ textShadow: "0 2px 16px rgba(0,0,0,0.6)" }}
-                  >
-                    {currentHero.title}
-                  </h1>
+          {/* Clean Gradient Scrim */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/30 to-slate-950/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/20 to-transparent" />
+        </div>
 
-                  <p
-                    className="text-white/90 text-sm sm:text-base font-normal leading-relaxed max-w-xl"
-                    style={{ textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}
-                  >
-                    {getGreeting()}, <strong className="font-semibold text-amber-300">{user?.name ? user.name.split(" ")[0] : "Daksh"}</strong>! {currentHero.description}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
+        {/* Spacer for top navbar */}
+        <div className="h-20" />
 
-              {/* Action Buttons & Carousel Arrows */}
-              <div className="flex flex-wrap items-center gap-3.5 pt-2">
-                <Button
-                  onClick={() => navigate("/trips/new")}
-                  className="h-12 px-6 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md gap-2 transition-transform hover:scale-102 cursor-pointer"
-                >
-                  <PlusCircle className="w-4 h-4" />
-                  <span>Plan a New Journey</span>
-                </Button>
+        {/* Hero Central Text Content */}
+        <div className="relative z-10 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 flex flex-col justify-center">
 
-                <Button
-                  onClick={() => navigate("/cities")}
-                  className="h-12 px-6 rounded-full bg-white hover:bg-slate-100 text-slate-900 font-semibold text-sm gap-2 transition-transform hover:scale-102 cursor-pointer shadow-sm"
-                >
-                  <Compass className="w-4 h-4 text-slate-700" />
-                  <span>Explore Destinations</span>
-                </Button>
+          {/* Clean Location Tag */}
+          <div className="flex items-center gap-2 mb-4">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-sky-500/90 text-white text-xs font-medium shadow-xs">
+              <MapPin className="w-3.5 h-3.5" />
+              {currentHero.city}
+            </span>
+          </div>
 
-                {/* Slider Controls */}
-                <div className="flex items-center gap-2 sm:ml-4">
-                  <button
-                    onClick={prevSlide}
-                    aria-label="Previous slide"
-                    className="w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={nextSlide}
-                    aria-label="Next slide"
-                    className="w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 border border-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
+          {/* Headline + Greeting */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`hero-${currentSlide}`}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              className="max-w-3xl space-y-4"
+            >
+              <h1
+                className="text-4xl sm:text-5xl lg:text-[56px] font-semibold text-white leading-[1.12] tracking-tight"
+                style={{ textShadow: "0 2px 24px rgba(0,0,0,0.6)" }}
+              >
+                {currentHero.title}
+              </h1>
+              <p
+                className="text-white/90 text-base sm:text-lg font-normal leading-relaxed max-w-2xl"
+                style={{ textShadow: "0 1px 12px rgba(0,0,0,0.5)" }}
+              >
+                {getGreeting()}, <span className="font-medium text-sky-300">{user?.name ? user.name.split(" ")[0] : "Daksh"}</span>. {currentHero.description}
+              </p>
+            </motion.div>
+          </AnimatePresence>
 
-            {/* Right Vignette Cards (Featured Destination Stack) */}
-            <div className="hidden lg:flex lg:col-span-4 flex-col gap-3">
-              <div className="text-xs font-bold uppercase tracking-wider text-amber-300 mb-0.5 flex items-center gap-1.5">
-                <Flame className="w-3.5 h-3.5 text-amber-400" />
-                <span>Featured Escapes</span>
-              </div>
+          {/* Action Buttons */}
+          <div className="flex flex-wrap items-center gap-3.5 mt-8">
+            <Button
+              onClick={() => navigate("/trips/new")}
+              className="h-11 px-6 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm gap-2 transition-colors cursor-pointer shadow-sm"
+            >
+              <PlusCircle className="w-4 h-4" />
+              Plan a New Journey
+            </Button>
 
-              {HERO_SLIDES.slice(0, 3).map((item, idx) => {
-                const isActive = idx === currentSlide;
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() => setCurrentSlide(idx)}
-                    className={`relative rounded-2xl p-3 flex items-center gap-3.5 cursor-pointer transition-all duration-200 border ${
-                      isActive
-                        ? "bg-slate-900 border-amber-400 text-white shadow-lg ring-1 ring-amber-400"
-                        : "bg-black/50 border-white/15 hover:bg-black/70 text-white"
-                    }`}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.city}
-                      className="w-14 h-14 rounded-xl object-cover shrink-0 border border-white/20"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-sm font-bold truncate">{item.city.split(",")[0]}</h4>
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
-                          {item.vibe.split("&")[0]}
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-300 truncate mt-0.5">{item.tagline}</p>
-                      <div className="flex items-center gap-1 text-[11px] text-amber-300 font-medium mt-1">
-                        <Star className="w-3 h-3 fill-amber-300 text-amber-300" />
-                        <span>{item.rating}</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
+            <Button
+              onClick={() => navigate("/cities")}
+              className="h-11 px-6 rounded-full bg-white hover:bg-slate-100 text-slate-900 font-medium text-sm gap-2 transition-colors cursor-pointer"
+            >
+              <Compass className="w-4 h-4 text-slate-600" />
+              Explore Destinations
+            </Button>
           </div>
         </div>
 
-        {/* ── Floating Quick Search / Planner Tray ────────────── */}
-        <div className="relative z-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 -mb-10 sm:-mb-12">
+        {/* ── Search Bar Card (Fully visible, clearly anchored at base of Hero) ── */}
+        <div className="relative z-20 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-10">
           <form
             onSubmit={handleQuickSearch}
-            className="bg-white rounded-2xl p-4 sm:p-5 shadow-xl border border-slate-200 text-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center"
+            className="bg-white rounded-2xl p-5 shadow-2xl border border-slate-200/90 text-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-center"
           >
-            {/* Destination input */}
             <div className="space-y-1 sm:border-r sm:border-slate-200 sm:pr-4">
-              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                Destination
-              </label>
+              <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">Destination</label>
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-slate-700 shrink-0" />
+                <MapPin className="w-4 h-4 text-sky-500 shrink-0" />
                 <input
                   type="text"
                   value={searchCity}
                   onChange={(e) => setSearchCity(e.target.value)}
-                  placeholder="Where to? (Jaipur, Goa...)"
-                  className="w-full text-sm font-semibold text-slate-800 placeholder:text-slate-400 bg-transparent border-none outline-none focus:ring-0 p-0"
+                  placeholder="Where to? (Agra, Jaipur...)"
+                  className="w-full text-sm font-medium text-slate-800 placeholder:text-slate-400 bg-transparent border-none outline-none p-0"
                 />
               </div>
             </div>
 
-            {/* Travel Vibe */}
             <div className="space-y-1 sm:border-r sm:border-slate-200 sm:pr-4">
-              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                Holiday Vibe
-              </label>
+              <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">Holiday Vibe</label>
               <div className="flex items-center gap-2">
-                <Compass className="w-4 h-4 text-slate-700 shrink-0" />
+                <Compass className="w-4 h-4 text-sky-500 shrink-0" />
                 <select
                   value={selectedVibe}
                   onChange={(e) => setSelectedVibe(e.target.value)}
-                  className="w-full text-sm font-semibold text-slate-800 bg-transparent border-none outline-none focus:ring-0 p-0 cursor-pointer"
+                  className="w-full text-sm font-medium text-slate-800 bg-transparent border-none outline-none cursor-pointer p-0"
                 >
                   <option value="All">All Experiences</option>
                   <option value="Heritage">Palaces & Forts</option>
@@ -404,172 +355,126 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Budget Range (in Rupees) */}
             <div className="space-y-1 sm:border-r sm:border-slate-200 sm:pr-4">
-              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                Budget Tier
-              </label>
+              <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">Budget Tier</label>
               <div className="flex items-center gap-1.5">
-                <IndianRupee className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span className="text-sm font-semibold text-slate-800">
-                  ₹1,500 – ₹8,000+ / day
-                </span>
+                <IndianRupee className="w-4 h-4 text-sky-500 shrink-0" />
+                <span className="text-sm font-medium text-slate-800">₹1,500 – ₹8,000+ / day</span>
               </div>
             </div>
 
-            {/* Search CTA */}
-            <div className="flex items-center">
-              <Button
-                type="submit"
-                className="w-full h-11 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-sm gap-2 transition-colors cursor-pointer"
-              >
-                <Search className="w-4 h-4" />
-                <span>Search Trips</span>
-              </Button>
-            </div>
+            <Button
+              type="submit"
+              className="h-11 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm gap-2 transition-colors cursor-pointer shadow-xs"
+            >
+              <Search className="w-4 h-4" />
+              Search Cities
+            </Button>
           </form>
         </div>
+      </section>
 
-      </div>
+      {/* ══════════════════════════════════════════════════════════
+          MAIN BODY — Clean Modern Layout
+         ══════════════════════════════════════════════════════════ */}
+      <main className="flex-1 bg-slate-50 pt-12 pb-16 px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="max-w-6xl mx-auto space-y-12">
 
-      {/* ── MAIN DASHBOARD BODY (CLEAN LIGHT BACKGROUND) ─────────── */}
-      <main className="flex-1 bg-slate-50 pt-16 sm:pt-20 pb-16 px-4 sm:px-6 lg:px-8 space-y-12">
-        <div className="max-w-7xl mx-auto space-y-12">
-
-          {/* Quick Analytics & Stats Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 flex items-center gap-4 shadow-xs">
-              <div className="w-12 h-12 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center shrink-0 border border-slate-200">
-                <Luggage className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Planned Trips</p>
-                <h3 className="text-2xl font-bold text-slate-900 mt-0.5">{loading ? "-" : totalTrips}</h3>
-              </div>
-            </div>
-
-            <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 flex items-center gap-4 shadow-xs">
-              <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-100">
-                <MapPin className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Total Stops</p>
-                <h3 className="text-2xl font-bold text-slate-900 mt-0.5">{loading ? "-" : totalStops}</h3>
-              </div>
-            </div>
-
-            <div className="rounded-2xl bg-white border border-slate-200 p-5 sm:p-6 flex items-center gap-4 shadow-xs">
-              <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-100">
-                <Calendar className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Travel Days</p>
-                <h3 className="text-2xl font-bold text-slate-900 mt-0.5">{loading ? "-" : totalDays}</h3>
-              </div>
-            </div>
+          {/* Stats Strip */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {[
+              { label: "Planned Trips", value: totalTrips, icon: Luggage },
+              { label: "Total Stops",   value: totalStops, icon: MapPin },
+              { label: "Travel Days",   value: totalDays,  icon: Calendar },
+            ].map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <div key={stat.label} className="rounded-2xl bg-white border border-slate-200 p-5 flex items-center gap-4 shadow-xs">
+                  <div className="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">{stat.label}</p>
+                    <h3 className="text-2xl font-semibold text-slate-900 mt-0.5">{loading ? "–" : stat.value}</h3>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          {/* ── Upcoming Itineraries Section ────────────────────── */}
-          <div className="space-y-5">
+          {/* ── Upcoming Itineraries ──────────────────────────── */}
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="flex items-center gap-2.5">
-                  <h2 className="text-xl font-bold text-slate-900 tracking-tight">Your Upcoming Itineraries</h2>
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
-                    {trips.length} Active
-                  </span>
-                </div>
-                <p className="text-xs text-slate-500 mt-0.5">Manage and track your customized route plans</p>
+                <h2 className="text-xl font-semibold text-slate-900">Your Upcoming Itineraries</h2>
+                <p className="text-xs text-slate-500 mt-0.5 font-normal">Manage and track your personalized journeys</p>
               </div>
-
               {trips.length > 0 && (
-                <Link
-                  to="/trips"
-                  className="text-xs font-semibold text-slate-900 hover:text-amber-600 hover:underline flex items-center gap-1"
-                >
+                <Link to="/trips" className="text-xs font-medium text-sky-600 hover:text-sky-700 hover:underline flex items-center gap-1">
                   View all ({trips.length})
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </Link>
               )}
             </div>
 
             {loading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {[1, 2, 3].map((n) => (
-                  <div key={n} className="animate-pulse rounded-2xl bg-white border border-slate-200 h-72" />
+                  <div key={n} className="animate-pulse rounded-2xl bg-white border border-slate-200 h-64" />
                 ))}
               </div>
             ) : trips.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {trips.map((trip) => {
                   const duration = getDurationDays(trip.startDate, trip.endDate);
                   return (
                     <div
                       key={trip.id}
-                      className="rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between group"
+                      className="rounded-2xl overflow-hidden bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col group"
                     >
-                      <div>
-                        {/* Trip Card Cover */}
-                        <div className="relative h-44 w-full overflow-hidden bg-slate-100">
-                          <img
-                            src={
-                              trip.coverPhoto ||
-                              "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&auto=format&fit=crop&q=80"
-                            }
-                            alt={trip.name}
-                            className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                          
-                          <div className="absolute top-3 right-3">
-                            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 shadow-xs">
-                              {duration} {duration === 1 ? "Day" : "Days"}
-                            </span>
-                          </div>
-
-                          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
-                            <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-black/60 border border-white/20">
-                              {trip.stopCount || 0} {trip.stopCount === 1 ? "Stop" : "Stops"}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Trip Details */}
-                        <div className="p-5 space-y-2.5">
-                          <h3 className="font-bold text-lg text-slate-900 group-hover:text-amber-600 transition-colors line-clamp-1">
-                            {trip.name}
-                          </h3>
-
-                          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
-                            <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                            <span>
-                              {formatDate(trip.startDate)} – {formatDate(trip.endDate)}
-                            </span>
-                          </div>
-
-                          {trip.description && (
-                            <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                              {trip.description}
-                            </p>
-                          )}
-                        </div>
+                      {/* Cover */}
+                      <div className="relative h-40 w-full overflow-hidden bg-slate-100">
+                        <img
+                          src={trip.coverPhoto || "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800&auto=format&fit=crop&q=80"}
+                          alt={trip.name}
+                          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+                        <span className="absolute top-2.5 right-2.5 text-[11px] font-medium px-2 py-0.5 rounded-full bg-sky-500 text-white shadow-xs">
+                          {duration}d
+                        </span>
+                        <span className="absolute bottom-2.5 left-2.5 text-[11px] font-medium px-2 py-0.5 rounded-full bg-black/50 text-white border border-white/20">
+                          {trip.stopCount || 0} stops
+                        </span>
                       </div>
 
-                      {/* Card Footer Actions */}
-                      <div className="p-5 pt-0 flex items-center gap-2 border-t border-slate-100 mt-2 pt-3">
+                      {/* Body */}
+                      <div className="p-4 flex-1 space-y-2">
+                        <h3 className="font-semibold text-base text-slate-900 group-hover:text-sky-600 transition-colors line-clamp-1">
+                          {trip.name}
+                        </h3>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                          <Calendar className="w-3.5 h-3.5 shrink-0" />
+                          <span>{formatDate(trip.startDate)} – {formatDate(trip.endDate)}</span>
+                        </div>
+                        {trip.description && (
+                          <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{trip.description}</p>
+                        )}
+                      </div>
+
+                      {/* Footer */}
+                      <div className="px-4 pb-4 pt-2 flex items-center gap-2 border-t border-slate-100">
                         <Button
-                          variant="default"
                           size="sm"
-                          className="flex-1 h-9 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs gap-1.5 cursor-pointer shadow-xs"
+                          className="flex-1 h-8 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-xs font-medium gap-1 cursor-pointer"
                           onClick={() => navigate(`/trips/${trip.id}`)}
                         >
-                          <span>View Itinerary</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
+                          View Itinerary <ArrowRight className="w-3 h-3" />
                         </Button>
                         <Button
                           variant="outline"
                           size="sm"
-                          className="h-9 px-3.5 rounded-xl border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium cursor-pointer"
+                          className="h-8 px-3 rounded-lg border-slate-200 text-slate-700 text-xs font-medium cursor-pointer hover:bg-slate-50"
                           onClick={() => navigate(`/trips/${trip.id}/edit`)}
                         >
                           Edit
@@ -580,20 +485,17 @@ export default function Dashboard() {
                 })}
               </div>
             ) : (
-              /* Empty Passport State */
-              <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center space-y-4 shadow-xs">
-                <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 mx-auto flex items-center justify-center border border-amber-100">
-                  <Plane className="w-7 h-7 -rotate-45" />
+              <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center space-y-3">
+                <div className="w-12 h-12 rounded-xl bg-slate-100 text-slate-600 mx-auto flex items-center justify-center">
+                  <Plane className="w-6 h-6 -rotate-45" />
                 </div>
-                <div className="max-w-md mx-auto space-y-1">
-                  <h3 className="font-bold text-lg text-slate-900">Your Travel Passport is Empty</h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">
-                    Start crafting your multi-city Indian adventure in minutes. Pick your dream destinations, organize stops, and track budgets in ₹.
-                  </p>
-                </div>
+                <h3 className="font-semibold text-base text-slate-900">Your Travel Passport is Empty</h3>
+                <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
+                  Start crafting your multi-city Indian adventure. Pick destinations, organize stops, and track budgets in ₹.
+                </p>
                 <Button
                   onClick={() => navigate("/trips/new")}
-                  className="h-10 px-5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm gap-2 shadow-xs cursor-pointer"
+                  className="h-9 px-4 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm gap-2 cursor-pointer shadow-xs"
                 >
                   <Plus className="w-4 h-4" />
                   Create Your First Trip
@@ -602,21 +504,20 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* ── Trending Indian Destinations Showcase ────────────── */}
-          <div className="space-y-5 pt-2">
+          {/* ── Popular Destinations ──────────────────────────── */}
+          <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-slate-900 tracking-tight">Popular Destinations Across India</h2>
-                <p className="text-xs text-slate-500 mt-0.5">Handpicked traveler-favorite cities to spark your next adventure</p>
+                <h2 className="text-xl font-semibold text-slate-900">Popular Destinations Across India</h2>
+                <p className="text-xs text-slate-500 mt-0.5 font-normal">Handpicked traveler-favorite cities</p>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/cities")}
-                className="text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-100 gap-1 rounded-lg cursor-pointer"
+                className="text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 gap-1 rounded-lg cursor-pointer"
               >
-                <span>View All Cities</span>
-                <ChevronRight className="w-4 h-4" />
+                View All <ChevronRight className="w-3.5 h-3.5" />
               </Button>
             </div>
 
@@ -624,36 +525,29 @@ export default function Dashboard() {
               {POPULAR_DESTINATIONS.map((dest) => (
                 <div
                   key={dest.name}
-                  className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-white hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between"
+                  className="group rounded-2xl overflow-hidden border border-slate-200 bg-white hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col"
                   onClick={() =>
-                    navigate(
-                      `/trips/new?name=${encodeURIComponent(dest.name + " Gateway")}&city=${encodeURIComponent(dest.name)}`
-                    )
+                    navigate(`/trips/new?name=${encodeURIComponent(dest.name + " Gateway")}&city=${encodeURIComponent(dest.name)}`)
                   }
                 >
-                  <div className="h-32 w-full overflow-hidden bg-slate-100 relative">
+                  <div className="h-28 w-full overflow-hidden bg-slate-100 relative">
                     <img
                       src={dest.image}
                       alt={dest.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
-                    
-                    <span className="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white">
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
+                    <span className="absolute top-2 right-2 text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-black/50 text-white">
                       {dest.cost}
                     </span>
                   </div>
-
-                  <div className="p-3 space-y-1">
-                    <h4 className="font-bold text-sm text-slate-900 group-hover:text-amber-600 transition-colors">
-                      {dest.name}
-                    </h4>
-                    <p className="text-[11px] text-slate-500 truncate">{dest.tag}</p>
-                    <p className="text-[11px] text-emerald-700 font-semibold">{dest.budgetPerDay}</p>
+                  <div className="p-2.5 space-y-0.5 flex-1">
+                    <h4 className="font-semibold text-sm text-slate-900 group-hover:text-sky-600 transition-colors">{dest.name}</h4>
+                    <p className="text-[11px] text-slate-500">{dest.tag}</p>
+                    <p className="text-[11px] text-sky-600 font-medium">{dest.budgetPerDay}</p>
                   </div>
-
-                  <div className="px-3 pb-3">
-                    <div className="w-full py-1.5 rounded-lg bg-slate-100 group-hover:bg-slate-900 group-hover:text-white text-slate-700 text-center text-xs font-semibold transition-colors">
+                  <div className="px-2.5 pb-2.5">
+                    <div className="w-full py-1.5 rounded-lg bg-slate-100 group-hover:bg-sky-500 group-hover:text-white text-slate-700 text-center text-xs font-medium transition-colors">
                       + Plan Trip
                     </div>
                   </div>
