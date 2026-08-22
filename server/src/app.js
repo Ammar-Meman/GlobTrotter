@@ -6,6 +6,7 @@ import tripRoutes from "./routes/trip.routes.js";
 import stopRoutes, { tripStopRouter } from "./routes/stop.routes.js";
 import activityRoutes, { stopActivityRouter } from "./routes/activity.routes.js";
 import budgetRoutes from "./routes/budget.routes.js";
+import cityRoutes from "./routes/city.routes.js";
 import { errorHandler } from "./middleware/error.middleware.js";
 
 const app = express();
@@ -25,6 +26,7 @@ app.use("/api/trips", budgetRoutes);
 app.use("/api/stops", stopRoutes);
 app.use("/api/stops", stopActivityRouter);
 app.use("/api/activities", activityRoutes);
+app.use("/api/cities", cityRoutes);
 
 app.use(errorHandler);
 
