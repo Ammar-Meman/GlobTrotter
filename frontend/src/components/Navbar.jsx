@@ -11,6 +11,7 @@ import {
   X,
   Sparkles,
   Luggage,
+  ShieldCheck,
 } from "lucide-react";
 import useAuthStore from "../store/authStore";
 import useLanguageStore from "../store/languageStore";
@@ -34,6 +35,8 @@ export default function Navbar() {
     { name: t("dashboard"), href: "/dashboard", icon: Compass },
     { name: t("myTrips"), href: "/trips", icon: Luggage },
     { name: t("exploreCities"), href: "/cities", icon: Map },
+    { name: "Activities", href: "/activities", icon: Sparkles },
+    ...(user?.isAdmin ? [{ name: "Admin", href: "/admin", icon: ShieldCheck }] : []),
     { name: t("profile"), href: "/profile", icon: User },
   ];
 
