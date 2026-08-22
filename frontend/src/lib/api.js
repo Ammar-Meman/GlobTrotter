@@ -9,8 +9,10 @@ async function fetchWrapper(endpoint, options = {}) {
   }
 
   const token = localStorage.getItem("token");
+  const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
+
   const headers = {
-    "Content-Type": "application/json",
+    ...(!isFormData && { "Content-Type": "application/json" }),
     ...options.headers,
   };
 
@@ -44,11 +46,28 @@ async function fetchWrapper(endpoint, options = {}) {
 
 const api = {
   get: (endpoint, options) => fetchWrapper(endpoint, { ...options, method: "GET" }),
-  post: (endpoint, body, options) =>
-    fetchWrapper(endpoint, { ...options, method: "POST", body: JSON.stringify(body) }),
-  put: (endpoint, body, options) =>
-    fetchWrapper(endpoint, { ...options, method: "PUT", body: JSON.stringify(body) }),
+  post: (endpoint, body, options) => {
+    const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
+    return fetchWrapper(endpoint, {
+      ...options,
+      method: "POST",
+      body: isFormData ? body : JSON.stringify(body),
+    });
+  },
+  put: (endpoint, body, options) => {
+    const isFormData = typeof FormData !== "undefined" && body instanceof FormData;
+    return fetchWrapper(endpoint, {
+      ...options,
+      method: "PUT",
+      body: isFormData ? body : JSON.stringify(body),
+    });
+  },
   delete: (endpoint, options) => fetchWrapper(endpoint, { ...options, method: "DELETE" }),
+  upload: (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    return api.post("/uploads", formData);
+  },
 };
 
 export default api;
